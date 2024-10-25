@@ -1,16 +1,13 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '../types';  // Import types
+import { RootStackParamList, RegisteredUser } from '../types'; // Import types
 
-type RegistrationScreenNavigationProp = StackNavigationProp<
-  RootStackParamList,
-  'Registration'
->;
+type RegistrationScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Registration'>;
 
 type Props = {
   navigation: RegistrationScreenNavigationProp;
-  setRegisteredUser: (user: { username: string; password: string }) => void;  // Prop to store user
+  setRegisteredUser: (user: RegisteredUser) => void;
 };
 
 const RegistrationScreen = ({ navigation, setRegisteredUser }: Props) => {
@@ -44,10 +41,7 @@ const RegistrationScreen = ({ navigation, setRegisteredUser }: Props) => {
         secureTextEntry
       />
       <Button title="Register" onPress={handleRegister} />
-      <Button
-        title="Already have an account? Login"
-        onPress={() => navigation.navigate('Login')}
-      />
+      <Button title="Already have an account? Login" onPress={() => navigation.navigate('Login')} />
     </View>
   );
 };

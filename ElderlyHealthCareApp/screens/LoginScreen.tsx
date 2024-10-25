@@ -1,16 +1,13 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '../types';  // Import types
+import { RootStackParamList, RegisteredUser } from '../types'; // Import types
 
-type LoginScreenNavigationProp = StackNavigationProp<
-  RootStackParamList,
-  'Login'
->;
+type LoginScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Login'>;
 
 type Props = {
   navigation: LoginScreenNavigationProp;
-  registeredUser: { username: string; password: string } | null;  // Prop to receive the registered user
+  registeredUser: RegisteredUser | null;
 };
 
 const LoginScreen = ({ navigation, registeredUser }: Props) => {
@@ -19,7 +16,8 @@ const LoginScreen = ({ navigation, registeredUser }: Props) => {
 
   const handleLogin = () => {
     if (registeredUser && username === registeredUser.username && password === registeredUser.password) {
-      navigation.navigate('Home');
+      // Navigate to the "Main" tab navigator and show the "Home" screen
+      navigation.navigate('Main', { screen: 'Home' });
     } else {
       alert('Incorrect username or password');
     }
@@ -42,10 +40,7 @@ const LoginScreen = ({ navigation, registeredUser }: Props) => {
         secureTextEntry
       />
       <Button title="Login" onPress={handleLogin} />
-      <Button
-        title="Don't have an account? Register"
-        onPress={() => navigation.navigate('Registration')}
-      />
+      <Button title="Don't have an account? Register" onPress={() => navigation.navigate('Registration')} />
     </View>
   );
 };
