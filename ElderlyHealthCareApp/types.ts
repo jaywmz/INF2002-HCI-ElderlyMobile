@@ -1,3 +1,4 @@
+// types.ts
 export type RootStackParamList = {
     Login: undefined;
     Registration: undefined;
@@ -9,13 +10,13 @@ export type RootStackParamList = {
     'View/Edit Appointment': undefined;
     Reminders: undefined;
 };
-  
+
 export type RegisteredUser = {
     username: string;
     password: string;
-};
+} | null;
   
 export type AuthProps = {
     registeredUser: RegisteredUser | null;
-    setRegisteredUser: (user: RegisteredUser) => void;
+    setRegisteredUser: (user: RegisteredUser | null) => void;
 };

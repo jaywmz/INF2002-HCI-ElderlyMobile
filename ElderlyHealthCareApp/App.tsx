@@ -1,7 +1,9 @@
+import 'react-native-gesture-handler';
 import React, { useState } from 'react';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { Icon } from 'react-native-elements';
 
 // Import screens
@@ -14,42 +16,64 @@ import ReminderScreen from './screens/ReminderScreen';
 import { AuthProps, RegisteredUser } from './types';
 
 const Stack = createStackNavigator();
-const Tab = createBottomTabNavigator();
+const Tab = createMaterialTopTabNavigator();
 
-function MainTabs() {
+function MainTabs({ registeredUser, setRegisteredUser }: AuthProps) {
   return (
-    <Tab.Navigator initialRouteName="Home" screenOptions={{ headerShown: false }}>
-      <Tab.Screen 
-        name="Home" 
-        component={HomeScreen} 
+    <Tab.Navigator
+      initialRouteName="Home"
+      screenOptions={{
+        tabBarLabelStyle: { fontSize: 12 }, // Customize label style
+        tabBarIndicatorStyle: { backgroundColor: '#e91e63' }, // Customize indicator color
+        swipeEnabled: true, // Enable swipe gestures between tabs
+      }}
+    >
+      <Tab.Screen
+        name="Home"
         options={{
           tabBarLabel: 'Home',
-          tabBarIcon: ({ color, size }) => <Icon name="home" color={color} size={size} />,
-        }} 
-      />
-      <Tab.Screen 
-        name="Create Appointment" 
-        component={CreateApptScreen} 
+          tabBarIcon: ({ color, focused }) => (
+            <Icon name="home" color={color} size={focused ? 30 : 24} />
+          ),
+        }}
+      >
+        {(props) => (
+          <HomeScreen
+            {...props}
+            registeredUser={registeredUser}
+            setRegisteredUser={setRegisteredUser}
+          />
+        )}
+      </Tab.Screen>
+      <Tab.Screen
+        name="Create Appointment"
+        component={CreateApptScreen}
         options={{
           tabBarLabel: 'New Appointment',
-          tabBarIcon: ({ color, size }) => <Icon name="calendar" type="font-awesome" color={color} size={size} />,
-        }} 
+          tabBarIcon: ({ color, focused }) => (
+            <Icon name="calendar" type="font-awesome" color={color} size={focused ? 30 : 24} />
+          ),
+        }}
       />
-      <Tab.Screen 
-        name="View/Edit Appointment" 
-        component={ViewEditApptScreen} 
+      <Tab.Screen
+        name="View/Edit Appointment"
+        component={ViewEditApptScreen}
         options={{
           tabBarLabel: 'View/Edit',
-          tabBarIcon: ({ color, size }) => <Icon name="edit" type="font-awesome" color={color} size={size} />,
-        }} 
+          tabBarIcon: ({ color, focused }) => (
+            <Icon name="edit" type="font-awesome" color={color} size={focused ? 30 : 24} />
+          ),
+        }}
       />
-      <Tab.Screen 
-        name="Reminders" 
-        component={ReminderScreen} 
+      <Tab.Screen
+        name="Reminders"
+        component={ReminderScreen}
         options={{
           tabBarLabel: 'Reminders',
-          tabBarIcon: ({ color, size }) => <Icon name="bell" type="font-awesome" color={color} size={size} />,
-        }} 
+          tabBarIcon: ({ color, focused }) => (
+            <Icon name="bell" type="font-awesome" color={color} size={focused ? 30 : 24} />
+          ),
+        }}
       />
     </Tab.Navigator>
   );
@@ -59,16 +83,29 @@ export default function App() {
   const [registeredUser, setRegisteredUser] = useState<RegisteredUser | null>(null);
 
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Login">
-        <Stack.Screen name="Login">
-          {(props) => <LoginScreen {...props} registeredUser={registeredUser} />}
-        </Stack.Screen>
-        <Stack.Screen name="Registration">
-          {(props) => <RegistrationScreen {...props} setRegisteredUser={setRegisteredUser} />}
-        </Stack.Screen>
-        <Stack.Screen name="Main" component={MainTabs} options={{ headerShown: false }} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Login">
+          <Stack.Screen name="Login">
+            {(props) => <LoginScreen {...props} registeredUser={registeredUser} />}
+          </Stack.Screen>
+          <Stack.Screen name="Registration">
+            {(props) => <RegistrationScreen {...props} setRegisteredUser={setRegisteredUser} />}
+          </Stack.Screen>
+          <Stack.Screen
+            name="Main"
+            options={{ headerShown: false }}
+          >
+            {(props) => (
+              <MainTabs
+                {...props}
+                registeredUser={registeredUser}
+                setRegisteredUser={setRegisteredUser}
+              />
+            )}
+          </Stack.Screen>
+        </Stack.Navigator>
+      </NavigationContainer>
+    </GestureHandlerRootView>
   );
 }
