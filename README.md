@@ -107,3 +107,8 @@ This project is licensed under the MIT License.
 ---
 
 This README.md provides a clear guide on how to set up and run your app, along with a description of the project structure, libraries used, and possible next steps. You can adjust the URL for cloning the repository and expand the Next Steps section as your project progresses.
+
+# git commit msg using CLI
+git add .
+git commit -m "fix(navigation): "
+git push origin <branch-name>
