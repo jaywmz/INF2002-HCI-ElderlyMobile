@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, Text, StyleSheet } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '../types'; // Import the RootStackParamList
+import { RootStackParamList } from '../types';  // Import types
 
 type LoginScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -10,14 +10,15 @@ type LoginScreenNavigationProp = StackNavigationProp<
 
 type Props = {
   navigation: LoginScreenNavigationProp;
+  registeredUser: { username: string; password: string } | null;  // Prop to receive the registered user
 };
 
-const LoginScreen = ({ navigation }: Props) => {
+const LoginScreen = ({ navigation, registeredUser }: Props) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   const handleLogin = () => {
-    if (username === 'user' && password === 'password') {
+    if (registeredUser && username === registeredUser.username && password === registeredUser.password) {
       navigation.navigate('Home');
     } else {
       alert('Incorrect username or password');
