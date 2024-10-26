@@ -4,10 +4,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList, AuthProps } from '../types';
 import { globalStyles } from '../styles/Theme';
 
-type ViewEditApptScreenNavigationProp = StackNavigationProp<
-  RootStackParamList,
-  'View/Edit Appointment'
->;
+type ViewEditApptScreenNavigationProp = StackNavigationProp<RootStackParamList, 'View/Edit Appointment'>;
 
 type Props = {
   navigation: ViewEditApptScreenNavigationProp;
@@ -15,17 +12,17 @@ type Props = {
 
 const ViewEditApptScreen = ({ navigation, setRegisteredUser }: Props) => {
   const handleLogout = () => {
-    setRegisteredUser(null); // Clear registered user state
-    navigation.replace('Login'); // Navigate back to the Login screen
+    setRegisteredUser(null);
+    navigation.replace('Login');
   };
 
   const handleNavigateToEdit = () => {
-    alert('Editing Appointment'); // Placeholder action
+    alert('Editing Appointment');
   };
 
   return (
     <View style={[globalStyles.container, styles.background]}>
-      {/* Header with Logout button */}
+      {/* Header with Logout and Settings button */}
       <View style={styles.header}>
         <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
           <Text style={styles.logoutText}>Logout</Text>
@@ -39,7 +36,7 @@ const ViewEditApptScreen = ({ navigation, setRegisteredUser }: Props) => {
       {/* Main View/Edit Appointment Card */}
       <TouchableOpacity style={styles.card} onPress={handleNavigateToEdit}>
         <Image
-          source={require('../assets/edit.jpg')} // Ensure path to edit image asset
+          source={require('../assets/edit.jpg')}
           style={styles.icon}
         />
         <Text style={styles.cardTitle}>View/Edit Appointment</Text>
@@ -53,6 +50,12 @@ const ViewEditApptScreen = ({ navigation, setRegisteredUser }: Props) => {
       >
         <Text style={globalStyles.buttonText}>Back to Home</Text>
       </TouchableOpacity>
+
+      {/* Swipe Indicators */}
+      <View style={styles.swipeIndicatorContainer}>
+        <Text style={styles.swipeIndicator}>← Swipe left to "Create Appointment"</Text>
+        <Text style={styles.swipeIndicator}>Swipe right to "Medicine Reminder" →</Text>
+      </View>
     </View>
   );
 };
@@ -71,7 +74,7 @@ const styles = StyleSheet.create({
   logoutButton: {
     paddingHorizontal: 10,
     paddingVertical: 5,
-    backgroundColor: '#e0e0e0', // Grey background for button
+    backgroundColor: '#e0e0e0',
     borderRadius: 5,
   },
   logoutText: {
@@ -114,6 +117,25 @@ const styles = StyleSheet.create({
   cardSubtitle: {
     fontSize: 16,
     color: '#555',
+  },
+  swipeIndicatorContainer: {
+    marginTop: 50,
+    alignSelf: 'center',
+    backgroundColor: '#fce4ec', // Light pink background for swipe indicator
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 5,
+    elevation: 2, // For Android shadow
+  },
+  swipeIndicator: {
+    textAlign: 'center',
+    color: 'purple',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 });
 

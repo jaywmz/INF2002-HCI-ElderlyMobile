@@ -54,7 +54,7 @@ function MainTabs({ registeredUser, setRegisteredUser }: AuthProps) {
         <Tab.Screen
           name="Create Appointment"
           options={{
-            tabBarLabel: 'New Appointment',
+            tabBarLabel: 'Appt',
             tabBarIcon: ({ color, focused }) => (
               <Icon name="calendar" type="font-awesome" color={color} size={focused ? 30 : 24} />
             ),

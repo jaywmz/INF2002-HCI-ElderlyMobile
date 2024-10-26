@@ -12,8 +12,8 @@ type Props = {
 
 const ReminderScreen = ({ navigation, setRegisteredUser }: Props) => {
   const handleLogout = () => {
-    setRegisteredUser(null); // Clear registered user state
-    navigation.replace('Login'); // Navigate back to the Login screen
+    setRegisteredUser(null);
+    navigation.replace('Login');
   };
 
   const handleNavigateToHome = () => {
@@ -36,7 +36,7 @@ const ReminderScreen = ({ navigation, setRegisteredUser }: Props) => {
       {/* Reminder Card */}
       <TouchableOpacity style={styles.card} onPress={() => alert('Reminder Saved!')}>
         <Image
-          source={require('../assets/reminder.jpg')} // Path to your reminder image asset
+          source={require('../assets/reminder.jpg')}
           style={styles.icon}
         />
         <Text style={styles.cardTitle}>Medicine Reminder</Text>
@@ -50,13 +50,18 @@ const ReminderScreen = ({ navigation, setRegisteredUser }: Props) => {
       >
         <Text style={globalStyles.buttonText}>Back to Home</Text>
       </TouchableOpacity>
+
+      {/* Swipe Indicator */}
+      <View style={styles.swipeIndicatorContainer}>
+        <Text style={styles.swipeIndicator}>← Swipe left to "View/Edit Appointment"</Text>
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   background: {
-    backgroundColor: '#fbe4e4', // Pinkish background matching your Figma design
+    backgroundColor: '#fbe4e4',
   },
   header: {
     flexDirection: 'row',
@@ -68,7 +73,7 @@ const styles = StyleSheet.create({
   logoutButton: {
     paddingHorizontal: 10,
     paddingVertical: 5,
-    backgroundColor: '#e0e0e0', // Grey background for button
+    backgroundColor: '#e0e0e0',
     borderRadius: 5,
   },
   logoutText: {
@@ -111,6 +116,25 @@ const styles = StyleSheet.create({
   cardSubtitle: {
     fontSize: 16,
     color: '#555',
+  },
+  swipeIndicatorContainer: {
+    marginTop: 50,
+    alignSelf: 'center',
+    backgroundColor: '#fce4ec', // Light pink background for swipe indicator
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 5,
+    elevation: 2, // For Android shadow
+  },
+  swipeIndicator: {
+    textAlign: 'center',
+    color: 'purple',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 });
 

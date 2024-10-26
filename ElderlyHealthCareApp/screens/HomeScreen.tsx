@@ -56,6 +56,11 @@ const HomeScreen = ({ navigation, registeredUser, setRegisteredUser }: Props) =>
         <Image source={require('../assets/reminder.jpg')} style={styles.icon} />
         <Text style={styles.buttonText}>Reminders</Text>
       </TouchableOpacity>
+
+      {/* Swipe Indicator */}
+      <View style={styles.swipeIndicatorContainer}>
+        <Text style={styles.swipeIndicator}>Swipe right to access "Create Appointment" →</Text>
+      </View>
     </View>
   );
 };
@@ -119,6 +124,25 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     color: '#333',
+  },
+  swipeIndicatorContainer: {
+    marginTop: 50,
+    alignSelf: 'center',
+    backgroundColor: '#fce4ec', // Light pink background for swipe indicator
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 5,
+    elevation: 2, // For Android shadow
+  },
+  swipeIndicator: {
+    textAlign: 'center',
+    color: 'purple',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 });
 
