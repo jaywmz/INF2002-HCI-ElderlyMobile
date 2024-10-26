@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import { globalStyles } from '../styles/Theme';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList, AuthProps } from '../types';
@@ -16,6 +16,10 @@ const ReminderScreen = ({ navigation, setRegisteredUser }: Props) => {
     navigation.replace('Login'); // Navigate back to the Login screen
   };
 
+  const handleNavigateToHome = () => {
+    navigation.navigate('Home');
+  };
+
   return (
     <View style={[globalStyles.container, styles.background]}>
       {/* Header with Logout button */}
@@ -29,18 +33,20 @@ const ReminderScreen = ({ navigation, setRegisteredUser }: Props) => {
         </TouchableOpacity>
       </View>
 
-      {/* Reminder Screen Content */}
-      <Text style={globalStyles.headerText}>Set Your Medicine Reminders Here</Text>
-      
-      {/* Save Reminder button */}
-      <TouchableOpacity style={globalStyles.button} onPress={() => alert('Reminder Saved!')}>
-        <Text style={globalStyles.buttonText}>Save Reminder</Text>
+      {/* Reminder Card */}
+      <TouchableOpacity style={styles.card} onPress={() => alert('Reminder Saved!')}>
+        <Image
+          source={require('../assets/reminder.jpg')} // Path to your reminder image asset
+          style={styles.icon}
+        />
+        <Text style={styles.cardTitle}>Medicine Reminder</Text>
+        <Text style={styles.cardSubtitle}>UI Card-based</Text>
       </TouchableOpacity>
 
-      {/* Back to Home button */}
+      {/* Back to Home Button */}
       <TouchableOpacity
-        style={[globalStyles.button, { marginTop: 10 }]}
-        onPress={() => navigation.navigate('Home')}
+        style={[globalStyles.button, { marginTop: 20 }]}
+        onPress={handleNavigateToHome}
       >
         <Text style={globalStyles.buttonText}>Back to Home</Text>
       </TouchableOpacity>
@@ -50,12 +56,12 @@ const ReminderScreen = ({ navigation, setRegisteredUser }: Props) => {
 
 const styles = StyleSheet.create({
   background: {
-    backgroundColor: '#fbe4e4', // Background color for Reminder Screen
+    backgroundColor: '#fbe4e4', // Pinkish background matching your Figma design
   },
   header: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
+    justifyContent: 'space-between',
     width: '100%',
     padding: 20,
   },
@@ -83,6 +89,28 @@ const styles = StyleSheet.create({
   settingsText: {
     color: '#333',
     fontWeight: 'bold',
+  },
+  card: {
+    backgroundColor: '#f0f0f0',
+    borderRadius: 15,
+    width: '80%',
+    alignItems: 'center',
+    paddingVertical: 40,
+    marginTop: 50,
+  },
+  icon: {
+    width: 60,
+    height: 60,
+    marginBottom: 15,
+  },
+  cardTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#333',
+  },
+  cardSubtitle: {
+    fontSize: 16,
+    color: '#555',
   },
 });
 
