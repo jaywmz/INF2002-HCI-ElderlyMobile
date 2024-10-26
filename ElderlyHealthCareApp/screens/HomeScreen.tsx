@@ -19,14 +19,34 @@ const HomeScreen = ({ navigation, registeredUser, setRegisteredUser }: Props) =>
   return (
     <View style={globalStyles.container}>
       <Text style={globalStyles.headerText}>Welcome, {registeredUser?.username}!</Text>
+
+      {/* Button to navigate to Create Appointment */}
       <TouchableOpacity
         style={globalStyles.button}
         onPress={() => navigation.navigate('Create Appointment')}
       >
         <Text style={globalStyles.buttonText}>Go to Create Appointment</Text>
       </TouchableOpacity>
+
+      {/* Button to navigate to View/Edit Appointment */}
       <TouchableOpacity
-        style={[globalStyles.button, { marginTop: 10, backgroundColor: 'red' }]}
+        style={[globalStyles.button, { marginTop: 10 }]}
+        onPress={() => navigation.navigate('View/Edit Appointment')}
+      >
+        <Text style={globalStyles.buttonText}>Go to View/Edit Appointment</Text>
+      </TouchableOpacity>
+
+      {/* Button to navigate to Reminders */}
+      <TouchableOpacity
+        style={[globalStyles.button, { marginTop: 10 }]}
+        onPress={() => navigation.navigate('Reminders')}
+      >
+        <Text style={globalStyles.buttonText}>Go to Reminders</Text>
+      </TouchableOpacity>
+
+      {/* Logout Button */}
+      <TouchableOpacity
+        style={[globalStyles.button, { marginTop: 20, backgroundColor: 'red' }]}
         onPress={handleLogout}
       >
         <Text style={globalStyles.buttonText}>Logout</Text>
