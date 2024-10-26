@@ -1,7 +1,8 @@
 import React from 'react';
-import { View, Text, Button, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '../types'; // Import the RootStackParamList
+import { RootStackParamList } from '../types';
+import { globalStyles } from '../styles/Theme';
 
 type ViewEditApptScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -14,26 +15,22 @@ type Props = {
 
 const ViewEditApptScreen = ({ navigation }: Props) => {
   return (
-    <View style={styles.container}>
-      <Text>View or Edit Your Appointment</Text>
-      <Button
-        title="Edit Appointment"
+    <View style={globalStyles.container}>
+      <Text style={globalStyles.headerText}>View or Edit Your Appointment</Text>
+      <TouchableOpacity
+        style={globalStyles.button}
         onPress={() => alert('Editing Appointment')}
-      />
-      <Button
-        title="Back to Home"
+      >
+        <Text style={globalStyles.buttonText}>Edit Appointment</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={[globalStyles.button, { marginTop: 10 }]}
         onPress={() => navigation.navigate('Home')}
-      />
+      >
+        <Text style={globalStyles.buttonText}>Back to Home</Text>
+      </TouchableOpacity>
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
 
 export default ViewEditApptScreen;

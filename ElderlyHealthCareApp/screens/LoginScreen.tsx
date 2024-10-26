@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { globalStyles } from '../styles/Theme';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList, RegisteredUser } from '../types'; // Import types
+import { RootStackParamList, RegisteredUser } from '../types';
 
 type LoginScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Login'>;
 
@@ -16,7 +17,6 @@ const LoginScreen = ({ navigation, registeredUser }: Props) => {
 
   const handleLogin = () => {
     if (registeredUser && username === registeredUser.username && password === registeredUser.password) {
-      // Navigate to the "Main" tab navigator and show the "Home" screen
       navigation.navigate('Main', { screen: 'Home' });
     } else {
       alert('Incorrect username or password');
@@ -24,41 +24,29 @@ const LoginScreen = ({ navigation, registeredUser }: Props) => {
   };
 
   return (
-    <View style={styles.container}>
-      <Text>Login</Text>
+    <View style={globalStyles.container}>
+      <Text style={globalStyles.headerText}>Login</Text>
       <TextInput
-        style={styles.input}
+        style={globalStyles.input}
         placeholder="Username"
         value={username}
         onChangeText={setUsername}
       />
       <TextInput
-        style={styles.input}
+        style={globalStyles.input}
         placeholder="Password"
         value={password}
         onChangeText={setPassword}
         secureTextEntry
       />
-      <Button title="Login" onPress={handleLogin} />
-      <Button title="Don't have an account? Register" onPress={() => navigation.navigate('Registration')} />
+      <TouchableOpacity style={globalStyles.button} onPress={handleLogin}>
+        <Text style={globalStyles.buttonText}>Login</Text>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('Registration')} style={{ marginTop: 10 }}>
+        <Text style={{ color: '#007AFF' }}>Don't have an account? Register</Text>
+      </TouchableOpacity>
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  input: {
-    width: 200,
-    padding: 10,
-    marginBottom: 10,
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 5,
-  },
-});
 
 export default LoginScreen;

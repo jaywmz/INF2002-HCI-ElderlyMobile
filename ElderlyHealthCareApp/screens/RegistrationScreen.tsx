@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { globalStyles } from '../styles/Theme';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList, RegisteredUser } from '../types'; // Import types
+import { RootStackParamList, RegisteredUser } from '../types';
 
 type RegistrationScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Registration'>;
 
@@ -25,41 +26,29 @@ const RegistrationScreen = ({ navigation, setRegisteredUser }: Props) => {
   };
 
   return (
-    <View style={styles.container}>
-      <Text>Register</Text>
+    <View style={globalStyles.container}>
+      <Text style={globalStyles.headerText}>Register</Text>
       <TextInput
-        style={styles.input}
+        style={globalStyles.input}
         placeholder="Username"
         value={username}
         onChangeText={setUsername}
       />
       <TextInput
-        style={styles.input}
+        style={globalStyles.input}
         placeholder="Password"
         value={password}
         onChangeText={setPassword}
         secureTextEntry
       />
-      <Button title="Register" onPress={handleRegister} />
-      <Button title="Already have an account? Login" onPress={() => navigation.navigate('Login')} />
+      <TouchableOpacity style={globalStyles.button} onPress={handleRegister}>
+        <Text style={globalStyles.buttonText}>Register</Text>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('Login')} style={{ marginTop: 10 }}>
+        <Text style={{ color: '#007AFF' }}>Already have an account? Login</Text>
+      </TouchableOpacity>
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  input: {
-    width: 200,
-    padding: 10,
-    marginBottom: 10,
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 5,
-  },
-});
 
 export default RegistrationScreen;

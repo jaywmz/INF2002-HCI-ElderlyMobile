@@ -1,7 +1,8 @@
 import React from 'react';
-import { View, Text, Button, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
+import { globalStyles } from '../styles/Theme';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList, AuthProps } from '../types'; // Assuming you have defined RootStackParamList
+import { RootStackParamList, AuthProps } from '../types';
 
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
 
@@ -11,34 +12,27 @@ type Props = {
 
 const HomeScreen = ({ navigation, registeredUser, setRegisteredUser }: Props) => {
   const handleLogout = () => {
-    setRegisteredUser(null); // Clear the registered user state
-    navigation.replace('Login'); // Navigate back to the Login screen
+    setRegisteredUser(null);
+    navigation.replace('Login');
   };
 
   return (
-    <View style={styles.container}>
-      <Text>Welcome, {registeredUser?.username}!</Text>
-
-      <Button
-        title="Go to Create Appointment"
+    <View style={globalStyles.container}>
+      <Text style={globalStyles.headerText}>Welcome, {registeredUser?.username}!</Text>
+      <TouchableOpacity
+        style={globalStyles.button}
         onPress={() => navigation.navigate('Create Appointment')}
-      />
-
-      <Button
-        title="Logout"
+      >
+        <Text style={globalStyles.buttonText}>Go to Create Appointment</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={[globalStyles.button, { marginTop: 10, backgroundColor: 'red' }]}
         onPress={handleLogout}
-        color="red" // Optionally, you can set a different color for the logout button
-      />
+      >
+        <Text style={globalStyles.buttonText}>Logout</Text>
+      </TouchableOpacity>
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
 
 export default HomeScreen;
