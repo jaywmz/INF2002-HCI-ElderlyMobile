@@ -3,9 +3,9 @@ import React, { useState } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'; // Updated import
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { Icon } from 'react-native-elements';
-import { View, StyleSheet } from 'react-native';
+import { View } from 'react-native';
 
 // Import screens
 import LoginScreen from './screens/LoginScreen';
@@ -17,20 +17,20 @@ import ReminderScreen from './screens/ReminderScreen';
 import { AuthProps, RegisteredUser } from './types';
 
 const Stack = createStackNavigator();
-const Tab = createMaterialTopTabNavigator(); // Updated navigator
+const Tab = createMaterialTopTabNavigator();
 
 function MainTabs({ registeredUser, setRegisteredUser }: AuthProps) {
   return (
     <View style={{ flex: 1 }}>
       <Tab.Navigator
         initialRouteName="Home"
-        tabBarPosition="bottom" // Position tabs at the bottom
+        tabBarPosition="bottom"
         screenOptions={{
-          tabBarLabelStyle: { fontSize: 12 }, // Customize label style
-          tabBarActiveTintColor: '#e91e63', // Customize active tab color
-          swipeEnabled: true, // Enable swipe gestures between tabs
-          tabBarIndicatorStyle: { backgroundColor: '#e91e63' }, // Customize indicator color
-          tabBarStyle: { backgroundColor: '#fff' }, // Customize tab bar background
+          tabBarLabelStyle: { fontSize: 12 },
+          tabBarActiveTintColor: '#e91e63',
+          swipeEnabled: true,
+          tabBarIndicatorStyle: { backgroundColor: '#e91e63' },
+          tabBarStyle: { backgroundColor: '#fff' },
         }}
       >
         <Tab.Screen
@@ -50,6 +50,7 @@ function MainTabs({ registeredUser, setRegisteredUser }: AuthProps) {
             />
           )}
         </Tab.Screen>
+        
         <Tab.Screen
           name="Create Appointment"
           options={{
@@ -62,32 +63,47 @@ function MainTabs({ registeredUser, setRegisteredUser }: AuthProps) {
           {(props) => (
             <CreateApptScreen
               {...props}
-              navigation={props.navigation} // Add navigation prop if required
-              registeredUser={registeredUser} // Pass additional props as needed
+              registeredUser={registeredUser}
               setRegisteredUser={setRegisteredUser}
             />
           )}
         </Tab.Screen>
+        
         <Tab.Screen
           name="View/Edit Appointment"
-          component={ViewEditApptScreen}
           options={{
             tabBarLabel: 'View/Edit',
             tabBarIcon: ({ color, focused }) => (
               <Icon name="edit" type="font-awesome" color={color} size={focused ? 30 : 24} />
             ),
           }}
-        />
+        >
+          {(props) => (
+            <ViewEditApptScreen
+              {...props}
+              registeredUser={registeredUser}
+              setRegisteredUser={setRegisteredUser}
+            />
+          )}
+        </Tab.Screen>
+        
         <Tab.Screen
           name="Reminders"
-          component={ReminderScreen}
           options={{
             tabBarLabel: 'Reminders',
             tabBarIcon: ({ color, focused }) => (
               <Icon name="bell" type="font-awesome" color={color} size={focused ? 30 : 24} />
             ),
           }}
-        />
+        >
+          {(props) => (
+            <ReminderScreen
+              {...props}
+              registeredUser={registeredUser}
+              setRegisteredUser={setRegisteredUser}
+            />
+          )}
+        </Tab.Screen>
       </Tab.Navigator>
     </View>
   );

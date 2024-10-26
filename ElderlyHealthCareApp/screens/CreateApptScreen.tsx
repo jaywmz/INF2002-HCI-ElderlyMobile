@@ -18,7 +18,9 @@ const CreateApptScreen = ({ navigation, setRegisteredUser }: Props) => {
 
   const handleNavigateToService = () => {
     // Navigate to the actual service screen (replace 'Home' with correct screen if necessary)
-    navigation.navigate('Home');
+    // navigation.navigate('Home');
+
+    alert('Create Appointment'); // Placeholder action
   };
 
   return (
@@ -42,6 +44,14 @@ const CreateApptScreen = ({ navigation, setRegisteredUser }: Props) => {
         />
         <Text style={styles.cardTitle}>Create Appointment</Text>
         <Text style={styles.cardSubtitle}>UI Card-based</Text>
+      </TouchableOpacity>
+
+      {/* Back to Home Button */}
+      <TouchableOpacity
+        style={[globalStyles.button, { marginTop: 20 }]}
+        onPress={() => navigation.navigate('Home')}
+      >
+        <Text style={globalStyles.buttonText}>Back to Home</Text>
       </TouchableOpacity>
     </View>
   );
