@@ -52,14 +52,22 @@ function MainTabs({ registeredUser, setRegisteredUser }: AuthProps) {
         </Tab.Screen>
         <Tab.Screen
           name="Create Appointment"
-          component={CreateApptScreen}
           options={{
             tabBarLabel: 'New Appointment',
             tabBarIcon: ({ color, focused }) => (
               <Icon name="calendar" type="font-awesome" color={color} size={focused ? 30 : 24} />
             ),
           }}
-        />
+        >
+          {(props) => (
+            <CreateApptScreen
+              {...props}
+              navigation={props.navigation} // Add navigation prop if required
+              registeredUser={registeredUser} // Pass additional props as needed
+              setRegisteredUser={setRegisteredUser}
+            />
+          )}
+        </Tab.Screen>
         <Tab.Screen
           name="View/Edit Appointment"
           component={ViewEditApptScreen}

@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../types';
-import { globalStyles } from '../styles/Theme';
+import { globalStyles } from '../styles/Theme'; // Adjust the path if necessary
 
 type ViewEditApptScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -16,13 +16,18 @@ type Props = {
 const ViewEditApptScreen = ({ navigation }: Props) => {
   return (
     <View style={globalStyles.container}>
+      {/* Header text using global styles */}
       <Text style={globalStyles.headerText}>View or Edit Your Appointment</Text>
+      
+      {/* Edit Appointment button */}
       <TouchableOpacity
         style={globalStyles.button}
         onPress={() => alert('Editing Appointment')}
       >
         <Text style={globalStyles.buttonText}>Edit Appointment</Text>
       </TouchableOpacity>
+      
+      {/* Back to Home button */}
       <TouchableOpacity
         style={[globalStyles.button, { marginTop: 10 }]}
         onPress={() => navigation.navigate('Home')}

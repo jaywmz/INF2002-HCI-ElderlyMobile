@@ -13,9 +13,20 @@ type Props = {
 const ReminderScreen = ({ navigation }: Props) => {
   return (
     <View style={globalStyles.container}>
+      {/* Header text using global styles */}
       <Text style={globalStyles.headerText}>Set Your Medicine Reminders Here</Text>
+      
+      {/* Save Reminder button */}
       <TouchableOpacity style={globalStyles.button} onPress={() => alert('Reminder Saved!')}>
         <Text style={globalStyles.buttonText}>Save Reminder</Text>
+      </TouchableOpacity>
+
+      {/* Back to Home button */}
+      <TouchableOpacity
+        style={[globalStyles.button, { marginTop: 10 }]}
+        onPress={() => navigation.navigate('Home')}
+      >
+        <Text style={globalStyles.buttonText}>Back to Home</Text>
       </TouchableOpacity>
     </View>
   );
