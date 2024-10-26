@@ -49,7 +49,7 @@ Make sure you have the following installed:
 
 Run the app locally with:
 ```bash
-expo start
+npx expo start or npm start
 ```
 This will open Expo DevTools in your browser. Use the Expo Go app on your device to scan the QR code and preview the app.
 
