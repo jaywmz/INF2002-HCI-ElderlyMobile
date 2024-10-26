@@ -1,4 +1,4 @@
-Elderly Healthcare App
+## Elderly Healthcare App
 This mobile application is designed to support elderly users in managing their healthcare tasks, such as booking appointments, setting reminders, and using voice commands for easier navigation.
 
 ## Features
