@@ -3,8 +3,9 @@ import React, { useState } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'; // Updated import
 import { Icon } from 'react-native-elements';
+import { View, StyleSheet } from 'react-native';
 
 // Import screens
 import LoginScreen from './screens/LoginScreen';
@@ -16,66 +17,71 @@ import ReminderScreen from './screens/ReminderScreen';
 import { AuthProps, RegisteredUser } from './types';
 
 const Stack = createStackNavigator();
-const Tab = createMaterialTopTabNavigator();
+const Tab = createMaterialTopTabNavigator(); // Updated navigator
 
 function MainTabs({ registeredUser, setRegisteredUser }: AuthProps) {
   return (
-    <Tab.Navigator
-      initialRouteName="Home"
-      screenOptions={{
-        tabBarLabelStyle: { fontSize: 12 }, // Customize label style
-        tabBarIndicatorStyle: { backgroundColor: '#e91e63' }, // Customize indicator color
-        swipeEnabled: true, // Enable swipe gestures between tabs
-      }}
-    >
-      <Tab.Screen
-        name="Home"
-        options={{
-          tabBarLabel: 'Home',
-          tabBarIcon: ({ color, focused }) => (
-            <Icon name="home" color={color} size={focused ? 30 : 24} />
-          ),
+    <View style={{ flex: 1 }}>
+      <Tab.Navigator
+        initialRouteName="Home"
+        tabBarPosition="bottom" // Position tabs at the bottom
+        screenOptions={{
+          tabBarLabelStyle: { fontSize: 12 }, // Customize label style
+          tabBarActiveTintColor: '#e91e63', // Customize active tab color
+          swipeEnabled: true, // Enable swipe gestures between tabs
+          tabBarIndicatorStyle: { backgroundColor: '#e91e63' }, // Customize indicator color
+          tabBarStyle: { backgroundColor: '#fff' }, // Customize tab bar background
         }}
       >
-        {(props) => (
-          <HomeScreen
-            {...props}
-            registeredUser={registeredUser}
-            setRegisteredUser={setRegisteredUser}
-          />
-        )}
-      </Tab.Screen>
-      <Tab.Screen
-        name="Create Appointment"
-        component={CreateApptScreen}
-        options={{
-          tabBarLabel: 'New Appointment',
-          tabBarIcon: ({ color, focused }) => (
-            <Icon name="calendar" type="font-awesome" color={color} size={focused ? 30 : 24} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="View/Edit Appointment"
-        component={ViewEditApptScreen}
-        options={{
-          tabBarLabel: 'View/Edit',
-          tabBarIcon: ({ color, focused }) => (
-            <Icon name="edit" type="font-awesome" color={color} size={focused ? 30 : 24} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Reminders"
-        component={ReminderScreen}
-        options={{
-          tabBarLabel: 'Reminders',
-          tabBarIcon: ({ color, focused }) => (
-            <Icon name="bell" type="font-awesome" color={color} size={focused ? 30 : 24} />
-          ),
-        }}
-      />
-    </Tab.Navigator>
+        <Tab.Screen
+          name="Home"
+          options={{
+            tabBarLabel: 'Home',
+            tabBarIcon: ({ color, focused }) => (
+              <Icon name="home" color={color} size={focused ? 30 : 24} />
+            ),
+          }}
+        >
+          {(props) => (
+            <HomeScreen
+              {...props}
+              registeredUser={registeredUser}
+              setRegisteredUser={setRegisteredUser}
+            />
+          )}
+        </Tab.Screen>
+        <Tab.Screen
+          name="Create Appointment"
+          component={CreateApptScreen}
+          options={{
+            tabBarLabel: 'New Appointment',
+            tabBarIcon: ({ color, focused }) => (
+              <Icon name="calendar" type="font-awesome" color={color} size={focused ? 30 : 24} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="View/Edit Appointment"
+          component={ViewEditApptScreen}
+          options={{
+            tabBarLabel: 'View/Edit',
+            tabBarIcon: ({ color, focused }) => (
+              <Icon name="edit" type="font-awesome" color={color} size={focused ? 30 : 24} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="Reminders"
+          component={ReminderScreen}
+          options={{
+            tabBarLabel: 'Reminders',
+            tabBarIcon: ({ color, focused }) => (
+              <Icon name="bell" type="font-awesome" color={color} size={focused ? 30 : 24} />
+            ),
+          }}
+        />
+      </Tab.Navigator>
+    </View>
   );
 }
 
