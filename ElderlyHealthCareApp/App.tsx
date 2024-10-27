@@ -15,10 +15,10 @@ import HomeScreen from './screens/HomeScreen';
 import CreateApptScreen from './screens/CreateApptScreen';
 import ViewEditApptScreen from './screens/ViewEditApptScreen';
 import ReminderScreen from './screens/ReminderScreen';
-import CalendarScreen from './screens/Calendar';
-import LocationsScreen from './screens/Locations';
-import TimeslotsScreen from './screens/Timeslots';
-import CreateApptConfirmationScreen from './screens/CreateApptConfirmation';
+import CalendarScreen from './screens/create-appointment screens/Calendar';
+import LocationsScreen from './screens/create-appointment screens/Locations';
+import TimeslotsScreen from './screens/create-appointment screens/Timeslots';
+import CreateApptConfirmationScreen from './screens/create-appointment screens/CreateApptConfirmation';
 
 const Stack = createStackNavigator();
 const Tab = createMaterialTopTabNavigator();

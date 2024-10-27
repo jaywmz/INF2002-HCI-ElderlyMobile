@@ -1,23 +1,23 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '../types';
-import { globalStyles } from '../styles/Theme';
+import { RootStackParamList } from '../../types';
+import { globalStyles } from '../../styles/Theme';
 
-type LocationsScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Locations'>;
+type CalendarScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Calendar'>;
 
 type Props = {
-  navigation: LocationsScreenNavigationProp;
+  navigation: CalendarScreenNavigationProp;
 };
 
-const LocationsScreen = ({ navigation }: Props) => {
+const CalendarScreen = ({ navigation }: Props) => {
   const handleBack = () => {
     navigation.goBack();
   }
 
-  const handleNavigateToCalendar = () => {
+  const handleNavigateToTimeslots = () => {
     // Navigate to the actual service screen (replace 'Home' with correct screen if necessary)
-    navigation.navigate('Calendar');
+    navigation.navigate('Timeslots');
     // alert("timeslots");
   };
 
@@ -28,9 +28,9 @@ const LocationsScreen = ({ navigation }: Props) => {
         <TouchableOpacity style={styles.logoutButton} onPress={handleBack}>
           <Text style={styles.logoutText}>Back</Text>
         </TouchableOpacity>
-        <Text style={styles.headerText}>Choose Location</Text>
-        <TouchableOpacity style={styles.logoutButton} onPress={handleNavigateToCalendar}>
-            <Text style={styles.logoutText}>Location 1</Text>
+        <Text style={styles.headerText}>Choose date</Text>
+        <TouchableOpacity style={styles.logoutButton} onPress={handleNavigateToTimeslots}>
+          <Text style={styles.logoutText}>Oct 27</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -115,4 +115,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LocationsScreen;
+export default CalendarScreen;

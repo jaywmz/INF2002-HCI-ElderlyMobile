@@ -1,23 +1,24 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '../types';
-import { globalStyles } from '../styles/Theme';
+import { RootStackParamList } from '../../types';
+import { globalStyles } from '../../styles/Theme';
 
-type CreateApptConfirmationScreenNavigationProp = StackNavigationProp<RootStackParamList, 'CreateApptConfirmation'>;
+type LocationsScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Locations'>;
 
 type Props = {
-  navigation: CreateApptConfirmationScreenNavigationProp;
+  navigation: LocationsScreenNavigationProp;
 };
 
-const CreateApptConfirmationScreen = ({ navigation }: Props) => {
+const LocationsScreen = ({ navigation }: Props) => {
   const handleBack = () => {
-    navigation.goBack(); 
+    navigation.goBack();
   }
 
-  const handleNavigateToHome = () => {
+  const handleNavigateToCalendar = () => {
     // Navigate to the actual service screen (replace 'Home' with correct screen if necessary)
-    navigation.navigate('Home');
+    navigation.navigate('Calendar');
+    // alert("timeslots");
   };
 
   return (
@@ -25,14 +26,11 @@ const CreateApptConfirmationScreen = ({ navigation }: Props) => {
       {/* Header with Logout button */}
       <View style={styles.header}>
         <TouchableOpacity style={styles.logoutButton} onPress={handleBack}>
-          <Text style={styles.logoutText}>Back</Text>   
+          <Text style={styles.logoutText}>Back</Text>
         </TouchableOpacity>
-        <Text style={styles.headerText}>Confirm?</Text>
-        <Text style={styles.headerText}>Location</Text>
-        <Text style={styles.headerText}>Date</Text>
-        <Text style={styles.headerText}>Time</Text>
-        <TouchableOpacity style={styles.logoutButton} onPress={handleNavigateToHome}>
-          <Text style={styles.logoutText}>Confirm</Text>
+        <Text style={styles.headerText}>Choose Location</Text>
+        <TouchableOpacity style={styles.logoutButton} onPress={handleNavigateToCalendar}>
+            <Text style={styles.logoutText}>Location 1</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -117,4 +115,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CreateApptConfirmationScreen;
+export default LocationsScreen;
