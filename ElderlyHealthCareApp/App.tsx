@@ -8,13 +8,17 @@ import { Icon } from 'react-native-elements';
 import { View } from 'react-native';
 
 // Import screens
+import { AuthProps, RegisteredUser } from './types';
 import LoginScreen from './screens/LoginScreen';
 import RegistrationScreen from './screens/RegistrationScreen';
 import HomeScreen from './screens/HomeScreen';
 import CreateApptScreen from './screens/CreateApptScreen';
 import ViewEditApptScreen from './screens/ViewEditApptScreen';
 import ReminderScreen from './screens/ReminderScreen';
-import { AuthProps, RegisteredUser } from './types';
+import CalendarScreen from './screens/Calendar';
+import LocationsScreen from './screens/Locations';
+import TimeslotsScreen from './screens/Timeslots';
+import CreateApptConfirmationScreen from './screens/CreateApptConfirmation';
 
 const Stack = createStackNavigator();
 const Tab = createMaterialTopTabNavigator();
@@ -119,9 +123,11 @@ export default function App() {
           <Stack.Screen name="Login">
             {(props) => <LoginScreen {...props} registeredUser={registeredUser} />}
           </Stack.Screen>
+
           <Stack.Screen name="Registration">
             {(props) => <RegistrationScreen {...props} setRegisteredUser={setRegisteredUser} />}
           </Stack.Screen>
+
           <Stack.Screen
             name="Main"
             options={{ headerShown: false }}
@@ -131,6 +137,38 @@ export default function App() {
                 {...props}
                 registeredUser={registeredUser}
                 setRegisteredUser={setRegisteredUser}
+              />
+            )}
+          </Stack.Screen>
+
+          <Stack.Screen name="Locations">
+            {(props) => (
+              <LocationsScreen
+                {...props}
+              />
+            )}
+          </Stack.Screen>
+
+          <Stack.Screen name="Calendar">
+            {(props) => (
+              <CalendarScreen 
+                {...props}
+              />
+            )}
+          </Stack.Screen>
+
+          <Stack.Screen name='Timeslots'>
+          {(props) => (
+              <TimeslotsScreen 
+                {...props}
+              />
+            )}
+          </Stack.Screen>
+
+          <Stack.Screen name='CreateApptConfirmation'>
+          {(props) => (
+              <CreateApptConfirmationScreen
+                {...props}
               />
             )}
           </Stack.Screen>

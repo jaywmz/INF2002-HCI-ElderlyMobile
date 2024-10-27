@@ -1,61 +1,39 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList, AuthProps } from '../types';
+import { RootStackParamList } from '../types';
 import { globalStyles } from '../styles/Theme';
 
-type CreateApptScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Create Appointment'>;
+type CreateApptConfirmationScreenNavigationProp = StackNavigationProp<RootStackParamList, 'CreateApptConfirmation'>;
 
 type Props = {
-  navigation: CreateApptScreenNavigationProp;
-} & AuthProps;
+  navigation: CreateApptConfirmationScreenNavigationProp;
+};
 
-const CreateApptScreen = ({ navigation, setRegisteredUser }: Props) => {
-  const handleLogout = () => {
-    setRegisteredUser(null); // Clear registered user state
-    navigation.replace('Login'); // Navigate back to the Login screen
-  };
+const CreateApptConfirmationScreen = ({ navigation }: Props) => {
+  const handleBack = () => {
+    navigation.goBack(); 
+  }
 
-  const handleNavigateToLocations = () => {
+  const handleNavigateToHome = () => {
     // Navigate to the actual service screen (replace 'Home' with correct screen if necessary)
-    navigation.navigate('Locations');
+    navigation.navigate('Home');
   };
 
   return (
     <View style={[globalStyles.container, styles.background]}>
       {/* Header with Logout button */}
       <View style={styles.header}>
-        <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
-          <Text style={styles.logoutText}>Logout</Text>
+        <TouchableOpacity style={styles.logoutButton} onPress={handleBack}>
+          <Text style={styles.logoutText}>Back</Text>   
         </TouchableOpacity>
-        <Text style={styles.headerText}>Create Appt</Text>
-        <TouchableOpacity style={styles.settingsButton}>
-          <Text style={styles.settingsText}>Settings</Text>
+        <Text style={styles.headerText}>Confirm?</Text>
+        <Text style={styles.headerText}>Location</Text>
+        <Text style={styles.headerText}>Date</Text>
+        <Text style={styles.headerText}>Time</Text>
+        <TouchableOpacity style={styles.logoutButton} onPress={handleNavigateToHome}>
+          <Text style={styles.logoutText}>Confirm</Text>
         </TouchableOpacity>
-      </View>
-
-      {/* Main Appointment Card with TouchableOpacity */}
-      <TouchableOpacity style={styles.card} onPress={handleNavigateToLocations}>
-        <Image
-          source={require('../assets/calendar.jpg')}
-          style={styles.icon}
-        />
-        <Text style={styles.cardTitle}>Create Appointment</Text>
-        <Text style={styles.cardSubtitle}>UI Card-based</Text>
-      </TouchableOpacity>
-
-      {/* Back to Home Button */}
-      <TouchableOpacity
-        style={[globalStyles.button, { marginTop: 20 }]}
-        onPress={() => navigation.navigate('Home')}
-      >
-        <Text style={globalStyles.buttonText}>Back to Home</Text>
-      </TouchableOpacity>
-
-      {/* Swipe Indicators */}
-      <View style={styles.swipeIndicatorContainer}>
-        <Text style={styles.swipeIndicator}>← Swipe left to go to "Home"</Text>
-        <Text style={styles.swipeIndicator}>Swipe right to "View/Edit Appointment" →</Text>
       </View>
     </View>
   );
@@ -66,7 +44,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fbe4e4',
   },
   header: {
-    flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     width: '100%',
@@ -140,4 +117,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CreateApptScreen;
+export default CreateApptConfirmationScreen;
