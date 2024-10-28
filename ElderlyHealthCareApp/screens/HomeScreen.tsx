@@ -21,7 +21,7 @@ const HomeScreen = ({ navigation, registeredUser, setRegisteredUser, isAiEnabled
     setShowAi(isAiEnabled);
 
     if (isAiEnabled) {
-      playVoice('Welcome, I am Joy. How can I assist you today?');
+      playVoice('Welcome, I am Joy. How can I assist you today? To turn off AI, please head towards Setting page.');
     }
   }, [isAiEnabled]);
 
@@ -57,7 +57,7 @@ const HomeScreen = ({ navigation, registeredUser, setRegisteredUser, isAiEnabled
     if (isSpeaking) {
       stopVoice();
     } else {
-      playVoice('Welcome, I am Joy. How can I assist you today?');
+      playVoice('Welcome, I am Joy. How can I assist you today? To turn off AI, please head towards Setting page.');
     }
   };
 
@@ -70,6 +70,11 @@ const HomeScreen = ({ navigation, registeredUser, setRegisteredUser, isAiEnabled
     playVoice('Redirecting you to create an appointment page.');
     navigation.navigate('Create Appointment');
   };
+
+  const handleredirectSetting = () =>{
+    playVoice('Redirecting you to Settings page');
+    navigation.navigate('Setting');
+  }
 
   const handleCloseMessage = () => {
     setShowNextMessage(false);
@@ -101,9 +106,12 @@ const HomeScreen = ({ navigation, registeredUser, setRegisteredUser, isAiEnabled
             <View style={styles.aiTextContainer}>
               {!showNextMessage ? (
                 <>
-                  <Text style={styles.aiText}>Welcome, I am Joy, How can I assist you today?</Text>
+                  <Text style={styles.aiText}>Welcome, I am Joy, How can I assist you today? To turn off AI, please head towards Settings page.</Text>
                   <TouchableOpacity style={styles.controlButton} onPress={handlePauseResume}>
                     <Text style={styles.controlButtonText}>{isSpeaking ? 'Pause' : 'Play'}</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity style={styles.controlButton} onPress={handleredirectSetting}>
+                    <Text style={styles.controlButtonText}>Settings</Text>
                   </TouchableOpacity>
                   <TouchableOpacity style={styles.closeButton} onPress={handleCloseAi}>
                     <Text style={styles.closeButtonText}>X</Text>
