@@ -6,17 +6,16 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList, AuthProps } from '../types';
 import { useNavigation } from '@react-navigation/native';
 
-// Define the navigation prop type for SettingScreen
 type SettingScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Setting'>;
 
 type Props = {
   navigation: SettingScreenNavigationProp;
-} & AuthProps;
+  isAiEnabled: boolean;
+  setIsAiEnabled: (enabled: boolean) => void;
+};
 
-const SettingScreen: React.FC<Props> = ({ navigation }) => {
-  const [isAiGuidanceEnabled, setIsAiGuidanceEnabled] = useState(false);
-
-  const toggleSwitch = () => setIsAiGuidanceEnabled(previousState => !previousState);
+const SettingScreen: React.FC<Props> = ({ navigation, isAiEnabled, setIsAiEnabled }) => {
+  const toggleSwitch = () => setIsAiEnabled(!isAiEnabled);
 
   return (
     <View style={styles.container}>
@@ -26,7 +25,7 @@ const SettingScreen: React.FC<Props> = ({ navigation }) => {
         <Text style={styles.label}>AI Guidance Assistance</Text>
         <Switch
           onValueChange={toggleSwitch}
-          value={isAiGuidanceEnabled}
+          value={isAiEnabled}
         />
       </View>
     </View>
