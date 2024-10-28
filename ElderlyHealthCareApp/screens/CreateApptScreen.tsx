@@ -16,6 +16,10 @@ const CreateApptScreen = ({ navigation, setRegisteredUser }: Props) => {
     navigation.replace('Login'); // Navigate back to the Login screen
   };
 
+  const handleSettings = () => {
+    navigation.navigate('Setting'); 
+  };
+
   const handleNavigateToLocations = () => {
     // Navigate to the actual service screen (replace 'Home' with correct screen if necessary)
     navigation.navigate('Locations');
@@ -29,7 +33,7 @@ const CreateApptScreen = ({ navigation, setRegisteredUser }: Props) => {
           <Text style={styles.logoutText}>Logout</Text>
         </TouchableOpacity>
         <Text style={styles.headerText}>Create Appt</Text>
-        <TouchableOpacity style={styles.settingsButton}>
+        <TouchableOpacity style={styles.settingsButton} onPress={handleSettings}>
           <Text style={styles.settingsText}>Settings</Text>
         </TouchableOpacity>
       </View>
