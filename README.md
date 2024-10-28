@@ -63,7 +63,7 @@ This will open Expo DevTools in your browser. Use the Expo Go app on your device
 - **App.tsx**: The main entry point for the app, initializing navigation and screen routing.
 - **assets/**: Contains static assets like images for service icons.
 - **screens/**: Holds all screen components, including:
-     - `mainscreens/LoginScreen.tsx`, `mainscreens/RegistrationScreen.tsx`: For user authentication.
+     - `auth/LoginScreen.tsx`, `auth/RegistrationScreen.tsx`: For user authentication.
      - `mainscreens/HomeScreen.tsx`: Main landing page with navigation to services.
      - `mainscreens/CreateApptScreen.tsx`, `mainscreens/ViewEditApptScreen.tsx`, `mainscreens/ReminderScreen.tsx`: Feature-specific screens for managing appointments and reminders.
      - `create-appointment screens/Calendar.tsx`, `create-appointment screens/Locations.tsx`, `create-appointment screens/Timeslots.tsx`, `create-appointment screens/CreateApptConfirmation.tsx`: Screens for creating appointments.
@@ -77,9 +77,10 @@ This will open Expo DevTools in your browser. Use the Expo Go app on your device
 .
 ├── assets/                   # Image and icon assets
 ├── screens/                  # App screens
-│   ├── mainscreens/          # Main screens
+│   ├── auth/                 # Authentication screens
 │   │   ├── LoginScreen.tsx
 │   │   ├── RegistrationScreen.tsx
+│   ├── mainscreens/          # Main screens
 │   │   ├── HomeScreen.tsx
 │   │   ├── CreateApptScreen.tsx
 │   │   ├── ViewEditApptScreen.tsx
