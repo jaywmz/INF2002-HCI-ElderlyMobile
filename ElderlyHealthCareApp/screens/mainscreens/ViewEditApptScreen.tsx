@@ -1,8 +1,8 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList, AuthProps } from '../types';
-import { globalStyles } from '../styles/Theme';
+import { RootStackParamList, AuthProps } from '../../types';
+import { globalStyles } from '../../styles/Theme';
 
 type ViewEditApptScreenNavigationProp = StackNavigationProp<RootStackParamList, 'View/Edit Appointment'>;
 
@@ -33,7 +33,6 @@ const ViewEditApptScreen = ({ navigation, setRegisteredUser }: Props) => {
       </View>
 
       <TouchableOpacity style={styles.card} onPress={handleNavigateToEdit}>
-        <Image source={require('../assets/edit.jpg')} style={styles.icon} />
         <Text style={styles.cardTitle}>View/Edit Appointment</Text>
         <Text style={styles.cardSubtitle}>UI Card-based</Text>
       </TouchableOpacity>
