@@ -102,7 +102,7 @@ const HomeScreen = ({ navigation, registeredUser, setRegisteredUser, isAiEnabled
         {/* AI Assistance Section */}
         {showAi && (
           <View style={styles.aiContainer}>
-            <Image source={require('../assets/AI_nurse.jpg')} style={styles.aiIcon} />
+            <Image source={require('../../assets/AI_nurse.jpg')} style={styles.aiIcon} />
             <View style={styles.aiTextContainer}>
               {!showNextMessage ? (
                 <>
@@ -142,7 +142,7 @@ const HomeScreen = ({ navigation, registeredUser, setRegisteredUser, isAiEnabled
           style={[styles.serviceButton, { marginTop: 20 }]}
           onPress={() => navigation.navigate('Create Appointment')}
         >
-          <Image source={require('../assets/calendar.jpg')} style={styles.icon} />
+          <Image source={require('../../assets/calendar.jpg')} style={styles.icon} />
           <Text style={styles.buttonText}>Create Appointment</Text>
         </TouchableOpacity>
 
@@ -150,7 +150,7 @@ const HomeScreen = ({ navigation, registeredUser, setRegisteredUser, isAiEnabled
           style={styles.serviceButton}
           onPress={() => navigation.navigate('View/Edit Appointment')}
         >
-          <Image source={require('../assets/edit.jpg')} style={styles.icon} />
+          <Image source={require('../../assets/edit.jpg')} style={styles.icon} />
           <Text style={styles.buttonText}>View/Edit Appointment</Text>
         </TouchableOpacity>
 
@@ -158,7 +158,7 @@ const HomeScreen = ({ navigation, registeredUser, setRegisteredUser, isAiEnabled
           style={styles.serviceButton}
           onPress={() => navigation.navigate('Reminders')}
         >
-          <Image source={require('../assets/reminder.jpg')} style={styles.icon} />
+          <Image source={require('../../assets/reminder.jpg')} style={styles.icon} />
           <Text style={styles.buttonText}>Reminders</Text>
         </TouchableOpacity>
 
