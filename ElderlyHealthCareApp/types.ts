@@ -14,6 +14,7 @@ export type RootStackParamList = {
     Timeslots: undefined;
     CreateApptConfirmation: undefined;
     Setting: undefined; 
+    'Current Appointment': undefined;
 };
 
 export type RegisteredUser = {
