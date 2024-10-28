@@ -16,6 +16,10 @@ const ViewEditApptScreen = ({ navigation, setRegisteredUser }: Props) => {
     navigation.replace('Login');
   };
 
+  const handleSettings = () => {
+    navigation.navigate('Setting'); 
+  };
+
   const handleNavigateToEdit = () => {
     alert('Editing Appointment');
   };
@@ -28,7 +32,7 @@ const ViewEditApptScreen = ({ navigation, setRegisteredUser }: Props) => {
           <Text style={styles.logoutText}>Logout</Text>
         </TouchableOpacity>
         <Text style={styles.headerText}>View/Edit Appt</Text>
-        <TouchableOpacity style={styles.settingsButton}>
+        <TouchableOpacity style={styles.settingsButton} onPress={handleSettings}>
           <Text style={styles.settingsText}>Settings</Text>
         </TouchableOpacity>
       </View>
