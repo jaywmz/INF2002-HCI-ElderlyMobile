@@ -14,47 +14,48 @@ Make sure you have the following installed:
 
 - **Node.js**: Download it [here](https://nodejs.org/).
 - **Expo CLI**: Install globally with:
-     ```bash
-     npm install -g expo-cli
-     ```
+    ```bash
+    npm install -g expo-cli
+    ```
 
 ## Project Setup
 
 1. **Clone the repository**
-      ```bash
-      git clone https://github.com/yourusername/elderly-healthcare-app.git
-      ```
+     ```bash
+     git clone https://github.com/yourusername/elderly-healthcare-app.git
+     ```
 
 2. **Navigate to the project directory**
-      ```bash
-      cd ElderlyHealthCareApp
-      ```
+     ```bash
+     cd ElderlyHealthCareApp
+     npm install @react-native-picker/picker
+     npm install react-native-modal-dropdown
+  
+
+
+
+     ```
 
 3. **Install dependencies**
-      ```bash
-      npm install
-      ```
+     ```bash
+     npm install
+     ```
 
 4. **Install required libraries**
-      Use the commands below to install libraries for navigation, gesture handling, and voice functionality:
-      ```bash
-      npm install @react-navigation/native
-      expo install react-native-screens react-native-safe-area-context
-      npm install @react-navigation/stack
-      expo install react-native-gesture-handler
-      expo install expo-speech
-      npm install @react-native-voice/voice
-      ```
+     Use the commands below to install libraries for navigation, gesture handling, and voice functionality:
+     ```bash
+     npm install @react-navigation/native
+     expo install react-native-screens react-native-safe-area-context
+     npm install @react-navigation/stack
+     expo install react-native-gesture-handler
+     expo install expo-speech
+     ```
 
 ## Start the app
 
 Run the app locally with:
 ```bash
-npx expo start
-```
-or
-```bash
-npm start
+npx expo start or npm start
 ```
 This will open Expo DevTools in your browser. Use the Expo Go app on your device to scan the QR code and preview the app.
 
@@ -63,11 +64,9 @@ This will open Expo DevTools in your browser. Use the Expo Go app on your device
 - **App.tsx**: The main entry point for the app, initializing navigation and screen routing.
 - **assets/**: Contains static assets like images for service icons.
 - **screens/**: Holds all screen components, including:
-     - `auth/LoginScreen.tsx`, `auth/RegistrationScreen.tsx`: For user authentication.
-     - `mainscreens/HomeScreen.tsx`: Main landing page with navigation to services.
-     - `mainscreens/CreateApptScreen.tsx`, `mainscreens/ViewEditApptScreen.tsx`, `mainscreens/ReminderScreen.tsx`: Feature-specific screens for managing appointments and reminders.
-     - `create-appointment screens/Calendar.tsx`, `create-appointment screens/Locations.tsx`, `create-appointment screens/Timeslots.tsx`, `create-appointment screens/CreateApptConfirmation.tsx`: Screens for creating appointments.
-     - `SettingScreen.tsx`: Screen for app settings.
+    - `LoginScreen.tsx`, `RegistrationScreen.tsx`: For user authentication.
+    - `HomeScreen.tsx`: Main landing page with navigation to services.
+    - `CreateAppointmentScreen.tsx`, `ViewEditAppointmentScreen.tsx`, `ReminderScreen.tsx`: Feature-specific screens for managing appointments and reminders.
 - **styles/Theme.ts**: Contains global styles to ensure a cohesive design across screens.
 - **types.ts**: Defines shared types for navigation and component props.
 
@@ -77,20 +76,12 @@ This will open Expo DevTools in your browser. Use the Expo Go app on your device
 .
 ├── assets/                   # Image and icon assets
 ├── screens/                  # App screens
-│   ├── auth/                 # Authentication screens
-│   │   ├── LoginScreen.tsx
-│   │   ├── RegistrationScreen.tsx
-│   ├── mainscreens/          # Main screens
-│   │   ├── HomeScreen.tsx
-│   │   ├── CreateApptScreen.tsx
-│   │   ├── ViewEditApptScreen.tsx
-│   │   ├── ReminderScreen.tsx
-│   ├── create-appointment screens/  # Screens for creating appointments
-│   │   ├── Calendar.tsx
-│   │   ├── Locations.tsx
-│   │   ├── Timeslots.tsx
-│   │   ├── CreateApptConfirmation.tsx
-│   ├── SettingScreen.tsx     # Settings screen
+│   ├── LoginScreen.tsx
+│   ├── RegistrationScreen.tsx
+│   ├── HomeScreen.tsx
+│   ├── CreateAppointmentScreen.tsx
+│   ├── ViewEditAppointmentScreen.tsx
+│   ├── ReminderScreen.tsx
 ├── styles/
 │   └── Theme.ts              # Global styling
 ├── App.tsx                   # Main entry point and navigation setup
