@@ -1,8 +1,8 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '../types';
-import { globalStyles } from '../styles/Theme';
+import { RootStackParamList } from '../../types';
+import { globalStyles } from '../../styles/Theme';
 
 type TimeslotsScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Timeslots'>;
 
