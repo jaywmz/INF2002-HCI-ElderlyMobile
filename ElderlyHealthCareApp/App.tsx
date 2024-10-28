@@ -24,7 +24,7 @@ import SettingScreen from './screens/SettingScreen';
 const Stack = createStackNavigator();
 const Tab = createMaterialTopTabNavigator();
 
-function MainTabs({ registeredUser, setRegisteredUser }: AuthProps) {
+function MainTabs({ registeredUser, setRegisteredUser, isAiEnabled }: AuthProps & { isAiEnabled: boolean }) {
   return (
     <View style={{ flex: 1 }}>
       <Tab.Navigator
@@ -52,6 +52,7 @@ function MainTabs({ registeredUser, setRegisteredUser }: AuthProps) {
               {...props}
               registeredUser={registeredUser}
               setRegisteredUser={setRegisteredUser}
+              isAiEnabled={isAiEnabled}
             />
           )}
         </Tab.Screen>
@@ -116,6 +117,7 @@ function MainTabs({ registeredUser, setRegisteredUser }: AuthProps) {
 
 export default function App() {
   const [registeredUser, setRegisteredUser] = useState<RegisteredUser | null>(null);
+  const [isAiEnabled, setIsAiEnabled] = useState(false);
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
@@ -138,6 +140,7 @@ export default function App() {
                 {...props}
                 registeredUser={registeredUser}
                 setRegisteredUser={setRegisteredUser}
+                isAiEnabled={isAiEnabled} // Pass isAiEnabled to MainTabs
               />
             )}
           </Stack.Screen>
@@ -174,13 +177,12 @@ export default function App() {
             )}
           </Stack.Screen>
 
-         
           <Stack.Screen name="Setting" options={{ headerTitle: 'Settings' }}>
             {(props) => (
               <SettingScreen 
                 {...props}
-                registeredUser={registeredUser}
-                setRegisteredUser={setRegisteredUser}
+                isAiEnabled={isAiEnabled}
+                setIsAiEnabled={setIsAiEnabled}
               />
             )}
           </Stack.Screen>
