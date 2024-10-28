@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import { globalStyles } from '../styles/Theme';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -8,9 +8,17 @@ type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
 
 type Props = {
   navigation: HomeScreenNavigationProp;
+  isAiEnabled: boolean;
 } & AuthProps;
 
-const HomeScreen = ({ navigation, registeredUser, setRegisteredUser }: Props) => {
+const HomeScreen = ({ navigation, registeredUser, setRegisteredUser, isAiEnabled }: Props) => {
+  const [showAi, setShowAi] = useState(isAiEnabled);
+
+  useEffect(() => {
+    // Update showAi whenever isAiEnabled changes
+    setShowAi(isAiEnabled);
+  }, [isAiEnabled]);
+
   const handleLogout = () => {
     setRegisteredUser(null);
     navigation.replace('Login');
@@ -19,7 +27,10 @@ const HomeScreen = ({ navigation, registeredUser, setRegisteredUser }: Props) =>
   const handleSettings = () => {
     navigation.navigate('Setting'); 
   };
-  
+
+  const handleCloseAi = () => {
+    setShowAi(false);
+  };
 
   return (
     <View style={[globalStyles.container, styles.background]}>
@@ -36,6 +47,19 @@ const HomeScreen = ({ navigation, registeredUser, setRegisteredUser }: Props) =>
 
       {/* Welcome Message */}
       <Text style={globalStyles.headerText}>Welcome, {registeredUser?.username}!</Text>
+
+      {/* AI Assistance Section */}
+      {showAi && (
+        <View style={styles.aiContainer}>
+          <Image source={require('../assets/AI_nurse.jpg')} style={styles.aiIcon} />
+          <View style={styles.aiTextContainer}>
+            <Text style={styles.aiText}>Welcome, I am Joy, How can I assist you today?</Text>
+            <TouchableOpacity style={styles.closeButton} onPress={handleCloseAi}>
+              <Text style={styles.closeButtonText}>X</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      )}
 
       {/* Navigation Buttons with Icons for Services */}
       <TouchableOpacity
@@ -105,6 +129,45 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     color: '#333',
+  },
+  aiContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginVertical: 20,
+  },
+  aiIcon: {
+    width: 50,
+    height: 80,
+    marginRight: 10,
+  },
+  aiTextContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    padding: 10,
+    borderRadius: 10,
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowRadius: 6,
+    elevation: 2,
+  },
+  aiText: {
+    fontSize: 16,
+    color: '#333',
+    marginRight: 10,
+  },
+  closeButton: {
+    backgroundColor: '#ff4d4d',
+    borderRadius: 15,
+    width: 20,
+    height: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  closeButtonText: {
+    color: '#fff',
+    fontSize: 12,
+    fontWeight: 'bold',
   },
   serviceButton: {
     flexDirection: 'row',
