@@ -8,21 +8,23 @@ import { Icon } from 'react-native-elements';
 import { View } from 'react-native';
 
 // Import screens
-import LoginScreen from './screens/LoginScreen';
-import RegistrationScreen from './screens/RegistrationScreen';
-import HomeScreen from './screens/HomeScreen';
-import CreateApptScreen from './screens/CreateApptScreen';
-import ViewEditApptScreen from './screens/ViewEditApptScreen';
-import ReminderScreen from './screens/ReminderScreen';
-import CurrentApptScreen from './screens/CurrentApptScreen';
-import EditYourApptScreen from './screens/EditYourApptScreen'; // Import EditYourApptScreen
-
 import { AuthProps, RegisteredUser } from './types';
+import LoginScreen from './screens/auth/LoginScreen';
+import RegistrationScreen from './screens/auth/RegistrationScreen';
+import HomeScreen from './screens/mainscreens/HomeScreen';
+import CreateApptScreen from './screens/mainscreens/CreateApptScreen';
+import ViewEditApptScreen from './screens/mainscreens/ViewEditApptScreen';
+import ReminderScreen from './screens/mainscreens/ReminderScreen';
+import CalendarScreen from './screens/create-appointment screens/Calendar';
+import LocationsScreen from './screens/create-appointment screens/Locations';
+import TimeslotsScreen from './screens/create-appointment screens/Timeslots';
+import CreateApptConfirmationScreen from './screens/create-appointment screens/CreateApptConfirmation';
+import SettingScreen from './screens/SettingScreen'; 
 
 const Stack = createStackNavigator();
 const Tab = createMaterialTopTabNavigator();
 
-function MainTabs({ registeredUser, setRegisteredUser }: AuthProps) {
+function MainTabs({ registeredUser, setRegisteredUser, isAiEnabled }: AuthProps & { isAiEnabled: boolean }) {
   return (
     <View style={{ flex: 1 }}>
       <Tab.Navigator
@@ -50,10 +52,11 @@ function MainTabs({ registeredUser, setRegisteredUser }: AuthProps) {
               {...props}
               registeredUser={registeredUser}
               setRegisteredUser={setRegisteredUser}
+              isAiEnabled={isAiEnabled}
             />
           )}
         </Tab.Screen>
-
+        
         <Tab.Screen
           name="Create Appointment"
           options={{
@@ -71,7 +74,7 @@ function MainTabs({ registeredUser, setRegisteredUser }: AuthProps) {
             />
           )}
         </Tab.Screen>
-
+        
         <Tab.Screen
           name="View/Edit Appointment"
           options={{
@@ -89,7 +92,7 @@ function MainTabs({ registeredUser, setRegisteredUser }: AuthProps) {
             />
           )}
         </Tab.Screen>
-
+        
         <Tab.Screen
           name="Reminders"
           options={{
@@ -114,6 +117,7 @@ function MainTabs({ registeredUser, setRegisteredUser }: AuthProps) {
 
 export default function App() {
   const [registeredUser, setRegisteredUser] = useState<RegisteredUser | null>(null);
+  const [isAiEnabled, setIsAiEnabled] = useState(true);
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
@@ -122,28 +126,66 @@ export default function App() {
           <Stack.Screen name="Login">
             {(props) => <LoginScreen {...props} registeredUser={registeredUser} />}
           </Stack.Screen>
+
           <Stack.Screen name="Registration">
             {(props) => <RegistrationScreen {...props} setRegisteredUser={setRegisteredUser} />}
           </Stack.Screen>
-          <Stack.Screen name="Main" options={{ headerShown: false }}>
+
+          <Stack.Screen
+            name="Main"
+            options={{ headerShown: false }}
+          >
             {(props) => (
               <MainTabs
                 {...props}
                 registeredUser={registeredUser}
                 setRegisteredUser={setRegisteredUser}
+                isAiEnabled={isAiEnabled} // Pass isAiEnabled to MainTabs
               />
             )}
           </Stack.Screen>
-          <Stack.Screen
-            name="Current Appointment"
-            component={CurrentApptScreen}
-            options={{ headerShown: true }}
-          />
-          <Stack.Screen
-            name="EditYourApptScreen"
-            component={EditYourApptScreen}
-            options={{ title: 'Edit Appointment', headerShown: true }}
-          />
+
+          <Stack.Screen name="Locations">
+            {(props) => (
+              <LocationsScreen
+                {...props}
+              />
+            )}
+          </Stack.Screen>
+
+          <Stack.Screen name="Calendar">
+            {(props) => (
+              <CalendarScreen 
+                {...props}
+              />
+            )}
+          </Stack.Screen>
+
+          <Stack.Screen name="Timeslots">
+            {(props) => (
+              <TimeslotsScreen 
+                {...props}
+              />
+            )}
+          </Stack.Screen>
+
+          <Stack.Screen name="CreateApptConfirmation">
+            {(props) => (
+              <CreateApptConfirmationScreen
+                {...props}
+              />
+            )}
+          </Stack.Screen>
+
+          <Stack.Screen name="Setting" options={{ headerTitle: 'Settings' }}>
+            {(props) => (
+              <SettingScreen 
+                {...props}
+                isAiEnabled={isAiEnabled}
+                setIsAiEnabled={setIsAiEnabled}
+              />
+            )}
+          </Stack.Screen>
         </Stack.Navigator>
       </NavigationContainer>
     </GestureHandlerRootView>
