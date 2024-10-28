@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity } from 'react-native';
-import { globalStyles } from '../styles/Theme';
+import { globalStyles } from '../../styles/Theme';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList, RegisteredUser } from '../types';
+import { RootStackParamList, RegisteredUser } from '../../types';
 
 type RegistrationScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Registration'>;
 

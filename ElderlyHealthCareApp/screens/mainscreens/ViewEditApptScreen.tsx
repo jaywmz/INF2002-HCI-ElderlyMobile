@@ -1,59 +1,64 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
-import { globalStyles } from '../styles/Theme';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList, AuthProps } from '../types';
+import { RootStackParamList, AuthProps } from '../../types';
+import { globalStyles } from '../../styles/Theme';
 
-type ReminderScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Reminders'>;
+type ViewEditApptScreenNavigationProp = StackNavigationProp<RootStackParamList, 'View/Edit Appointment'>;
 
 type Props = {
-  navigation: ReminderScreenNavigationProp;
+  navigation: ViewEditApptScreenNavigationProp;
 } & AuthProps;
 
-const ReminderScreen = ({ navigation, setRegisteredUser }: Props) => {
+const ViewEditApptScreen = ({ navigation, setRegisteredUser }: Props) => {
   const handleLogout = () => {
     setRegisteredUser(null);
     navigation.replace('Login');
   };
 
-  const handleNavigateToHome = () => {
-    navigation.navigate('Home');
+  const handleSettings = () => {
+    navigation.navigate('Setting'); 
+  };
+
+  const handleNavigateToEdit = () => {
+    alert('Editing Appointment');
   };
 
   return (
     <View style={[globalStyles.container, styles.background]}>
-      {/* Header with Logout button */}
+      {/* Header with Logout and Settings button */}
       <View style={styles.header}>
         <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
           <Text style={styles.logoutText}>Logout</Text>
         </TouchableOpacity>
-        <Text style={styles.headerText}>Reminders</Text>
-        <TouchableOpacity style={styles.settingsButton}>
+        <Text style={styles.headerText}>View/Edit Appt</Text>
+        <TouchableOpacity style={styles.settingsButton} onPress={handleSettings}>
           <Text style={styles.settingsText}>Settings</Text>
         </TouchableOpacity>
       </View>
 
-      {/* Reminder Card */}
-      <TouchableOpacity style={styles.card} onPress={() => alert('Reminder Saved!')}>
+      {/* Main View/Edit Appointment Card */}
+      <TouchableOpacity style={styles.card} onPress={handleNavigateToEdit}>
         <Image
-          source={require('../assets/reminder.jpg')}
+          source={require('../../assets/edit.jpg')}
           style={styles.icon}
         />
-        <Text style={styles.cardTitle}>Medicine Reminder</Text>
+        <Text style={styles.cardTitle}>View/Edit Appointment</Text>
         <Text style={styles.cardSubtitle}>UI Card-based</Text>
       </TouchableOpacity>
 
       {/* Back to Home Button */}
       <TouchableOpacity
         style={[globalStyles.button, { marginTop: 20 }]}
-        onPress={handleNavigateToHome}
+        onPress={() => navigation.navigate('Home')}
       >
         <Text style={globalStyles.buttonText}>Back to Home</Text>
       </TouchableOpacity>
 
-      {/* Swipe Indicator */}
+      {/* Swipe Indicators */}
       <View style={styles.swipeIndicatorContainer}>
-        <Text style={styles.swipeIndicator}>← Swipe left to "View/Edit Appointment"</Text>
+        <Text style={styles.swipeIndicator}>← Swipe left to "Create Appointment"</Text>
+        <Text style={styles.swipeIndicator}>Swipe right to "Medicine Reminder" →</Text>
       </View>
     </View>
   );
@@ -61,12 +66,12 @@ const ReminderScreen = ({ navigation, setRegisteredUser }: Props) => {
 
 const styles = StyleSheet.create({
   background: {
-    backgroundColor: '#fbe4e4',
+    backgroundColor: '#fbe4e4', // Pinkish background
   },
   header: {
     flexDirection: 'row',
-    alignItems: 'center',
     justifyContent: 'space-between',
+    alignItems: 'center',
     width: '100%',
     padding: 20,
   },
@@ -138,4 +143,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ReminderScreen;
+export default ViewEditApptScreen;

@@ -9,21 +9,22 @@ import { View } from 'react-native';
 
 // Import screens
 import { AuthProps, RegisteredUser } from './types';
-import LoginScreen from './screens/LoginScreen';
-import RegistrationScreen from './screens/RegistrationScreen';
-import HomeScreen from './screens/HomeScreen';
-import CreateApptScreen from './screens/CreateApptScreen';
-import ViewEditApptScreen from './screens/ViewEditApptScreen';
-import ReminderScreen from './screens/ReminderScreen';
+import LoginScreen from './screens/auth/LoginScreen';
+import RegistrationScreen from './screens/auth/RegistrationScreen';
+import HomeScreen from './screens/mainscreens/HomeScreen';
+import CreateApptScreen from './screens/mainscreens/CreateApptScreen';
+import ViewEditApptScreen from './screens/mainscreens/ViewEditApptScreen';
+import ReminderScreen from './screens/mainscreens/ReminderScreen';
 import CalendarScreen from './screens/create-appointment screens/Calendar';
 import LocationsScreen from './screens/create-appointment screens/Locations';
 import TimeslotsScreen from './screens/create-appointment screens/Timeslots';
 import CreateApptConfirmationScreen from './screens/create-appointment screens/CreateApptConfirmation';
+import SettingScreen from './screens/SettingScreen'; 
 
 const Stack = createStackNavigator();
 const Tab = createMaterialTopTabNavigator();
 
-function MainTabs({ registeredUser, setRegisteredUser }: AuthProps) {
+function MainTabs({ registeredUser, setRegisteredUser, isAiEnabled }: AuthProps & { isAiEnabled: boolean }) {
   return (
     <View style={{ flex: 1 }}>
       <Tab.Navigator
@@ -51,6 +52,7 @@ function MainTabs({ registeredUser, setRegisteredUser }: AuthProps) {
               {...props}
               registeredUser={registeredUser}
               setRegisteredUser={setRegisteredUser}
+              isAiEnabled={isAiEnabled}
             />
           )}
         </Tab.Screen>
@@ -115,6 +117,7 @@ function MainTabs({ registeredUser, setRegisteredUser }: AuthProps) {
 
 export default function App() {
   const [registeredUser, setRegisteredUser] = useState<RegisteredUser | null>(null);
+  const [isAiEnabled, setIsAiEnabled] = useState(true);
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
@@ -137,6 +140,7 @@ export default function App() {
                 {...props}
                 registeredUser={registeredUser}
                 setRegisteredUser={setRegisteredUser}
+                isAiEnabled={isAiEnabled} // Pass isAiEnabled to MainTabs
               />
             )}
           </Stack.Screen>
@@ -157,18 +161,28 @@ export default function App() {
             )}
           </Stack.Screen>
 
-          <Stack.Screen name='Timeslots'>
-          {(props) => (
+          <Stack.Screen name="Timeslots">
+            {(props) => (
               <TimeslotsScreen 
                 {...props}
               />
             )}
           </Stack.Screen>
 
-          <Stack.Screen name='CreateApptConfirmation'>
-          {(props) => (
+          <Stack.Screen name="CreateApptConfirmation">
+            {(props) => (
               <CreateApptConfirmationScreen
                 {...props}
+              />
+            )}
+          </Stack.Screen>
+
+          <Stack.Screen name="Setting" options={{ headerTitle: 'Settings' }}>
+            {(props) => (
+              <SettingScreen 
+                {...props}
+                isAiEnabled={isAiEnabled}
+                setIsAiEnabled={setIsAiEnabled}
               />
             )}
           </Stack.Screen>

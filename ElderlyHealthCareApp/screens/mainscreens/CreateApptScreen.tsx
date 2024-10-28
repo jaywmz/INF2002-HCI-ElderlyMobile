@@ -1,8 +1,8 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList, AuthProps } from '../types';
-import { globalStyles } from '../styles/Theme';
+import { RootStackParamList, AuthProps } from '../../types';
+import { globalStyles } from '../../styles/Theme';
 
 type CreateApptScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Create Appointment'>;
 
@@ -14,6 +14,10 @@ const CreateApptScreen = ({ navigation, setRegisteredUser }: Props) => {
   const handleLogout = () => {
     setRegisteredUser(null); // Clear registered user state
     navigation.replace('Login'); // Navigate back to the Login screen
+  };
+
+  const handleSettings = () => {
+    navigation.navigate('Setting'); 
   };
 
   const handleNavigateToLocations = () => {
@@ -29,7 +33,7 @@ const CreateApptScreen = ({ navigation, setRegisteredUser }: Props) => {
           <Text style={styles.logoutText}>Logout</Text>
         </TouchableOpacity>
         <Text style={styles.headerText}>Create Appt</Text>
-        <TouchableOpacity style={styles.settingsButton}>
+        <TouchableOpacity style={styles.settingsButton} onPress={handleSettings}>
           <Text style={styles.settingsText}>Settings</Text>
         </TouchableOpacity>
       </View>
@@ -37,7 +41,7 @@ const CreateApptScreen = ({ navigation, setRegisteredUser }: Props) => {
       {/* Main Appointment Card with TouchableOpacity */}
       <TouchableOpacity style={styles.card} onPress={handleNavigateToLocations}>
         <Image
-          source={require('../assets/calendar.jpg')}
+          source={require('../../assets/calendar.jpg')}
           style={styles.icon}
         />
         <Text style={styles.cardTitle}>Create Appointment</Text>
