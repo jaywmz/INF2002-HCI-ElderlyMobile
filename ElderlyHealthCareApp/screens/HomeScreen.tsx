@@ -16,6 +16,11 @@ const HomeScreen = ({ navigation, registeredUser, setRegisteredUser }: Props) =>
     navigation.replace('Login');
   };
 
+  const handleSettings = () => {
+    navigation.navigate('Setting'); 
+  };
+  
+
   return (
     <View style={[globalStyles.container, styles.background]}>
       {/* Header with Logout and Settings button */}
@@ -24,7 +29,7 @@ const HomeScreen = ({ navigation, registeredUser, setRegisteredUser }: Props) =>
           <Text style={styles.logoutText}>Logout</Text>
         </TouchableOpacity>
         <Text style={styles.headerText}>Home</Text>
-        <TouchableOpacity style={styles.settingsButton}>
+        <TouchableOpacity style={styles.settingsButton} onPress={handleSettings}>
           <Text style={styles.settingsText}>Settings</Text>
         </TouchableOpacity>
       </View>
