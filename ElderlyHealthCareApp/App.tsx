@@ -19,6 +19,7 @@ import CalendarScreen from './screens/create-appointment screens/Calendar';
 import LocationsScreen from './screens/create-appointment screens/Locations';
 import TimeslotsScreen from './screens/create-appointment screens/Timeslots';
 import CreateApptConfirmationScreen from './screens/create-appointment screens/CreateApptConfirmation';
+import SettingScreen from './screens/SettingScreen'; 
 
 const Stack = createStackNavigator();
 const Tab = createMaterialTopTabNavigator();
@@ -157,18 +158,29 @@ export default function App() {
             )}
           </Stack.Screen>
 
-          <Stack.Screen name='Timeslots'>
-          {(props) => (
+          <Stack.Screen name="Timeslots">
+            {(props) => (
               <TimeslotsScreen 
                 {...props}
               />
             )}
           </Stack.Screen>
 
-          <Stack.Screen name='CreateApptConfirmation'>
-          {(props) => (
+          <Stack.Screen name="CreateApptConfirmation">
+            {(props) => (
               <CreateApptConfirmationScreen
                 {...props}
+              />
+            )}
+          </Stack.Screen>
+
+         
+          <Stack.Screen name="Setting" options={{ headerTitle: 'Settings' }}>
+            {(props) => (
+              <SettingScreen 
+                {...props}
+                registeredUser={registeredUser}
+                setRegisteredUser={setRegisteredUser}
               />
             )}
           </Stack.Screen>
