@@ -1,8 +1,12 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Pressable } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../../types';
 import { globalStyles } from '../../styles/Theme';
+import { ScrollView, TouchableHighlight } from 'react-native-gesture-handler';
+import { Image } from 'expo-image';
+
+const PlaceholderImage = require('../../assets/background-image.png');
 
 type LocationsScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Locations'>;
 
@@ -21,98 +25,86 @@ const LocationsScreen = ({ navigation }: Props) => {
     // alert("timeslots");
   };
 
+  const LocationCard = () => {
+    return (
+      <View style={[styles.elevation, styles.card]}>
+        <Pressable 
+          onPress={handleNavigateToCalendar}
+          style={({ pressed }) => [
+            {
+              opacity: pressed ? 0.5 : 1, // Change opacity when pressed
+            },
+          ]}
+        >
+          <Image source={PlaceholderImage} style={styles.image} />
+          <Text style={styles.locationText}>Location 1</Text>
+          <Text style={styles.locationText}>Address</Text>
+        </Pressable>
+      </View>
+    );
+  };
+
   return (
-    <View style={[globalStyles.container, styles.background]}>
+    <View style={styles.background}>
       {/* Header with Logout button */}
       <View style={styles.header}>
-        <TouchableOpacity style={styles.logoutButton} onPress={handleBack}>
-          <Text style={styles.logoutText}>Back</Text>
-        </TouchableOpacity>
-        <Text style={styles.headerText}>Choose Location</Text>
-        <TouchableOpacity style={styles.logoutButton} onPress={handleNavigateToCalendar}>
-            <Text style={styles.logoutText}>Location 1</Text>
-        </TouchableOpacity>
+        <Text style={styles.headerText}>Choose location</Text>
       </View>
+      <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollViewContent}>
+        <LocationCard></LocationCard>
+        <LocationCard></LocationCard>
+        <LocationCard></LocationCard>
+      </ScrollView>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   background: {
+    flex: 1,
     backgroundColor: '#fbe4e4',
+    alignItems: 'center',
+    height: '100%',
   },
   header: {
     alignItems: 'center',
     justifyContent: 'space-between',
     width: '100%',
-    padding: 20,
-  },
-  logoutButton: {
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    backgroundColor: '#e0e0e0',
-    borderRadius: 5,
-  },
-  logoutText: {
-    color: '#333',
-    fontWeight: 'bold',
+    paddingTop: 20,
+    paddingBottom: 20,
   },
   headerText: {
-    fontSize: 18,
+    fontSize: 28,
     fontWeight: 'bold',
     color: '#333',
   },
-  settingsButton: {
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    backgroundColor: '#e0e0e0',
-    borderRadius: 5,
+  scrollView: {
+    width: '100%',
   },
-  settingsText: {
-    color: '#333',
-    fontWeight: 'bold',
+  scrollViewContent: {
+    flexGrow: 1,
+    alignItems: 'center',
   },
   card: {
-    backgroundColor: '#f0f0f0',
-    borderRadius: 15,
-    width: '80%',
-    alignItems: 'center',
-    paddingVertical: 40,
-    marginTop: 50,
+    width: '90%',
+    padding: 20,
+    backgroundColor: '#ffffff',
+    borderRadius: 18,
+    marginBottom: 20,
   },
-  icon: {
-    width: 60,
-    height: 60,
-    marginBottom: 15,
+  elevation: {
+    elevation: 4,
+    shadowColor: '#171717',
   },
-  cardTitle: {
+  image: {
+    width: 280,
+    height: 200,
+    borderRadius: 18,
+  },
+  locationText: {
+    paddingTop: 10,
     fontSize: 20,
-    fontWeight: 'bold',
-    color: '#333',
-  },
-  cardSubtitle: {
-    fontSize: 16,
-    color: '#555',
-  },
-  swipeIndicatorContainer: {
-    marginTop: 50,
-    alignSelf: 'center',
-    backgroundColor: '#fce4ec', // Light pink background for swipe indicator
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 10,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 5,
-    elevation: 2, // For Android shadow
-  },
-  swipeIndicator: {
-    textAlign: 'center',
-    color: 'purple',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
+  }
 });
 
 export default LocationsScreen;
