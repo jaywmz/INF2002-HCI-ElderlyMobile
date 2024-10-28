@@ -1,3 +1,4 @@
+// types.ts
 export type RootStackParamList = {
     Login: undefined;
     Registration: undefined;
@@ -8,27 +9,20 @@ export type RootStackParamList = {
     'Create Appointment': undefined;
     'View/Edit Appointment': undefined;
     Reminders: undefined;
-    'Current Appointment': undefined; // Current Appointment route
-    'EditYourApptScreen': {
-      appointment: Appointment;
-      onSave: (newAppointment: Appointment) => void;
-    }; // Edit appointment route with parameters
-  };
-  
-  export type RegisteredUser = {
+    Calendar: undefined;
+    Locations: undefined;
+    Timeslots: undefined;
+    CreateApptConfirmation: undefined;
+    Setting: undefined; 
+};
+
+export type RegisteredUser = {
     username: string;
     password: string;
-  } | null;
-  
-  export type Appointment = {
-    location: string;
-    date: string;
-    time: string;
-    type: string;
-  };
-  
-  export type AuthProps = {
+} | null;
+
+export type AuthProps = {
     registeredUser: RegisteredUser | null;
     setRegisteredUser: (user: RegisteredUser | null) => void;
-  };
+};
   
