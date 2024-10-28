@@ -1,28 +1,27 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import { globalStyles } from '../../styles/Theme';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList, AuthProps } from '../types';
-import { globalStyles } from '../styles/Theme';
+import { RootStackParamList, AuthProps } from '../../types';
 
-type CreateApptScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Create Appointment'>;
+type ReminderScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Reminders'>;
 
 type Props = {
-  navigation: CreateApptScreenNavigationProp;
+  navigation: ReminderScreenNavigationProp;
 } & AuthProps;
 
-const CreateApptScreen = ({ navigation, setRegisteredUser }: Props) => {
+const ReminderScreen = ({ navigation, setRegisteredUser }: Props) => {
   const handleLogout = () => {
-    setRegisteredUser(null); // Clear registered user state
-    navigation.replace('Login'); // Navigate back to the Login screen
+    setRegisteredUser(null);
+    navigation.replace('Login');
   };
 
   const handleSettings = () => {
     navigation.navigate('Setting'); 
   };
 
-  const handleNavigateToLocations = () => {
-    // Navigate to the actual service screen (replace 'Home' with correct screen if necessary)
-    navigation.navigate('Locations');
+  const handleNavigateToHome = () => {
+    navigation.navigate('Home');
   };
 
   return (
@@ -32,34 +31,33 @@ const CreateApptScreen = ({ navigation, setRegisteredUser }: Props) => {
         <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
           <Text style={styles.logoutText}>Logout</Text>
         </TouchableOpacity>
-        <Text style={styles.headerText}>Create Appt</Text>
+        <Text style={styles.headerText}>Reminders</Text>
         <TouchableOpacity style={styles.settingsButton} onPress={handleSettings}>
           <Text style={styles.settingsText}>Settings</Text>
         </TouchableOpacity>
       </View>
 
-      {/* Main Appointment Card with TouchableOpacity */}
-      <TouchableOpacity style={styles.card} onPress={handleNavigateToLocations}>
+      {/* Reminder Card */}
+      <TouchableOpacity style={styles.card} onPress={() => alert('Reminder Saved!')}>
         <Image
-          source={require('../assets/calendar.jpg')}
+          source={require('../../assets/reminder.jpg')}
           style={styles.icon}
         />
-        <Text style={styles.cardTitle}>Create Appointment</Text>
+        <Text style={styles.cardTitle}>Medicine Reminder</Text>
         <Text style={styles.cardSubtitle}>UI Card-based</Text>
       </TouchableOpacity>
 
       {/* Back to Home Button */}
       <TouchableOpacity
         style={[globalStyles.button, { marginTop: 20 }]}
-        onPress={() => navigation.navigate('Home')}
+        onPress={handleNavigateToHome}
       >
         <Text style={globalStyles.buttonText}>Back to Home</Text>
       </TouchableOpacity>
 
-      {/* Swipe Indicators */}
+      {/* Swipe Indicator */}
       <View style={styles.swipeIndicatorContainer}>
-        <Text style={styles.swipeIndicator}>← Swipe left to go to "Home"</Text>
-        <Text style={styles.swipeIndicator}>Swipe right to "View/Edit Appointment" →</Text>
+        <Text style={styles.swipeIndicator}>← Swipe left to "View/Edit Appointment"</Text>
       </View>
     </View>
   );
@@ -144,4 +142,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CreateApptScreen;
+export default ReminderScreen;

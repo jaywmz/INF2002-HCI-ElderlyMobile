@@ -9,12 +9,12 @@ import { View } from 'react-native';
 
 // Import screens
 import { AuthProps, RegisteredUser } from './types';
-import LoginScreen from './screens/LoginScreen';
-import RegistrationScreen from './screens/RegistrationScreen';
-import HomeScreen from './screens/HomeScreen';
-import CreateApptScreen from './screens/CreateApptScreen';
-import ViewEditApptScreen from './screens/ViewEditApptScreen';
-import ReminderScreen from './screens/ReminderScreen';
+import LoginScreen from './screens/mainscreens/LoginScreen';
+import RegistrationScreen from './screens/mainscreens/RegistrationScreen';
+import HomeScreen from './screens/mainscreens/HomeScreen';
+import CreateApptScreen from './screens/mainscreens/CreateApptScreen';
+import ViewEditApptScreen from './screens/mainscreens/ViewEditApptScreen';
+import ReminderScreen from './screens/mainscreens/ReminderScreen';
 import CalendarScreen from './screens/create-appointment screens/Calendar';
 import LocationsScreen from './screens/create-appointment screens/Locations';
 import TimeslotsScreen from './screens/create-appointment screens/Timeslots';

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
-import { globalStyles } from '../styles/Theme';
+import { globalStyles } from '../../styles/Theme';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList, AuthProps } from '../types';
+import { RootStackParamList, AuthProps } from '../../types';
 
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
 
@@ -51,7 +51,7 @@ const HomeScreen = ({ navigation, registeredUser, setRegisteredUser, isAiEnabled
       {/* AI Assistance Section */}
       {showAi && (
         <View style={styles.aiContainer}>
-          <Image source={require('../assets/AI_nurse.jpg')} style={styles.aiIcon} />
+          <Image source={require('../../assets/AI_nurse.jpg')} style={styles.aiIcon} />
           <View style={styles.aiTextContainer}>
             <Text style={styles.aiText}>Welcome, I am Joy, How can I assist you today?</Text>
             <TouchableOpacity style={styles.closeButton} onPress={handleCloseAi}>
@@ -66,7 +66,7 @@ const HomeScreen = ({ navigation, registeredUser, setRegisteredUser, isAiEnabled
         style={[styles.serviceButton, { marginTop: 20 }]}
         onPress={() => navigation.navigate('Create Appointment')}
       >
-        <Image source={require('../assets/calendar.jpg')} style={styles.icon} />
+        <Image source={require('../../assets/calendar.jpg')} style={styles.icon} />
         <Text style={styles.buttonText}>Create Appointment</Text>
       </TouchableOpacity>
 
@@ -74,7 +74,7 @@ const HomeScreen = ({ navigation, registeredUser, setRegisteredUser, isAiEnabled
         style={styles.serviceButton}
         onPress={() => navigation.navigate('View/Edit Appointment')}
       >
-        <Image source={require('../assets/edit.jpg')} style={styles.icon} />
+        <Image source={require('../../assets/edit.jpg')} style={styles.icon} />
         <Text style={styles.buttonText}>View/Edit Appointment</Text>
       </TouchableOpacity>
 
@@ -82,7 +82,7 @@ const HomeScreen = ({ navigation, registeredUser, setRegisteredUser, isAiEnabled
         style={styles.serviceButton}
         onPress={() => navigation.navigate('Reminders')}
       >
-        <Image source={require('../assets/reminder.jpg')} style={styles.icon} />
+        <Image source={require('../../assets/reminder.jpg')} style={styles.icon} />
         <Text style={styles.buttonText}>Reminders</Text>
       </TouchableOpacity>
 
