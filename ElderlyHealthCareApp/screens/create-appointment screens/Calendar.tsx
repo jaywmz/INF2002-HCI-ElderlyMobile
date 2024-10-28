@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../../types';
 import { globalStyles } from '../../styles/Theme';
+import { Calendar } from 'react-native-calendars';
 
 type CalendarScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Calendar'>;
 
@@ -11,6 +12,12 @@ type Props = {
 };
 
 const CalendarScreen = ({ navigation }: Props) => {
+  const [selectedDate, setSelectedDate] = useState('');
+
+  const onDayPress = (day: { dateString: React.SetStateAction<string>; }) => {
+    setSelectedDate(day.dateString);
+  };
+
   const handleBack = () => {
     navigation.goBack();
   }
@@ -18,20 +25,28 @@ const CalendarScreen = ({ navigation }: Props) => {
   const handleNavigateToTimeslots = () => {
     // Navigate to the actual service screen (replace 'Home' with correct screen if necessary)
     navigation.navigate('Timeslots');
-    // alert("timeslots");
   };
 
   return (
-    <View style={[globalStyles.container, styles.background]}>
+    <View style={styles.background}>
       {/* Header with Logout button */}
       <View style={styles.header}>
-        <TouchableOpacity style={styles.logoutButton} onPress={handleBack}>
-          <Text style={styles.logoutText}>Back</Text>
-        </TouchableOpacity>
         <Text style={styles.headerText}>Choose date</Text>
-        <TouchableOpacity style={styles.logoutButton} onPress={handleNavigateToTimeslots}>
-          <Text style={styles.logoutText}>Oct 27</Text>
-        </TouchableOpacity>
+      </View>
+      <View style={styles.container}>
+        <Text style={styles.selectedDateText}>
+          Selected Date: {selectedDate || 'None'}
+        </Text>
+        <Calendar
+          onDayPress={onDayPress}
+          markedDates={{
+            [selectedDate]: { selected: true, marked: true, selectedColor: 'blue' },
+          }}
+          theme={{
+            todayTextColor: 'red',
+            arrowColor: 'blue',
+          }}
+        />
       </View>
     </View>
   );
@@ -39,7 +54,22 @@ const CalendarScreen = ({ navigation }: Props) => {
 
 const styles = StyleSheet.create({
   background: {
+    flex: 1,
     backgroundColor: '#fbe4e4',
+    alignItems: 'center',
+    height: '100%',
+  },
+  container: {
+    flex: 1,
+    paddingTop: 20,
+    paddingBottom: 20,
+    width: '90%',
+    backgroundColor: '#fff',
+  },
+  selectedDateText: {
+    fontSize: 18,
+    textAlign: 'center',
+    marginBottom: 10,
   },
   header: {
     alignItems: 'center',
@@ -47,71 +77,10 @@ const styles = StyleSheet.create({
     width: '100%',
     padding: 20,
   },
-  logoutButton: {
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    backgroundColor: '#e0e0e0',
-    borderRadius: 5,
-  },
-  logoutText: {
-    color: '#333',
-    fontWeight: 'bold',
-  },
   headerText: {
-    fontSize: 18,
+    fontSize: 28,
     fontWeight: 'bold',
     color: '#333',
-  },
-  settingsButton: {
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    backgroundColor: '#e0e0e0',
-    borderRadius: 5,
-  },
-  settingsText: {
-    color: '#333',
-    fontWeight: 'bold',
-  },
-  card: {
-    backgroundColor: '#f0f0f0',
-    borderRadius: 15,
-    width: '80%',
-    alignItems: 'center',
-    paddingVertical: 40,
-    marginTop: 50,
-  },
-  icon: {
-    width: 60,
-    height: 60,
-    marginBottom: 15,
-  },
-  cardTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#333',
-  },
-  cardSubtitle: {
-    fontSize: 16,
-    color: '#555',
-  },
-  swipeIndicatorContainer: {
-    marginTop: 50,
-    alignSelf: 'center',
-    backgroundColor: '#fce4ec', // Light pink background for swipe indicator
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 10,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 5,
-    elevation: 2, // For Android shadow
-  },
-  swipeIndicator: {
-    textAlign: 'center',
-    color: 'purple',
-    fontSize: 16,
-    fontWeight: 'bold',
   },
 });
 

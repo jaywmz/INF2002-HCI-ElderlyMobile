@@ -50,11 +50,13 @@ const LocationsScreen = ({ navigation }: Props) => {
       <View style={styles.header}>
         <Text style={styles.headerText}>Choose location</Text>
       </View>
-      <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollViewContent}>
-        <LocationCard></LocationCard>
-        <LocationCard></LocationCard>
-        <LocationCard></LocationCard>
-      </ScrollView>
+      <View style={{ height: 650, overflow: 'hidden' }}>
+        <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollViewContent}>
+          <LocationCard></LocationCard>
+          <LocationCard></LocationCard>
+          <LocationCard></LocationCard>
+        </ScrollView>
+      </View>
     </View>
   );
 };
@@ -80,17 +82,21 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     width: '100%',
+    height: '100%',
+    overflow: 'scroll',
   },
   scrollViewContent: {
     flexGrow: 1,
     alignItems: 'center',
+    paddingBottom: 20,
   },
   card: {
-    width: '90%',
+    width: 320,
     padding: 20,
     backgroundColor: '#ffffff',
     borderRadius: 18,
     marginBottom: 20,
+    alignItems: 'center',
   },
   elevation: {
     elevation: 4,
