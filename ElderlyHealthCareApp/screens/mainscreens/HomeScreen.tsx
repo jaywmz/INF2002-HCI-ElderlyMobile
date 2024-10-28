@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
-import { globalStyles } from '../../styles/Theme';
+import { globalStyles } from '../styles/Theme';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList, AuthProps } from '../../types';
 
@@ -13,11 +13,30 @@ type Props = {
 
 const HomeScreen = ({ navigation, registeredUser, setRegisteredUser, isAiEnabled }: Props) => {
   const [showAi, setShowAi] = useState(isAiEnabled);
+  const [isSpeaking, setIsSpeaking] = useState(false);
+  const [showNextMessage, setShowNextMessage] = useState(false);
 
   useEffect(() => {
-    // Update showAi whenever isAiEnabled changes
     setShowAi(isAiEnabled);
+
+    if (isAiEnabled) {
+      playVoice('Welcome, I am Joy. How can I assist you today? To turn off AI, please head towards Setting page.');
+    }
   }, [isAiEnabled]);
+
+  const playVoice = (text: string) => {
+    Speech.speak(text, {
+      onStart: () => setIsSpeaking(true),
+      onDone: () => setIsSpeaking(false),
+      onStopped: () => setIsSpeaking(false),
+      onError: () => setIsSpeaking(false),
+    });
+  };
+
+  const stopVoice = () => {
+    Speech.stop();
+    setIsSpeaking(false);
+  };
 
   const handleLogout = () => {
     setRegisteredUser(null);
@@ -29,29 +48,60 @@ const HomeScreen = ({ navigation, registeredUser, setRegisteredUser, isAiEnabled
   };
 
   const handleCloseAi = () => {
+    stopVoice();
     setShowAi(false);
   };
 
-  return (
-    <View style={[globalStyles.container, styles.background]}>
-      {/* Header with Logout and Settings button */}
-      <View style={styles.header}>
-        <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
-          <Text style={styles.logoutText}>Logout</Text>
-        </TouchableOpacity>
-        <Text style={styles.headerText}>Home</Text>
-        <TouchableOpacity style={styles.settingsButton} onPress={handleSettings}>
-          <Text style={styles.settingsText}>Settings</Text>
-        </TouchableOpacity>
-      </View>
+  const handlePauseResume = () => {
+    if (isSpeaking) {
+      stopVoice();
+    } else {
+      playVoice('Welcome, I am Joy. How can I assist you today? To turn off AI, please head towards Setting page.');
+    }
+  };
 
-      {/* Welcome Message */}
-      <Text style={globalStyles.headerText}>Welcome, {registeredUser?.username}!</Text>
+  const handleBackgroundClick = () => {
+    setShowNextMessage(true);
+    playVoice('Got it, I will now redirect you to the create appointment page. Please click continue to proceed.');
+  };
+
+  const handleContinue = () => {
+    playVoice('Redirecting you to create an appointment page.');
+    navigation.navigate('Create Appointment');
+  };
+
+  const handleredirectSetting = () =>{
+    playVoice('Redirecting you to Settings page');
+    navigation.navigate('Setting');
+  }
+
+  const handleCloseMessage = () => {
+    setShowNextMessage(false);
+    stopVoice();
+  };
+
+  const handleReplayRedirectMessage = () => {
+    playVoice('Got it, I will now redirect you to the create appointment page. Please click continue to proceed.');
+  };
+
+  return (
+    <TouchableWithoutFeedback onPress={handleBackgroundClick}>
+      <View style={[globalStyles.container, styles.background]}>
+        {/* Header with Logout and Settings button */}
+        <View style={styles.header}>
+          <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
+            <Text style={styles.logoutText}>Logout</Text>
+          </TouchableOpacity>
+          <Text style={styles.headerText}>Home</Text>
+          <TouchableOpacity style={styles.settingsButton} onPress={handleSettings}>
+            <Text style={styles.settingsText}>Settings</Text>
+          </TouchableOpacity>
+        </View>
 
       {/* AI Assistance Section */}
       {showAi && (
         <View style={styles.aiContainer}>
-          <Image source={require('../../assets/AI_nurse.jpg')} style={styles.aiIcon} />
+          <Image source={require('../assets/AI_nurse.jpg')} style={styles.aiIcon} />
           <View style={styles.aiTextContainer}>
             <Text style={styles.aiText}>Welcome, I am Joy, How can I assist you today?</Text>
             <TouchableOpacity style={styles.closeButton} onPress={handleCloseAi}>
@@ -66,7 +116,7 @@ const HomeScreen = ({ navigation, registeredUser, setRegisteredUser, isAiEnabled
         style={[styles.serviceButton, { marginTop: 20 }]}
         onPress={() => navigation.navigate('Create Appointment')}
       >
-        <Image source={require('../../assets/calendar.jpg')} style={styles.icon} />
+        <Image source={require('../assets/calendar.jpg')} style={styles.icon} />
         <Text style={styles.buttonText}>Create Appointment</Text>
       </TouchableOpacity>
 
@@ -74,7 +124,7 @@ const HomeScreen = ({ navigation, registeredUser, setRegisteredUser, isAiEnabled
         style={styles.serviceButton}
         onPress={() => navigation.navigate('View/Edit Appointment')}
       >
-        <Image source={require('../../assets/edit.jpg')} style={styles.icon} />
+        <Image source={require('../assets/edit.jpg')} style={styles.icon} />
         <Text style={styles.buttonText}>View/Edit Appointment</Text>
       </TouchableOpacity>
 
@@ -82,17 +132,19 @@ const HomeScreen = ({ navigation, registeredUser, setRegisteredUser, isAiEnabled
         style={styles.serviceButton}
         onPress={() => navigation.navigate('Reminders')}
       >
-        <Image source={require('../../assets/reminder.jpg')} style={styles.icon} />
+        <Image source={require('../assets/reminder.jpg')} style={styles.icon} />
         <Text style={styles.buttonText}>Reminders</Text>
       </TouchableOpacity>
 
-      {/* Swipe Indicator */}
-      <View style={styles.swipeIndicatorContainer}>
-        <Text style={styles.swipeIndicator}>Swipe right to access "Create Appointment" →</Text>
+        {/* Swipe Indicator */}
+        <View style={styles.swipeIndicatorContainer}>
+          <Text style={styles.swipeIndicator}>Swipe right to access "Create Appointment" →</Text>
+        </View>
       </View>
-    </View>
+    </TouchableWithoutFeedback>
   );
 };
+
 
 const styles = StyleSheet.create({
   background: {
@@ -155,6 +207,18 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#333',
     marginRight: 10,
+  },
+  controlButton: {
+    backgroundColor: '#007AFF',
+    borderRadius: 15,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    marginRight: 10,
+  },
+  controlButtonText: {
+    color: '#fff',
+    fontSize: 12,
+    fontWeight: 'bold',
   },
   closeButton: {
     backgroundColor: '#ff4d4d',

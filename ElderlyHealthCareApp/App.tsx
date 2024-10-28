@@ -117,7 +117,7 @@ function MainTabs({ registeredUser, setRegisteredUser, isAiEnabled }: AuthProps 
 
 export default function App() {
   const [registeredUser, setRegisteredUser] = useState<RegisteredUser | null>(null);
-  const [isAiEnabled, setIsAiEnabled] = useState(false);
+  const [isAiEnabled, setIsAiEnabled] = useState(true);
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
