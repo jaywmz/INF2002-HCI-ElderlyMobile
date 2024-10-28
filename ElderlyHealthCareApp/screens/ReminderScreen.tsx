@@ -16,6 +16,10 @@ const ReminderScreen = ({ navigation, setRegisteredUser }: Props) => {
     navigation.replace('Login');
   };
 
+  const handleSettings = () => {
+    navigation.navigate('Setting'); 
+  };
+
   const handleNavigateToHome = () => {
     navigation.navigate('Home');
   };
@@ -28,7 +32,7 @@ const ReminderScreen = ({ navigation, setRegisteredUser }: Props) => {
           <Text style={styles.logoutText}>Logout</Text>
         </TouchableOpacity>
         <Text style={styles.headerText}>Reminders</Text>
-        <TouchableOpacity style={styles.settingsButton}>
+        <TouchableOpacity style={styles.settingsButton} onPress={handleSettings}>
           <Text style={styles.settingsText}>Settings</Text>
         </TouchableOpacity>
       </View>
