@@ -167,13 +167,30 @@ export default function App() {
             {(props) => <CurrentApptScreen {...props} />}
           </Stack.Screen>
 
-          {/* <Stack.Screen name="Edit Appointment">
-            {(props) => (
-              <EditYourApptScreen
-                {...props}
-              />
-            )}
-          </Stack.Screen> */}
+          <Stack.Screen name="Edit Appointment">
+            {(props) => {
+              const appointment = (props.route.params as { appointment?: Appointment })?.appointment || {
+                location: '',
+                day: '',
+                month: '',
+                year: '',
+                time: '',
+                type: '',
+              };
+              const onSave = (props.route.params as { onSave?: (newAppointment: Appointment) => void })?.onSave || (() => {});
+
+              return (
+                <EditYourApptScreen
+                  {...props}
+                  route={{
+                    ...props.route,
+                    params: { appointment, onSave },
+                  }}
+                  navigation={props.navigation}
+                />
+              );
+            }}
+          </Stack.Screen>
 
           <Stack.Screen name="Setting" options={{ headerTitle: 'Settings' }}>
             {(props) => (

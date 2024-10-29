@@ -44,6 +44,8 @@ Make sure you have the following installed:
       expo install react-native-gesture-handler
       expo install expo-speech
       npm install @react-native-voice/voice
+      npm install react-native-modal-dropdown
+
       ```
 
 ## Start the app
