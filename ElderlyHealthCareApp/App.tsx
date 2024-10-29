@@ -168,6 +168,7 @@ export default function App() {
             {(props) => (
               <TimeslotsScreen 
                 {...props}
+                isAiEnabled={isAiEnabled} 
               />
             )}
           </Stack.Screen>
@@ -194,3 +195,4 @@ export default function App() {
     </GestureHandlerRootView>
   );
 }
+
