@@ -1,7 +1,6 @@
-import { useFocusEffect } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import * as Speech from 'expo-speech';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
 import { globalStyles } from '../../styles/Theme';
 import { AuthProps, RootStackParamList } from '../../types';
@@ -18,17 +17,16 @@ const HomeScreen = ({ navigation, registeredUser, setRegisteredUser, isAiEnabled
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [showNextMessage, setShowNextMessage] = useState(false);
 
-  useFocusEffect(
-    React.useCallback(() => {
-      // Only play the AI voice when the screen is focused
-      if (isAiEnabled) {
-        playVoice('Welcome, I am Joy. How can I assist you today? To turn off AI, please head towards Setting page.');
-      }
+  useEffect(() => {
+    // Update showAi whenever isAiEnabled changes
+    setShowAi(isAiEnabled);
 
-      // Stop the AI voice when the screen is unfocused
-      return () => stopVoice();
-    }, [isAiEnabled])
-  );
+    if (isAiEnabled) {
+      playVoice('Welcome, I am Joy. How can I assist you today? To turn off AI, please head towards Setting page.');
+    } else {
+      stopVoice();
+    }
+  }, [isAiEnabled]);
 
   const playVoice = (text: string) => {
     Speech.speak(text, {
@@ -50,7 +48,7 @@ const HomeScreen = ({ navigation, registeredUser, setRegisteredUser, isAiEnabled
   };
 
   const handleSettings = () => {
-    navigation.navigate('Setting'); 
+    navigation.navigate('Setting');
   };
 
   const handleCloseAi = () => {
@@ -115,7 +113,9 @@ const HomeScreen = ({ navigation, registeredUser, setRegisteredUser, isAiEnabled
 
               {!showNextMessage ? (
                 <>
-                  <Text style={styles.aiText}>Welcome, I am Joy, How can I assist you today? To turn off AI, please head towards Settings page.</Text>
+                  <Text style={styles.aiText}>
+                    Welcome, I am Joy, How can I assist you today? To turn off AI, please head towards Settings page.
+                  </Text>
                   <View style={styles.buttonRow}>
                     <TouchableOpacity style={styles.controlButton} onPress={handlePauseResume}>
                       <Text style={styles.controlButtonText}>{isSpeaking ? 'Pause' : 'Play'}</Text>
@@ -153,18 +153,12 @@ const HomeScreen = ({ navigation, registeredUser, setRegisteredUser, isAiEnabled
           <Text style={styles.buttonText}>Create Appointment</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity
-          style={styles.serviceButton}
-          onPress={() => navigation.navigate('View/Edit Appointment')}
-        >
+        <TouchableOpacity style={styles.serviceButton} onPress={() => navigation.navigate('View/Edit Appointment')}>
           <Image source={require('../../assets/edit.jpg')} style={styles.icon} />
           <Text style={styles.buttonText}>View/Edit Appointment</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity
-          style={styles.serviceButton}
-          onPress={() => navigation.navigate('Reminders')}
-        >
+        <TouchableOpacity style={styles.serviceButton} onPress={() => navigation.navigate('Reminders')}>
           <Image source={require('../../assets/reminder.jpg')} style={styles.icon} />
           <Text style={styles.buttonText}>Reminders</Text>
         </TouchableOpacity>
@@ -179,51 +173,15 @@ const HomeScreen = ({ navigation, registeredUser, setRegisteredUser, isAiEnabled
 };
 
 const styles = StyleSheet.create({
-  background: {
-    backgroundColor: '#fbe4e4', // Background color for Home Screen
-  },
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    width: '100%',
-    padding: 20,
-  },
-  logoutButton: {
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    backgroundColor: '#e0e0e0', // Grey background for button
-    borderRadius: 5,
-  },
-  logoutText: {
-    color: '#333',
-    fontWeight: 'bold',
-  },
-  settingsButton: {
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    backgroundColor: '#e0e0e0',
-    borderRadius: 5,
-  },
-  settingsText: {
-    color: '#333',
-    fontWeight: 'bold',
-  },
-  headerText: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#333',
-  },
-  aiContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginVertical: 20,
-  },
-  aiIcon: {
-    width: 50,
-    height: 80,
-    marginRight: 10,
-  },
+  background: { backgroundColor: '#fbe4e4' },
+  header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', width: '100%', padding: 20 },
+  logoutButton: { paddingHorizontal: 10, paddingVertical: 5, backgroundColor: '#e0e0e0', borderRadius: 5 },
+  logoutText: { color: '#333', fontWeight: 'bold' },
+  settingsButton: { paddingHorizontal: 10, paddingVertical: 5, backgroundColor: '#e0e0e0', borderRadius: 5 },
+  settingsText: { color: '#333', fontWeight: 'bold' },
+  headerText: { fontSize: 18, fontWeight: 'bold', color: '#333' },
+  aiContainer: { flexDirection: 'row', alignItems: 'center', marginVertical: 20 },
+  aiIcon: { width: 50, height: 80, marginRight: 10 },
   aiTextContainer: {
     backgroundColor: '#fff',
     padding: 10,
@@ -232,16 +190,12 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 6,
     elevation: 2,
-    width: 180, // Set a narrower width to make the box taller
+    width: 180,
     alignItems: 'center',
     justifyContent: 'center',
-    position: 'relative', // To use absolute positioning for the close button
+    position: 'relative',
   },
-  aiText: {
-    fontSize: 16,
-    color: '#333',
-    textAlign: 'center', // Center-align text within the box
-  },
+  aiText: { fontSize: 16, color: '#333', textAlign: 'center' },
   closeButton: {
     position: 'absolute',
     top: 5,
@@ -253,28 +207,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  closeButtonText: {
-    color: '#fff',
-    fontSize: 12,
-    fontWeight: 'bold',
-  },
-  buttonRow: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    marginTop: 10,
-  },
-  controlButton: {
-    backgroundColor: '#007AFF',
-    borderRadius: 15,
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    marginHorizontal: 5,
-  },
-  controlButtonText: {
-    color: '#fff',
-    fontSize: 12,
-    fontWeight: 'bold',
-  },
+  closeButtonText: { color: '#fff', fontSize: 12, fontWeight: 'bold' },
+  buttonRow: { flexDirection: 'row', justifyContent: 'center', marginTop: 10 },
+  controlButton: { backgroundColor: '#007AFF', borderRadius: 15, paddingHorizontal: 10, paddingVertical: 5, marginHorizontal: 5 },
+  controlButtonText: { color: '#fff', fontSize: 12, fontWeight: 'bold' },
   serviceButton: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -289,20 +225,12 @@ const styles = StyleSheet.create({
     shadowRadius: 6,
     elevation: 2,
   },
-  icon: {
-    width: 40,
-    height: 40,
-    marginRight: 15,
-  },
-  buttonText: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: '#333',
-  },
+  icon: { width: 40, height: 40, marginRight: 15 },
+  buttonText: { fontSize: 16, fontWeight: 'bold', color: '#333' },
   swipeIndicatorContainer: {
     marginTop: 50,
     alignSelf: 'center',
-    backgroundColor: '#fce4ec', // Light pink background for swipe indicator
+    backgroundColor: '#fce4ec',
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 10,
@@ -310,14 +238,9 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 5,
-    elevation: 2, // For Android shadow
+    elevation: 2,
   },
-  swipeIndicator: {
-    textAlign: 'center',
-    color: 'purple',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
+  swipeIndicator: { textAlign: 'center', color: 'purple', fontSize: 16, fontWeight: 'bold' },
 });
 
 export default HomeScreen;
