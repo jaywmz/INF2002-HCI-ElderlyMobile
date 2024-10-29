@@ -95,6 +95,7 @@ const ViewEditApptScreen = ({ navigation, setRegisteredUser, isAiEnabled }: Prop
 
       {/* Main Appointment Card */}
       <TouchableOpacity style={styles.card} onPress={handleNavigateToEdit}>
+      <Image source={require('../../assets/edit.jpg')} style={styles.icon} />
         <Text style={styles.cardTitle}>View/Edit Appointment</Text>
         <Text style={styles.cardSubtitle}>UI Card-based</Text>
       </TouchableOpacity>
