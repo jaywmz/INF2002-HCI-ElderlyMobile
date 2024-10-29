@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
-import * as Speech from 'expo-speech';
-import { globalStyles } from '../../styles/Theme';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList, AuthProps } from '../../types';
+import * as Speech from 'expo-speech';
+import React, { useEffect, useState } from 'react';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { globalStyles } from '../../styles/Theme';
+import { AuthProps, RootStackParamList } from '../../types';
 
 type ReminderScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Reminders'>;
 
@@ -78,12 +78,14 @@ const ReminderScreen = ({ navigation, setRegisteredUser, isAiEnabled }: Props) =
         <View style={styles.aiContainer}>
           <Image source={require('../../assets/AI_nurse.jpg')} style={styles.aiIcon} />
           <View style={styles.aiTextContainer}>
-            <Text style={styles.aiText}>This is the Reminder page. Click on the Pill icon to get started.</Text>
-            <TouchableOpacity style={styles.controlButton} onPress={handlePauseResume}>
-              <Text style={styles.controlButtonText}>{isSpeaking ? 'Pause' : 'Play'}</Text>
-            </TouchableOpacity>
             <TouchableOpacity style={styles.closeButton} onPress={handleCloseAi}>
               <Text style={styles.closeButtonText}>X</Text>
+            </TouchableOpacity>
+            <Text style={styles.aiText}>
+              This is the Reminder page. Click on the Pill icon to get started.
+            </Text>
+            <TouchableOpacity style={styles.controlButton} onPress={handlePauseResume}>
+              <Text style={styles.controlButtonText}>{isSpeaking ? 'Pause' : 'Play'}</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -162,8 +164,6 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   aiTextContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
     backgroundColor: '#fff',
     padding: 10,
     borderRadius: 10,
@@ -171,25 +171,20 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 6,
     elevation: 2,
+    position: 'relative',
+    width: 180, // To make the box more vertical
+    alignItems: 'center',
   },
   aiText: {
     fontSize: 16,
     color: '#333',
-    marginRight: 10,
-  },
-  controlButton: {
-    backgroundColor: '#007AFF',
-    borderRadius: 15,
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    marginRight: 10,
-  },
-  controlButtonText: {
-    color: '#fff',
-    fontSize: 12,
-    fontWeight: 'bold',
+    textAlign: 'center',
+    marginVertical: 10,
   },
   closeButton: {
+    position: 'absolute',
+    top: 5,
+    right: 5,
     backgroundColor: '#ff4d4d',
     borderRadius: 15,
     width: 20,
@@ -198,6 +193,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   closeButtonText: {
+    color: '#fff',
+    fontSize: 12,
+    fontWeight: 'bold',
+  },
+  controlButton: {
+    backgroundColor: '#007AFF',
+    borderRadius: 15,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    marginTop: 10,
+  },
+  controlButtonText: {
     color: '#fff',
     fontSize: 12,
     fontWeight: 'bold',
@@ -235,7 +242,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 5,
-    elevation: 2, // For Android shadow
+    elevation: 2,
   },
   swipeIndicator: {
     textAlign: 'center',
