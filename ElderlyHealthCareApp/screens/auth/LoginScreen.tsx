@@ -16,12 +16,12 @@ const LoginScreen = ({ navigation, registeredUser }: Props) => {
   const [password, setPassword] = useState('');
 
   const handleLogin = () => {
-    // if (registeredUser && username === registeredUser.username && password === registeredUser.password) {
-    //   navigation.navigate('Main', { screen: 'Home' });
-    // } else {
-    //   alert('Incorrect username or password');
-    // }
-    navigation.navigate('Main', { screen: 'Home' });
+    if (registeredUser && username === registeredUser.username && password === registeredUser.password) {
+      navigation.navigate('Main', { screen: 'Home' });
+    } else {
+      alert('Incorrect username or password');
+    }
+    // navigation.navigate('Main', { screen: 'Home' });
   };
 
   return (
