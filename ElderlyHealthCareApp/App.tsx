@@ -159,6 +159,7 @@ export default function App() {
             {(props) => (
               <CalendarScreen 
                 {...props}
+                isAiEnabled={isAiEnabled} 
               />
             )}
           </Stack.Screen>
