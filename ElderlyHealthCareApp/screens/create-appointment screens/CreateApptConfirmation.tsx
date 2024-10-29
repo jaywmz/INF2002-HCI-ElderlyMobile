@@ -163,11 +163,13 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 6,
     elevation: 2,
+    position: 'relative',
   },
   aiText: {
     fontSize: 16,
     color: '#333',
     marginRight: 10,
+    textAlign: 'center',
   },
   controlButton: {
     backgroundColor: '#007AFF',
@@ -188,6 +190,9 @@ const styles = StyleSheet.create({
     height: 20,
     alignItems: 'center',
     justifyContent: 'center',
+    position: 'absolute',
+    top: 5,
+    right: 5,
   },
   closeButtonText: {
     color: '#fff',
