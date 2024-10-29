@@ -1,5 +1,3 @@
-import React from 'react';
-import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import * as Speech from 'expo-speech';
 import React, { useEffect, useState } from 'react';
@@ -48,7 +46,7 @@ const ViewEditApptScreen = ({ navigation, setRegisteredUser, isAiEnabled }: Prop
   };
 
   const handleNavigateToEdit = () => {
-    navigation.navigate('Current Appointment');
+    navigation.navigate('Current Appointment'); // Navigate to CurrentApptScreen
   };
 
   const handleCloseAi = () => {
@@ -125,7 +123,58 @@ const styles = StyleSheet.create({
   headerText: { fontSize: 18, fontWeight: 'bold', color: '#333' },
   settingsButton: { paddingHorizontal: 10, paddingVertical: 5, backgroundColor: '#e0e0e0', borderRadius: 5 },
   settingsText: { color: '#333', fontWeight: 'bold' },
-  card: { backgroundColor: '#f0f0f0', borderRadius: 15, width: '80%', alignItems: 'center', paddingVertical: 40, marginTop: 50 },
+  aiContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginVertical: 20,
+  },
+  aiIcon: { width: 50, height: 80, marginRight: 10 },
+  aiTextContainer: {
+    backgroundColor: '#fff',
+    padding: 10,
+    borderRadius: 10,
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowRadius: 6,
+    elevation: 2,
+    width: 180,
+    alignItems: 'center',
+    position: 'relative',
+  },
+  aiText: {
+    fontSize: 16,
+    color: '#333',
+    textAlign: 'center',
+    marginVertical: 10,
+  },
+  closeButton: {
+    position: 'absolute',
+    top: 5,
+    right: 5,
+    backgroundColor: '#ff4d4d',
+    borderRadius: 15,
+    width: 20,
+    height: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  closeButtonText: { color: '#fff', fontSize: 12, fontWeight: 'bold' },
+  controlButton: {
+    backgroundColor: '#007AFF',
+    borderRadius: 15,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    marginTop: 10,
+  },
+  controlButtonText: { color: '#fff', fontSize: 12, fontWeight: 'bold' },
+  card: {
+    backgroundColor: '#f0f0f0',
+    borderRadius: 15,
+    width: '80%',
+    alignItems: 'center',
+    paddingVertical: 40,
+    marginTop: 50,
+  },
   icon: { width: 60, height: 60, marginBottom: 15 },
   cardTitle: { fontSize: 20, fontWeight: 'bold', color: '#333' },
   cardSubtitle: { fontSize: 16, color: '#555' },
@@ -142,4 +191,3 @@ const styles = StyleSheet.create({
 });
 
 export default ViewEditApptScreen;
-
