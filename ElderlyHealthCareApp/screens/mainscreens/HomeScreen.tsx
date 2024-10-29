@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, Image, StyleSheet, TouchableWithoutFeedback } from 'react-native';
-import * as Speech from 'expo-speech';
-import { globalStyles } from '../../styles/Theme';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList, AuthProps } from '../../types';
+import * as Speech from 'expo-speech';
+import React, { useEffect, useState } from 'react';
+import { Image, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
+import { globalStyles } from '../../styles/Theme';
+import { AuthProps, RootStackParamList } from '../../types';
 
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
 
@@ -71,10 +71,10 @@ const HomeScreen = ({ navigation, registeredUser, setRegisteredUser, isAiEnabled
     navigation.navigate('Create Appointment');
   };
 
-  const handleredirectSetting = () =>{
+  const handleredirectSetting = () => {
     playVoice('Redirecting you to Settings page');
     navigation.navigate('Setting');
-  }
+  };
 
   const handleCloseMessage = () => {
     setShowNextMessage(false);
@@ -104,33 +104,35 @@ const HomeScreen = ({ navigation, registeredUser, setRegisteredUser, isAiEnabled
           <View style={styles.aiContainer}>
             <Image source={require('../../assets/AI_nurse.jpg')} style={styles.aiIcon} />
             <View style={styles.aiTextContainer}>
+              <TouchableOpacity style={styles.closeButton} onPress={handleCloseAi}>
+                <Text style={styles.closeButtonText}>X</Text>
+              </TouchableOpacity>
+
               {!showNextMessage ? (
                 <>
                   <Text style={styles.aiText}>Welcome, I am Joy, How can I assist you today? To turn off AI, please head towards Settings page.</Text>
-                  <TouchableOpacity style={styles.controlButton} onPress={handlePauseResume}>
-                    <Text style={styles.controlButtonText}>{isSpeaking ? 'Pause' : 'Play'}</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity style={styles.controlButton} onPress={handleredirectSetting}>
-                    <Text style={styles.controlButtonText}>Settings</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity style={styles.closeButton} onPress={handleCloseAi}>
-                    <Text style={styles.closeButtonText}>X</Text>
-                  </TouchableOpacity>
+                  <View style={styles.buttonRow}>
+                    <TouchableOpacity style={styles.controlButton} onPress={handlePauseResume}>
+                      <Text style={styles.controlButtonText}>{isSpeaking ? 'Pause' : 'Play'}</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.controlButton} onPress={handleredirectSetting}>
+                      <Text style={styles.controlButtonText}>Settings</Text>
+                    </TouchableOpacity>
+                  </View>
                 </>
               ) : (
                 <>
                   <Text style={styles.aiText}>
                     Got it, I will now redirect you to the create appointment page. Please click continue to proceed.
                   </Text>
-                  <TouchableOpacity style={styles.controlButton} onPress={handleReplayRedirectMessage}>
-                    <Text style={styles.controlButtonText}>Play</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity style={styles.controlButton} onPress={handleContinue}>
-                    <Text style={styles.controlButtonText}>Continue</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity style={styles.closeButton} onPress={handleCloseMessage}>
-                    <Text style={styles.closeButtonText}>X</Text>
-                  </TouchableOpacity>
+                  <View style={styles.buttonRow}>
+                    <TouchableOpacity style={styles.controlButton} onPress={handleReplayRedirectMessage}>
+                      <Text style={styles.controlButtonText}>Play</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.controlButton} onPress={handleContinue}>
+                      <Text style={styles.controlButtonText}>Continue</Text>
+                    </TouchableOpacity>
+                  </View>
                 </>
               )}
             </View>
@@ -171,7 +173,7 @@ const HomeScreen = ({ navigation, registeredUser, setRegisteredUser, isAiEnabled
   );
 };
 
-
+// Adjusted Styles
 const styles = StyleSheet.create({
   background: {
     backgroundColor: '#fbe4e4', // Background color for Home Screen
@@ -219,8 +221,6 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   aiTextContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
     backgroundColor: '#fff',
     padding: 10,
     borderRadius: 10,
@@ -228,25 +228,20 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 6,
     elevation: 2,
+    width: 180, // Set a narrower width to make the box taller
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: 'relative', // To use absolute positioning for the close button
   },
   aiText: {
     fontSize: 16,
     color: '#333',
-    marginRight: 10,
-  },
-  controlButton: {
-    backgroundColor: '#007AFF',
-    borderRadius: 15,
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    marginRight: 10,
-  },
-  controlButtonText: {
-    color: '#fff',
-    fontSize: 12,
-    fontWeight: 'bold',
+    textAlign: 'center', // Center-align text within the box
   },
   closeButton: {
+    position: 'absolute',
+    top: 5,
+    right: 5,
     backgroundColor: '#ff4d4d',
     borderRadius: 15,
     width: 20,
@@ -255,6 +250,23 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   closeButtonText: {
+    color: '#fff',
+    fontSize: 12,
+    fontWeight: 'bold',
+  },
+  buttonRow: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginTop: 10,
+  },
+  controlButton: {
+    backgroundColor: '#007AFF',
+    borderRadius: 15,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    marginHorizontal: 5,
+  },
+  controlButtonText: {
     color: '#fff',
     fontSize: 12,
     fontWeight: 'bold',
