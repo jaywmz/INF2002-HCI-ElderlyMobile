@@ -161,8 +161,6 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   aiTextContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
     backgroundColor: '#fff',
     padding: 10,
     borderRadius: 10,
@@ -170,8 +168,9 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 6,
     elevation: 2,
-    width: 250, // Narrow width for more vertical height
+    width: 250,
     position: 'relative',
+    alignItems: 'center',
   },
   aiText: {
     fontSize: 16,
@@ -184,6 +183,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     paddingHorizontal: 10,
     paddingVertical: 5,
+    marginTop: 10,
   },
   controlButtonText: {
     color: '#fff',
@@ -209,4 +209,3 @@ const styles = StyleSheet.create({
 });
 
 export default LocationsScreen;
-
