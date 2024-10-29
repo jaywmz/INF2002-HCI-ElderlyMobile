@@ -3,7 +3,7 @@ export type RootStackParamList = {
     Login: undefined;
     Registration: undefined;
     Main: {
-      screen: 'Home' | 'Create Appointment' | 'View/Edit Appointment' | 'Reminders';
+      screen: 'Home' | 'Create Appointment' | 'View/Edit Appointment' | 'Reminders' | 'Current Appointment';
     };
     Home: undefined;
     'Create Appointment': undefined;
@@ -13,8 +13,22 @@ export type RootStackParamList = {
     Locations: undefined;
     Timeslots: undefined;
     CreateApptConfirmation: undefined;
-    Setting: undefined; 
+    Setting: undefined;
     'Current Appointment': undefined;
+    'Edit Appointment': {
+        appointment: Appointment;
+        onSave: (newAppointment: Appointment) => void;
+    };
+};
+
+// Define Appointment type for ease of use
+export type Appointment = {
+    location: string;
+    day: string;
+    month: string;
+    year: string;
+    time: string;
+    type: string;
 };
 
 export type RegisteredUser = {
@@ -26,4 +40,3 @@ export type AuthProps = {
     registeredUser: RegisteredUser | null;
     setRegisteredUser: (user: RegisteredUser | null) => void;
 };
-  

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList, AuthProps } from '../../types';
 import { globalStyles } from '../../styles/Theme';
@@ -17,7 +17,7 @@ const ViewEditApptScreen = ({ navigation, setRegisteredUser }: Props) => {
   };
 
   const handleNavigateToEdit = () => {
-    navigation.navigate('Current Appointment'); // Navigate to CurrentApptScreen
+    navigation.navigate('Current Appointment');
   };
 
   return (
@@ -61,7 +61,6 @@ const styles = StyleSheet.create({
   settingsButton: { paddingHorizontal: 10, paddingVertical: 5, backgroundColor: '#e0e0e0', borderRadius: 5 },
   settingsText: { color: '#333', fontWeight: 'bold' },
   card: { backgroundColor: '#f0f0f0', borderRadius: 15, width: '80%', alignItems: 'center', paddingVertical: 40, marginTop: 50 },
-  icon: { width: 60, height: 60, marginBottom: 15 },
   cardTitle: { fontSize: 20, fontWeight: 'bold', color: '#333' },
   cardSubtitle: { fontSize: 16, color: '#555' },
   swipeIndicatorContainer: { marginTop: 50, alignSelf: 'center', backgroundColor: '#fce4ec', paddingVertical: 10, paddingHorizontal: 20, borderRadius: 10, elevation: 2 },

@@ -7,7 +7,7 @@ import { Icon } from 'react-native-elements';
 import 'react-native-gesture-handler';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
-// Import screens
+// Import screens based on your file structure
 import LoginScreen from './screens/auth/LoginScreen';
 import RegistrationScreen from './screens/auth/RegistrationScreen';
 import CalendarScreen from './screens/create-appointment screens/Calendar';
@@ -19,7 +19,9 @@ import HomeScreen from './screens/mainscreens/HomeScreen';
 import ReminderScreen from './screens/mainscreens/ReminderScreen';
 import ViewEditApptScreen from './screens/mainscreens/ViewEditApptScreen';
 import SettingScreen from './screens/SettingScreen';
-import { AuthProps, RegisteredUser } from './types';
+import CurrentApptScreen from './screens/edit-appt/CurrentApptScreen';
+import EditYourApptScreen from './screens/edit-appt/EditYourApptScreen';
+import { AuthProps, RegisteredUser, Appointment } from './types';
 
 const Stack = createStackNavigator();
 const Tab = createMaterialTopTabNavigator();
@@ -133,60 +135,48 @@ export default function App() {
             {(props) => <RegistrationScreen {...props} setRegisteredUser={setRegisteredUser} />}
           </Stack.Screen>
 
-          <Stack.Screen
-            name="Main"
-            options={{ headerShown: false }}
-          >
+          <Stack.Screen name="Main" options={{ headerShown: false }}>
             {(props) => (
               <MainTabs
                 {...props}
                 registeredUser={registeredUser}
                 setRegisteredUser={setRegisteredUser}
-                isAiEnabled={isAiEnabled} // Pass isAiEnabled to MainTabs
-              />
-            )}
-          </Stack.Screen>
-
-          <Stack.Screen name="Locations">
-  {(props) => (
-    <LocationsScreen
-      {...props}
-      isAiEnabled={isAiEnabled} 
-    />
-  )}
-</Stack.Screen>
-
-
-          <Stack.Screen name="Calendar">
-            {(props) => (
-              <CalendarScreen 
-                {...props}
-                isAiEnabled={isAiEnabled} 
-              />
-            )}
-          </Stack.Screen>
-
-          <Stack.Screen name="Timeslots">
-            {(props) => (
-              <TimeslotsScreen 
-                {...props}
-                isAiEnabled={isAiEnabled} 
-              />
-            )}
-          </Stack.Screen>
-
-          <Stack.Screen name="CreateApptConfirmation">
-            {(props) => (
-              <CreateApptConfirmationScreen
-                {...props}
                 isAiEnabled={isAiEnabled}
               />
             )}
           </Stack.Screen>
 
+          <Stack.Screen name="Locations">
+            {(props) => <LocationsScreen {...props} isAiEnabled={isAiEnabled} />}
+          </Stack.Screen>
+
+          <Stack.Screen name="Calendar">
+            {(props) => <CalendarScreen {...props} isAiEnabled={isAiEnabled} />}
+          </Stack.Screen>
+
+          <Stack.Screen name="Timeslots">
+            {(props) => <TimeslotsScreen {...props} isAiEnabled={isAiEnabled} />}
+          </Stack.Screen>
+
+          <Stack.Screen name="CreateApptConfirmation">
+            {(props) => <CreateApptConfirmationScreen {...props} isAiEnabled={isAiEnabled} />}
+          </Stack.Screen>
+
+          <Stack.Screen name="Current Appointment">
+            {(props) => <CurrentApptScreen {...props} />}
+          </Stack.Screen>
+
+          {/* <Stack.Screen name="Edit Appointment">
+            {(props) => (
+              <EditYourApptScreen
+                {...props}
+              />
+            )}
+          </Stack.Screen> */}
+
           <Stack.Screen name="Setting" options={{ headerTitle: 'Settings' }}>
             {(props) => (
-              <SettingScreen 
+              <SettingScreen
                 {...props}
                 isAiEnabled={isAiEnabled}
                 setIsAiEnabled={setIsAiEnabled}
