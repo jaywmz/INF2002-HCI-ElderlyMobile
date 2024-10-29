@@ -71,6 +71,7 @@ function MainTabs({ registeredUser, setRegisteredUser, isAiEnabled }: AuthProps 
               {...props}
               registeredUser={registeredUser}
               setRegisteredUser={setRegisteredUser}
+              isAiEnabled={isAiEnabled}
             />
           )}
         </Tab.Screen>
@@ -196,4 +197,3 @@ export default function App() {
     </GestureHandlerRootView>
   );
 }
-
