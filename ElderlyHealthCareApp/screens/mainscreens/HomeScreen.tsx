@@ -1,6 +1,7 @@
+import { useFocusEffect } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import * as Speech from 'expo-speech';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
 import { globalStyles } from '../../styles/Theme';
 import { AuthProps, RootStackParamList } from '../../types';
@@ -17,13 +18,17 @@ const HomeScreen = ({ navigation, registeredUser, setRegisteredUser, isAiEnabled
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [showNextMessage, setShowNextMessage] = useState(false);
 
-  useEffect(() => {
-    setShowAi(isAiEnabled);
+  useFocusEffect(
+    React.useCallback(() => {
+      // Only play the AI voice when the screen is focused
+      if (isAiEnabled) {
+        playVoice('Welcome, I am Joy. How can I assist you today? To turn off AI, please head towards Setting page.');
+      }
 
-    if (isAiEnabled) {
-      playVoice('Welcome, I am Joy. How can I assist you today? To turn off AI, please head towards Setting page.');
-    }
-  }, [isAiEnabled]);
+      // Stop the AI voice when the screen is unfocused
+      return () => stopVoice();
+    }, [isAiEnabled])
+  );
 
   const playVoice = (text: string) => {
     Speech.speak(text, {
@@ -173,7 +178,6 @@ const HomeScreen = ({ navigation, registeredUser, setRegisteredUser, isAiEnabled
   );
 };
 
-// Adjusted Styles
 const styles = StyleSheet.create({
   background: {
     backgroundColor: '#fbe4e4', // Background color for Home Screen

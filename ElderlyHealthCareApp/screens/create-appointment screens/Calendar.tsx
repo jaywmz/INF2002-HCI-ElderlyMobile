@@ -66,12 +66,12 @@ const CalendarScreen = ({ navigation, isAiEnabled }: Props) => {
         <View style={styles.aiContainer}>
           <Image source={require('../../assets/AI_nurse.jpg')} style={styles.aiIcon} />
           <View style={styles.aiTextContainer}>
+            <TouchableOpacity style={styles.closeButton} onPress={handleCloseAi}>
+              <Text style={styles.closeButtonText}>X</Text>
+            </TouchableOpacity>
             <Text style={styles.aiText}>Please choose your preferred appointment date from the calendar below.</Text>
             <TouchableOpacity style={styles.controlButton} onPress={handlePauseResume}>
               <Text style={styles.controlButtonText}>{isSpeaking ? 'Pause' : 'Play'}</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.closeButton} onPress={handleCloseAi}>
-              <Text style={styles.closeButtonText}>X</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
   },
   header: {
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     width: '100%',
     padding: 20,
   },
@@ -138,8 +138,6 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   aiTextContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
     backgroundColor: '#fff',
     padding: 10,
     borderRadius: 10,
@@ -147,18 +145,23 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 6,
     elevation: 2,
+    maxWidth: 260,
+    position: 'relative',
+    alignItems: 'center',
   },
   aiText: {
-    fontSize: 16,
+    fontSize: 14,
     color: '#333',
-    marginRight: 10,
+    textAlign: 'center',
+    marginVertical: 10,
+    flexWrap: 'wrap',
   },
   controlButton: {
     backgroundColor: '#007AFF',
     borderRadius: 15,
     paddingHorizontal: 10,
     paddingVertical: 5,
-    marginRight: 10,
+    marginTop: 10,
   },
   controlButtonText: {
     color: '#fff',
@@ -166,6 +169,9 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   closeButton: {
+    position: 'absolute',
+    top: 5,
+    right: 5,
     backgroundColor: '#ff4d4d',
     borderRadius: 15,
     width: 20,
