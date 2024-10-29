@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
-import * as Speech from 'expo-speech';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '../../types';
+import * as Speech from 'expo-speech';
+import React, { useEffect, useState } from 'react';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { globalStyles } from '../../styles/Theme';
+import { RootStackParamList } from '../../types';
 
 type TimeslotsScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Timeslots'>;
 
@@ -75,12 +75,12 @@ const TimeslotsScreen = ({ navigation, isAiEnabled }: Props) => {
         <View style={styles.aiContainer}>
           <Image source={require('../../assets/AI_nurse.jpg')} style={styles.aiIcon} />
           <View style={styles.aiTextContainer}>
+            <TouchableOpacity style={styles.closeButton} onPress={handleCloseAi}>
+              <Text style={styles.closeButtonText}>X</Text>
+            </TouchableOpacity>
             <Text style={styles.aiText}>Please choose your preferred appointment timeslot.</Text>
             <TouchableOpacity style={styles.controlButton} onPress={handlePauseResume}>
               <Text style={styles.controlButtonText}>{isSpeaking ? 'Pause' : 'Play'}</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.closeButton} onPress={handleCloseAi}>
-              <Text style={styles.closeButtonText}>X</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -126,8 +126,6 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   aiTextContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
     backgroundColor: '#fff',
     padding: 10,
     borderRadius: 10,
@@ -135,18 +133,22 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 6,
     elevation: 2,
+    width: 180, // Reduce width to make text box taller
+    position: 'relative',
+    alignItems: 'center',
   },
   aiText: {
     fontSize: 16,
     color: '#333',
-    marginRight: 10,
+    textAlign: 'center',
+    marginVertical: 10,
   },
   controlButton: {
     backgroundColor: '#007AFF',
     borderRadius: 15,
     paddingHorizontal: 10,
     paddingVertical: 5,
-    marginRight: 10,
+    marginTop: 10,
   },
   controlButtonText: {
     color: '#fff',
@@ -154,6 +156,9 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   closeButton: {
+    position: 'absolute',
+    top: 5,
+    right: 5,
     backgroundColor: '#ff4d4d',
     borderRadius: 15,
     width: 20,
