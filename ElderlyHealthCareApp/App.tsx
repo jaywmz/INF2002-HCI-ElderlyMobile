@@ -177,6 +177,7 @@ export default function App() {
             {(props) => (
               <CreateApptConfirmationScreen
                 {...props}
+                isAiEnabled={isAiEnabled}
               />
             )}
           </Stack.Screen>
