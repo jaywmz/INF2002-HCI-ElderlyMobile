@@ -1,10 +1,10 @@
-import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Pressable } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '../../types';
-import { globalStyles } from '../../styles/Theme';
-import { ScrollView, TouchableHighlight } from 'react-native-gesture-handler';
 import { Image } from 'expo-image';
+import * as Speech from 'expo-speech';
+import React, { useEffect, useState } from 'react';
+import { Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
+import { RootStackParamList } from '../../types';
 
 const PlaceholderImage = require('../../assets/background-image.png');
 
@@ -12,17 +12,48 @@ type LocationsScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Lo
 
 type Props = {
   navigation: LocationsScreenNavigationProp;
+  isAiEnabled: boolean;
 };
 
-const LocationsScreen = ({ navigation }: Props) => {
-  const handleBack = () => {
-    navigation.goBack();
-  }
+const LocationsScreen = ({ navigation, isAiEnabled }: Props) => {
+  const [showAi, setShowAi] = useState(isAiEnabled);
+  const [isSpeaking, setIsSpeaking] = useState(false);
+
+  useEffect(() => {
+    if (isAiEnabled) {
+      playVoice('Please click on your preferred location for your appointment.');
+    }
+  }, [isAiEnabled]);
+
+  const playVoice = (text: string = 'Please click on your preferred location for your appointment.') => {
+    Speech.speak(text, {
+      onStart: () => setIsSpeaking(true),
+      onDone: () => setIsSpeaking(false),
+      onStopped: () => setIsSpeaking(false),
+      onError: () => setIsSpeaking(false),
+    });
+  };
+
+  const stopVoice = () => {
+    Speech.stop();
+    setIsSpeaking(false);
+  };
 
   const handleNavigateToCalendar = () => {
-    // Navigate to the actual service screen (replace 'Home' with correct screen if necessary)
     navigation.navigate('Calendar');
-    // alert("timeslots");
+  };
+
+  const handlePauseResume = () => {
+    if (isSpeaking) {
+      stopVoice();
+    } else {
+      playVoice();
+    }
+  };
+
+  const handleCloseAi = () => {
+    stopVoice();
+    setShowAi(false);
   };
 
   const LocationCard = () => {
@@ -30,11 +61,7 @@ const LocationsScreen = ({ navigation }: Props) => {
       <View style={[styles.elevation, styles.card]}>
         <Pressable 
           onPress={handleNavigateToCalendar}
-          style={({ pressed }) => [
-            {
-              opacity: pressed ? 0.5 : 1, // Change opacity when pressed
-            },
-          ]}
+          style={({ pressed }) => [{ opacity: pressed ? 0.5 : 1 }]}
         >
           <Image source={PlaceholderImage} style={styles.image} />
           <Text style={styles.locationText}>Location 1</Text>
@@ -46,15 +73,33 @@ const LocationsScreen = ({ navigation }: Props) => {
 
   return (
     <View style={styles.background}>
-      {/* Header with Logout button */}
+      {/* Header */}
       <View style={styles.header}>
         <Text style={styles.headerText}>Choose location</Text>
       </View>
+
+      {/* AI Assistance Section */}
+      {showAi && (
+        <View style={styles.aiContainer}>
+          <Image source={require('../../assets/AI_nurse.jpg')} style={styles.aiIcon} />
+          <View style={styles.aiTextContainer}>
+            <Text style={styles.aiText}>Please click on your preferred location for your appointment.</Text>
+            <TouchableOpacity style={styles.controlButton} onPress={handlePauseResume}>
+              <Text style={styles.controlButtonText}>{isSpeaking ? 'Pause' : 'Play'}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.closeButton} onPress={handleCloseAi}>
+              <Text style={styles.closeButtonText}>X</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      )}
+
+      {/* Location Cards */}
       <View style={{ height: 650, overflow: 'hidden' }}>
         <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollViewContent}>
-          <LocationCard></LocationCard>
-          <LocationCard></LocationCard>
-          <LocationCard></LocationCard>
+          <LocationCard />
+          <LocationCard />
+          <LocationCard />
         </ScrollView>
       </View>
     </View>
@@ -110,7 +155,58 @@ const styles = StyleSheet.create({
   locationText: {
     paddingTop: 10,
     fontSize: 20,
-  }
+  },
+  aiContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginVertical: 20,
+  },
+  aiIcon: {
+    width: 50,
+    height: 80,
+    marginRight: 10,
+  },
+  aiTextContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    padding: 10,
+    borderRadius: 10,
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowRadius: 6,
+    elevation: 2,
+  },
+  aiText: {
+    fontSize: 16,
+    color: '#333',
+    marginRight: 10,
+  },
+  controlButton: {
+    backgroundColor: '#007AFF',
+    borderRadius: 15,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    marginRight: 10,
+  },
+  controlButtonText: {
+    color: '#fff',
+    fontSize: 12,
+    fontWeight: 'bold',
+  },
+  closeButton: {
+    backgroundColor: '#ff4d4d',
+    borderRadius: 15,
+    width: 20,
+    height: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  closeButtonText: {
+    color: '#fff',
+    fontSize: 12,
+    fontWeight: 'bold',
+  },
 });
 
 export default LocationsScreen;
