@@ -56,20 +56,15 @@ const LocationsScreen = ({ navigation, isAiEnabled }: Props) => {
     setShowAi(false);
   };
 
-  const LocationCard = () => {
-    return (
-      <View style={[styles.elevation, styles.card]}>
-        <Pressable 
-          onPress={handleNavigateToCalendar}
-          style={({ pressed }) => [{ opacity: pressed ? 0.5 : 1 }]}
-        >
-          <Image source={PlaceholderImage} style={styles.image} />
-          <Text style={styles.locationText}>Location 1</Text>
-          <Text style={styles.locationText}>Address</Text>
-        </Pressable>
-      </View>
-    );
-  };
+  const LocationCard = () => (
+    <View style={[styles.elevation, styles.card]}>
+      <Pressable onPress={handleNavigateToCalendar} style={({ pressed }) => [{ opacity: pressed ? 0.5 : 1 }]}>
+        <Image source={PlaceholderImage} style={styles.image} />
+        <Text style={styles.locationText}>Location 1</Text>
+        <Text style={styles.locationText}>Address</Text>
+      </Pressable>
+    </View>
+  );
 
   return (
     <View style={styles.background}>
@@ -83,12 +78,12 @@ const LocationsScreen = ({ navigation, isAiEnabled }: Props) => {
         <View style={styles.aiContainer}>
           <Image source={require('../../assets/AI_nurse.jpg')} style={styles.aiIcon} />
           <View style={styles.aiTextContainer}>
+            <TouchableOpacity style={styles.closeButton} onPress={handleCloseAi}>
+              <Text style={styles.closeButtonText}>X</Text>
+            </TouchableOpacity>
             <Text style={styles.aiText}>Please click on your preferred location for your appointment.</Text>
             <TouchableOpacity style={styles.controlButton} onPress={handlePauseResume}>
               <Text style={styles.controlButtonText}>{isSpeaking ? 'Pause' : 'Play'}</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.closeButton} onPress={handleCloseAi}>
-              <Text style={styles.closeButtonText}>X</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -115,7 +110,7 @@ const styles = StyleSheet.create({
   },
   header: {
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     width: '100%',
     paddingTop: 20,
     paddingBottom: 20,
@@ -128,7 +123,6 @@ const styles = StyleSheet.create({
   scrollView: {
     width: '100%',
     height: '100%',
-    overflow: 'scroll',
   },
   scrollViewContent: {
     flexGrow: 1,
@@ -176,18 +170,20 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 6,
     elevation: 2,
+    width: 250, // Narrow width for more vertical height
+    position: 'relative',
   },
   aiText: {
     fontSize: 16,
     color: '#333',
-    marginRight: 10,
+    textAlign: 'center',
+    marginVertical: 10,
   },
   controlButton: {
     backgroundColor: '#007AFF',
     borderRadius: 15,
     paddingHorizontal: 10,
     paddingVertical: 5,
-    marginRight: 10,
   },
   controlButtonText: {
     color: '#fff',
@@ -195,6 +191,9 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   closeButton: {
+    position: 'absolute',
+    top: 5,
+    right: 5,
     backgroundColor: '#ff4d4d',
     borderRadius: 15,
     width: 20,
@@ -210,3 +209,4 @@ const styles = StyleSheet.create({
 });
 
 export default LocationsScreen;
+
