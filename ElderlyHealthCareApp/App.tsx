@@ -1,25 +1,25 @@
-import 'react-native-gesture-handler';
-import React, { useState } from 'react';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { Icon } from 'react-native-elements';
+import React, { useState } from 'react';
 import { View } from 'react-native';
+import { Icon } from 'react-native-elements';
+import 'react-native-gesture-handler';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 // Import screens
-import { AuthProps, RegisteredUser } from './types';
 import LoginScreen from './screens/auth/LoginScreen';
 import RegistrationScreen from './screens/auth/RegistrationScreen';
-import HomeScreen from './screens/mainscreens/HomeScreen';
-import CreateApptScreen from './screens/mainscreens/CreateApptScreen';
-import ViewEditApptScreen from './screens/mainscreens/ViewEditApptScreen';
-import ReminderScreen from './screens/mainscreens/ReminderScreen';
 import CalendarScreen from './screens/create-appointment screens/Calendar';
+import CreateApptConfirmationScreen from './screens/create-appointment screens/CreateApptConfirmation';
 import LocationsScreen from './screens/create-appointment screens/Locations';
 import TimeslotsScreen from './screens/create-appointment screens/Timeslots';
-import CreateApptConfirmationScreen from './screens/create-appointment screens/CreateApptConfirmation';
-import SettingScreen from './screens/SettingScreen'; 
+import CreateApptScreen from './screens/mainscreens/CreateApptScreen';
+import HomeScreen from './screens/mainscreens/HomeScreen';
+import ReminderScreen from './screens/mainscreens/ReminderScreen';
+import ViewEditApptScreen from './screens/mainscreens/ViewEditApptScreen';
+import SettingScreen from './screens/SettingScreen';
+import { AuthProps, RegisteredUser } from './types';
 
 const Stack = createStackNavigator();
 const Tab = createMaterialTopTabNavigator();
@@ -146,12 +146,14 @@ export default function App() {
           </Stack.Screen>
 
           <Stack.Screen name="Locations">
-            {(props) => (
-              <LocationsScreen
-                {...props}
-              />
-            )}
-          </Stack.Screen>
+  {(props) => (
+    <LocationsScreen
+      {...props}
+      isAiEnabled={isAiEnabled} 
+    />
+  )}
+</Stack.Screen>
+
 
           <Stack.Screen name="Calendar">
             {(props) => (
