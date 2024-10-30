@@ -1,97 +1,119 @@
-import React, { useState } from 'react';
-import { 
-  View, 
-  Text, 
-  TouchableOpacity, 
-  StyleSheet, 
-  ScrollView, 
-  Alert 
+import { StackNavigationProp } from '@react-navigation/stack';
+import * as Speech from 'expo-speech';
+import React, { useEffect, useState } from 'react';
+import {
+  Alert,
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 import ModalDropdown from 'react-native-modal-dropdown';
 import { globalStyles } from '../../styles/Theme';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RouteProp } from '@react-navigation/native';
-import { RootStackParamList, Appointment } from '../../types';
+import { Appointment, RootStackParamList } from '../../types';
 
-type EditYourApptScreenNavigationProp = StackNavigationProp<
-  RootStackParamList,
-  'Edit Appointment'
->;
-
-type EditYourApptScreenRouteProp = RouteProp<RootStackParamList, 'Edit Appointment'>;
+type EditYourApptScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Edit Appointment'>;
 
 type Props = {
   navigation: EditYourApptScreenNavigationProp;
-  route: EditYourApptScreenRouteProp;
+  route: { params: { appointment: Appointment; onSave: (newAppointment: Appointment) => void } };
+  isAiEnabled: boolean;
 };
 
-// Data for Dropdowns
+// Dropdown data
 const locations = ['Woodlands Clinic', 'Khoo Teck Phuat Hospital', 'Sengkang Hospital'];
-const times = [
-  '10:00 AM', '10:30 AM',
-  '11:00 AM (Unavailable)', '11:30 AM (Unavailable)',
-  '12:00 PM', '1:00 PM',
-  '2:00 PM (Unavailable)', '2:30 PM (Unavailable)',
-  '3:00 PM', '3:30 PM', '4:00 PM'
-];
+const times = ['10:00 AM', '10:30 AM', '11:00 AM (Unavailable)', '11:30 AM (Unavailable)', '12:00 PM'];
 const types = ['Health Check-up', 'Blood Test', 'Surgery', 'Report Sick'];
 const days = Array.from({ length: 31 }, (_, i) => `${i + 1}`);
-const months = [
-  'January', 'February', 'March', 'April', 'May', 'June',
-  'July', 'August', 'September', 'October', 'November', 'December'
-];
+const months = ['January', 'February', 'March', 'April'];
 const years = Array.from({ length: 7 }, (_, i) => `${2024 + i}`);
 
-const EditYourApptScreen: React.FC<Props> = ({ route, navigation }) => {
+const EditYourApptScreen: React.FC<Props> = ({ route, navigation, isAiEnabled }) => {
   const { appointment, onSave } = route.params;
-
   const [location, setLocation] = useState(appointment.location);
   const [day, setDay] = useState(appointment.day);
   const [month, setMonth] = useState(appointment.month);
   const [year, setYear] = useState(appointment.year);
   const [time, setTime] = useState(appointment.time);
   const [type, setType] = useState(appointment.type);
+  const [isSpeaking, setIsSpeaking] = useState(false);
+  const [showAi, setShowAi] = useState(isAiEnabled);
+
+  useEffect(() => {
+    if (isAiEnabled) {
+      playVoice();
+    }
+    setShowAi(isAiEnabled);
+  }, [isAiEnabled]);
+
+  const playVoice = () => {
+    Speech.speak('This is the edit section for your current appointment.', {
+      onStart: () => setIsSpeaking(true),
+      onDone: () => setIsSpeaking(false),
+    });
+  };
+
+  const stopVoice = () => {
+    Speech.stop();
+    setIsSpeaking(false);
+  };
 
   const handleConfirm = () => {
     if (time.includes('Unavailable')) {
       Alert.alert('Error', 'You cannot select an unavailable time.');
       return;
     }
-
     const selectedDate = new Date(`${month} ${day}, ${year}`);
-    const currentDate = new Date();
-
-    if (selectedDate <= currentDate) {
+    if (selectedDate <= new Date()) {
       Alert.alert('Error', 'Please select a future date.');
       return;
     }
-
-    Alert.alert(
-      'Confirm Changes',
-      'Are you sure you want to make changes to your current appointment?',
-      [
-        { text: 'Cancel', style: 'cancel' },
-        {
-          text: 'Yes',
-          onPress: () => {
-            const updatedAppointment: Appointment = { 
-              location, 
-              day, 
-              month, 
-              year, 
-              time, 
-              type 
-            };
-            onSave(updatedAppointment);
-            navigation.goBack();
-          },
+    Alert.alert('Confirm Changes', 'Are you sure you want to make changes?', [
+      { text: 'Cancel', style: 'cancel' },
+      {
+        text: 'Yes',
+        onPress: () => {
+          const updatedAppointment: Appointment = { location, day, month, year, time, type };
+          onSave(updatedAppointment);
+          navigation.goBack();
         },
-      ]
-    );
+      },
+    ]);
+  };
+
+  const handleCloseAi = () => {
+    stopVoice();
+    setShowAi(false);
+  };
+
+  const handlePauseResume = () => {
+    if (isSpeaking) {
+      stopVoice();
+    } else {
+      playVoice();
+    }
   };
 
   return (
     <ScrollView contentContainerStyle={[globalStyles.container, styles.background]}>
+      {/* AI Assistance Section */}
+      {showAi && (
+        <View style={styles.aiContainer}>
+          <Image source={require('../../assets/AI_nurse.jpg')} style={styles.aiIcon} />
+          <View style={styles.aiTextContainer}>
+            <TouchableOpacity style={styles.closeButton} onPress={handleCloseAi}>
+              <Text style={styles.closeButtonText}>X</Text>
+            </TouchableOpacity>
+            <Text style={styles.aiText}>This is the edit section for your current appointment.</Text>
+            <TouchableOpacity style={styles.controlButton} onPress={handlePauseResume}>
+              <Text style={styles.controlButtonText}>{isSpeaking ? 'Pause' : 'Play'}</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      )}
+
       <Text style={styles.title}>Edit Appointment</Text>
 
       {/* Hospital Dropdown */}
@@ -214,6 +236,62 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: 16,
+    fontWeight: 'bold',
+  },
+  // AI Box Styles
+  aiContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginVertical: 20,
+  },
+  aiIcon: {
+    width: 50,
+    height: 80,
+    marginRight: 10,
+  },
+  aiTextContainer: {
+    backgroundColor: '#fff',
+    padding: 10,
+    borderRadius: 10,
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowRadius: 6,
+    elevation: 2,
+    width: 250,
+    alignItems: 'center',
+    position: 'relative',
+  },
+  aiText: {
+    fontSize: 16,
+    color: '#333',
+    textAlign: 'center',
+    marginBottom: 10,
+  },
+  closeButton: {
+    position: 'absolute',
+    top: 5,
+    right: 5,
+    backgroundColor: '#ff4d4d',
+    borderRadius: 15,
+    width: 20,
+    height: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  closeButtonText: {
+    color: '#fff',
+    fontSize: 12,
+    fontWeight: 'bold',
+  },
+  controlButton: {
+    backgroundColor: '#007AFF',
+    borderRadius: 15,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+  },
+  controlButtonText: {
+    color: '#fff',
+    fontSize: 12,
     fontWeight: 'bold',
   },
 });
