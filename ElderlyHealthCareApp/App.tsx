@@ -14,14 +14,14 @@ import CalendarScreen from './screens/create-appointment screens/Calendar';
 import CreateApptConfirmationScreen from './screens/create-appointment screens/CreateApptConfirmation';
 import LocationsScreen from './screens/create-appointment screens/Locations';
 import TimeslotsScreen from './screens/create-appointment screens/Timeslots';
+import CurrentApptScreen from './screens/edit-appt/CurrentApptScreen';
+import EditYourApptScreen from './screens/edit-appt/EditYourApptScreen';
 import CreateApptScreen from './screens/mainscreens/CreateApptScreen';
 import HomeScreen from './screens/mainscreens/HomeScreen';
 import ReminderScreen from './screens/mainscreens/ReminderScreen';
 import ViewEditApptScreen from './screens/mainscreens/ViewEditApptScreen';
 import SettingScreen from './screens/SettingScreen';
-import CurrentApptScreen from './screens/edit-appt/CurrentApptScreen';
-import EditYourApptScreen from './screens/edit-appt/EditYourApptScreen';
-import { AuthProps, RegisteredUser, Appointment } from './types';
+import { Appointment, AuthProps, RegisteredUser } from './types';
 
 const Stack = createStackNavigator();
 const Tab = createMaterialTopTabNavigator();
@@ -164,7 +164,7 @@ export default function App() {
           </Stack.Screen>
 
           <Stack.Screen name="Current Appointment">
-            {(props) => <CurrentApptScreen {...props} />}
+            {(props) => <CurrentApptScreen {...props}  isAiEnabled={isAiEnabled} />}
           </Stack.Screen>
 
           <Stack.Screen name="Edit Appointment">
@@ -186,6 +186,7 @@ export default function App() {
                     ...props.route,
                     params: { appointment, onSave },
                   }}
+                  isAiEnabled={isAiEnabled}
                   navigation={props.navigation}
                 />
               );
