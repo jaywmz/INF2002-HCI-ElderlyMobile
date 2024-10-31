@@ -1,6 +1,7 @@
 import { StackNavigationProp } from '@react-navigation/stack';
+import { useFocusEffect } from '@react-navigation/native';
 import * as Speech from 'expo-speech';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import {
   Alert,
   Image,
@@ -27,13 +28,26 @@ const CurrentApptScreen: React.FC<Props> = ({ navigation, isAiEnabled }) => {
   ]);
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [showAi, setShowAi] = useState(isAiEnabled);
+  const [hasVisited, setHasVisited] = useState(false);
 
+  // Play AI voice only on the first load
   useEffect(() => {
-    if (isAiEnabled) {
+    if (isAiEnabled && !hasVisited) {
       playVoice();
+      setHasVisited(true);
     }
     setShowAi(isAiEnabled);
-  }, [isAiEnabled]);
+  }, [isAiEnabled, hasVisited]);
+
+  // Use `useFocusEffect` to trigger voice when revisiting
+  useFocusEffect(
+    useCallback(() => {
+      if (isAiEnabled && hasVisited) {
+        playVoice();
+      }
+      return () => stopVoice(); // Stop voice when navigating away
+    }, [isAiEnabled, hasVisited])
+  );
 
   const playVoice = () => {
     Speech.speak('This is the current appointment that you have.', {
@@ -219,4 +233,3 @@ const styles = StyleSheet.create({
 });
 
 export default CurrentApptScreen;
-
