@@ -1,6 +1,7 @@
+import { useFocusEffect } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import * as Speech from 'expo-speech';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { globalStyles } from '../../styles/Theme';
 import { AuthProps, RootStackParamList } from '../../types';
@@ -10,16 +11,28 @@ type ReminderScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Rem
 type Props = {
   navigation: ReminderScreenNavigationProp;
   isAiEnabled: boolean;
+  screenId: number; // Unique identifier for this screen
+  currentScreenId: number | null; // The currently active screen ID
+  setCurrentScreenId: React.Dispatch<React.SetStateAction<number | null>>; // Function to set the active screen ID
 } & AuthProps;
 
-const ReminderScreen = ({ navigation, setRegisteredUser, isAiEnabled }: Props) => {
+const ReminderScreen = ({ navigation, setRegisteredUser, isAiEnabled, screenId, currentScreenId, setCurrentScreenId }: Props) => {
   const [isSpeaking, setIsSpeaking] = useState(false);
 
-  useEffect(() => {
-    if (isAiEnabled) {
-      playVoice();
-    }
-  }, [isAiEnabled]);
+  useFocusEffect(
+    useCallback(() => {
+      // Set the current screen ID when this screen is focused
+      setCurrentScreenId(screenId);
+
+      // Play voice only if AI is enabled and this screen is active
+      if (isAiEnabled && currentScreenId === screenId) {
+        playVoice();
+      }
+
+      // Stop voice when leaving the screen
+      return () => stopVoice();
+    }, [isAiEnabled, currentScreenId])
+  );
 
   const playVoice = () => {
     Speech.speak('This is the Reminder page. Click on the Pill icon to get started.', {
