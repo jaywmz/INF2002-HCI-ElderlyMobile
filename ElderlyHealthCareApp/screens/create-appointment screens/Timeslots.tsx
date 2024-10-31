@@ -1,6 +1,7 @@
 import { StackNavigationProp } from '@react-navigation/stack';
+import { useFocusEffect } from '@react-navigation/native';
 import * as Speech from 'expo-speech';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { globalStyles } from '../../styles/Theme';
 import { RootStackParamList } from '../../types';
@@ -15,12 +16,25 @@ type Props = {
 const TimeslotsScreen = ({ navigation, isAiEnabled }: Props) => {
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [showAi, setShowAi] = useState(isAiEnabled);
+  const [hasVisited, setHasVisited] = useState(false); // Track initial visit
 
+  // Play AI voice on first screen load
   useEffect(() => {
-    if (isAiEnabled) {
-      playVoice('Please choose your preferred appointment timeslot.');
+    if (isAiEnabled && !hasVisited) {
+      playVoice();
+      setHasVisited(true); // Mark as visited to prevent auto-play on every return
     }
-  }, [isAiEnabled]);
+  }, [isAiEnabled, hasVisited]);
+
+  // Use `useFocusEffect` to handle re-focus events and play voice if revisited
+  useFocusEffect(
+    useCallback(() => {
+      if (isAiEnabled && hasVisited) {
+        playVoice();
+      }
+      return () => stopVoice(); // Stop voice when navigating away
+    }, [isAiEnabled, hasVisited])
+  );
 
   const playVoice = (text: string = 'Please choose your preferred appointment timeslot.') => {
     Speech.speak(text, {
