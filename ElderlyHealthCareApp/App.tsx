@@ -26,7 +26,8 @@ import { Appointment, AuthProps, RegisteredUser } from './types';
 const Stack = createStackNavigator();
 const Tab = createMaterialTopTabNavigator();
 
-function MainTabs({ registeredUser, setRegisteredUser, isAiEnabled }: AuthProps & { isAiEnabled: boolean }) {
+function MainTabs({ registeredUser, setRegisteredUser, isAiEnabled,  currentScreenId,
+  setCurrentScreenId }: AuthProps & { isAiEnabled: boolean , currentScreenId: number | null, setCurrentScreenId: React.Dispatch<React.SetStateAction<number | null>> }) {
   return (
     <View style={{ flex: 1 }}>
       <Tab.Navigator
@@ -55,6 +56,9 @@ function MainTabs({ registeredUser, setRegisteredUser, isAiEnabled }: AuthProps 
               registeredUser={registeredUser}
               setRegisteredUser={setRegisteredUser}
               isAiEnabled={isAiEnabled}
+              screenId={1}  // Assign a unique screen ID
+              currentScreenId={currentScreenId}
+              setCurrentScreenId={setCurrentScreenId}
             />
           )}
         </Tab.Screen>
@@ -74,6 +78,9 @@ function MainTabs({ registeredUser, setRegisteredUser, isAiEnabled }: AuthProps 
               registeredUser={registeredUser}
               setRegisteredUser={setRegisteredUser}
               isAiEnabled={isAiEnabled}
+              screenId={2}  // Assign a unique screen ID
+              currentScreenId={currentScreenId}
+              setCurrentScreenId={setCurrentScreenId}
             />
           )}
         </Tab.Screen>
@@ -93,6 +100,9 @@ function MainTabs({ registeredUser, setRegisteredUser, isAiEnabled }: AuthProps 
               registeredUser={registeredUser}
               setRegisteredUser={setRegisteredUser}
               isAiEnabled={isAiEnabled}
+              screenId={3}  // Assign a unique screen ID
+              currentScreenId={currentScreenId}
+              setCurrentScreenId={setCurrentScreenId}
             />
           )}
         </Tab.Screen>
@@ -112,6 +122,9 @@ function MainTabs({ registeredUser, setRegisteredUser, isAiEnabled }: AuthProps 
               registeredUser={registeredUser}
               setRegisteredUser={setRegisteredUser}
               isAiEnabled={isAiEnabled}
+              screenId={4}  // Assign a unique screen ID
+              currentScreenId={currentScreenId}
+              setCurrentScreenId={setCurrentScreenId}
             />
           )}
         </Tab.Screen>
@@ -123,6 +136,8 @@ function MainTabs({ registeredUser, setRegisteredUser, isAiEnabled }: AuthProps 
 export default function App() {
   const [registeredUser, setRegisteredUser] = useState<RegisteredUser | null>(null);
   const [isAiEnabled, setIsAiEnabled] = useState(true);
+  const [currentScreenId, setCurrentScreenId] = useState<number | null>(1); // Default to Home screen ID
+
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
@@ -143,6 +158,8 @@ export default function App() {
                 registeredUser={registeredUser}
                 setRegisteredUser={setRegisteredUser}
                 isAiEnabled={isAiEnabled}
+                currentScreenId={currentScreenId}
+                setCurrentScreenId={setCurrentScreenId}
               />
             )}
           </Stack.Screen>
