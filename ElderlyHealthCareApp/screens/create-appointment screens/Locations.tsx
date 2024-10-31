@@ -1,7 +1,8 @@
+import { useFocusEffect } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Image } from 'expo-image';
 import * as Speech from 'expo-speech';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { RootStackParamList } from '../../types';
@@ -18,12 +19,26 @@ type Props = {
 const LocationsScreen = ({ navigation, isAiEnabled }: Props) => {
   const [showAi, setShowAi] = useState(isAiEnabled);
   const [isSpeaking, setIsSpeaking] = useState(false);
+  const [hasVisited, setHasVisited] = useState(false); // Track if the screen has been visited before
 
+  // Play AI voice on initial load if not previously visited
   useEffect(() => {
-    if (isAiEnabled) {
-      playVoice('Please click on your preferred location for your appointment.');
+    if (isAiEnabled && !hasVisited) {
+      playVoice();
+      setHasVisited(true); // Mark as visited after playing the first time
     }
-  }, [isAiEnabled]);
+  }, [isAiEnabled, hasVisited]);
+
+  useFocusEffect(
+    useCallback(() => {
+      // Play AI voice every time the screen regains focus (after initial load)
+      if (isAiEnabled && hasVisited) {
+        playVoice();
+      }
+      // Stop voice when navigating away
+      return () => stopVoice();
+    }, [isAiEnabled, hasVisited])
+  );
 
   const playVoice = (text: string = 'Please click on your preferred location for your appointment.') => {
     Speech.speak(text, {
