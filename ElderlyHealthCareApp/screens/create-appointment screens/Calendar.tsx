@@ -1,6 +1,7 @@
 import { StackNavigationProp } from '@react-navigation/stack';
+import { useFocusEffect } from '@react-navigation/native';
 import * as Speech from 'expo-speech';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Calendar } from 'react-native-calendars';
 import { RootStackParamList } from '../../types';
@@ -16,12 +17,25 @@ const CalendarScreen = ({ navigation, isAiEnabled }: Props) => {
   const [selectedDate, setSelectedDate] = useState('');
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [showAi, setShowAi] = useState(isAiEnabled);
+  const [hasVisited, setHasVisited] = useState(false); // Track if the screen has been visited
 
+  // Play AI voice on initial load if not previously visited
   useEffect(() => {
-    if (isAiEnabled) {
-      playVoice('Please choose your preferred appointment date from the calendar below.');
+    if (isAiEnabled && !hasVisited) {
+      playVoice();
+      setHasVisited(true); // Mark as visited after first play
     }
-  }, [isAiEnabled]);
+  }, [isAiEnabled, hasVisited]);
+
+  // Handle screen focus and re-focus events
+  useFocusEffect(
+    useCallback(() => {
+      if (isAiEnabled && hasVisited) {
+        playVoice();
+      }
+      return () => stopVoice(); // Stop voice when navigating away
+    }, [isAiEnabled, hasVisited])
+  );
 
   const playVoice = (text: string = 'Please choose your preferred appointment date from the calendar below.') => {
     Speech.speak(text, {
@@ -187,3 +201,4 @@ const styles = StyleSheet.create({
 });
 
 export default CalendarScreen;
+
