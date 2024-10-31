@@ -1,32 +1,39 @@
-import { StackNavigationProp } from '@react-navigation/stack';
+import { useFocusEffect } from '@react-navigation/native';
 import * as Speech from 'expo-speech';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
 import { globalStyles } from '../../styles/Theme';
-import { AuthProps, RootStackParamList } from '../../types';
-
-type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
+import { AuthProps } from '../../types';
 
 type Props = {
-  navigation: HomeScreenNavigationProp;
+  navigation: any;
   isAiEnabled: boolean;
+  screenId: number; // Unique identifier for this screen
+  currentScreenId: number | null; // The currently active screen ID
+  setCurrentScreenId: React.Dispatch<React.SetStateAction<number | null>>; // Function to set the active screen ID
 } & AuthProps;
 
-const HomeScreen = ({ navigation, registeredUser, setRegisteredUser, isAiEnabled }: Props) => {
+const HomeScreen = ({ navigation, registeredUser, setRegisteredUser, isAiEnabled, screenId, currentScreenId, setCurrentScreenId }: Props) => {
   const [showAi, setShowAi] = useState(isAiEnabled);
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [showNextMessage, setShowNextMessage] = useState(false);
 
-  useEffect(() => {
-    // Update showAi whenever isAiEnabled changes
-    setShowAi(isAiEnabled);
+  // Use focus effect to detect when the screen becomes active
+  useFocusEffect(
+    useCallback(() => {
+      // Set the current screen ID to this screen's ID when it becomes active
+      setCurrentScreenId(screenId);
 
-    if (isAiEnabled) {
-      playVoice('Welcome, I am Joy. How can I assist you today? To turn off AI, please head towards Setting page.');
-    } else {
-      stopVoice();
-    }
-  }, [isAiEnabled]);
+      // Play the AI voice only if this screen is active, AI is enabled, and the screen ID matches
+      if (isAiEnabled && currentScreenId === screenId) {
+        playVoice('Welcome, I am Joy. How can I assist you today? To turn off AI, please head towards Setting page.');
+      }
+
+      return () => {
+        stopVoice(); // Stop the voice when leaving the screen
+      };
+    }, [isAiEnabled, currentScreenId])
+  );
 
   const playVoice = (text: string) => {
     Speech.speak(text, {
