@@ -1,6 +1,7 @@
 import { StackNavigationProp } from '@react-navigation/stack';
+import { useFocusEffect } from '@react-navigation/native';
 import * as Speech from 'expo-speech';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import {
   Alert,
   Image,
@@ -40,13 +41,26 @@ const EditYourApptScreen: React.FC<Props> = ({ route, navigation, isAiEnabled })
   const [type, setType] = useState(appointment.type);
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [showAi, setShowAi] = useState(isAiEnabled);
+  const [hasVisited, setHasVisited] = useState(false);
 
+  // Initial load setup and AI speech
   useEffect(() => {
-    if (isAiEnabled) {
+    if (isAiEnabled && !hasVisited) {
       playVoice();
+      setHasVisited(true);
     }
     setShowAi(isAiEnabled);
-  }, [isAiEnabled]);
+  }, [isAiEnabled, hasVisited]);
+
+  // UseFocusEffect to trigger playback on re-focus
+  useFocusEffect(
+    useCallback(() => {
+      if (isAiEnabled && hasVisited) {
+        playVoice();
+      }
+      return () => stopVoice(); // Stop voice when navigating away
+    }, [isAiEnabled, hasVisited])
+  );
 
   const playVoice = () => {
     Speech.speak('This is the edit section for your current appointment.', {
@@ -297,3 +311,4 @@ const styles = StyleSheet.create({
 });
 
 export default EditYourApptScreen;
+
