@@ -1,25 +1,34 @@
-import { StackNavigationProp } from '@react-navigation/stack';
+import { useFocusEffect } from '@react-navigation/native';
 import * as Speech from 'expo-speech';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { globalStyles } from '../../styles/Theme';
-import { AuthProps, RootStackParamList } from '../../types';
-
-type CreateApptScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Create Appointment'>;
+import { AuthProps } from '../../types';
 
 type Props = {
-  navigation: CreateApptScreenNavigationProp;
+  navigation: any;
   isAiEnabled: boolean;
+  screenId: number; // Unique identifier for this screen
+  currentScreenId: number | null; // The currently active screen ID
+  setCurrentScreenId: React.Dispatch<React.SetStateAction<number | null>>; // Function to set the active screen ID
 } & AuthProps;
 
-const CreateApptScreen = ({ navigation, setRegisteredUser, isAiEnabled }: Props) => {
+const CreateApptScreen = ({ navigation, setRegisteredUser, isAiEnabled, screenId, currentScreenId, setCurrentScreenId }: Props) => {
   const [isSpeaking, setIsSpeaking] = useState(false);
 
-  useEffect(() => {
-    if (isAiEnabled) {
-      playVoice();
-    }
-  }, [isAiEnabled]);
+  useFocusEffect(
+    useCallback(() => {
+      // Set the current screen ID when this screen becomes active
+      setCurrentScreenId(screenId);
+
+      // Play voice only if AI is enabled and this screen is active
+      if (isAiEnabled && currentScreenId === screenId) {
+        playVoice();
+      }
+
+      return () => stopVoice(); // Stop the voice when leaving the screen
+    }, [isAiEnabled, currentScreenId])
+  );
 
   const playVoice = () => {
     Speech.speak('This is the Create Appointment page. Click on the Calendar icon to get started.', {
