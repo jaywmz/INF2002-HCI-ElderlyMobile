@@ -1,26 +1,38 @@
-import { StackNavigationProp } from '@react-navigation/stack';
+import { useFocusEffect } from '@react-navigation/native';
 import * as Speech from 'expo-speech';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { globalStyles } from '../../styles/Theme';
 import { AuthProps, RootStackParamList } from '../../types';
+import { StackNavigationProp } from '@react-navigation/stack';
 
 type ViewEditApptScreenNavigationProp = StackNavigationProp<RootStackParamList, 'View/Edit Appointment'>;
 
 type Props = {
   navigation: ViewEditApptScreenNavigationProp;
   isAiEnabled: boolean;
+  screenId: number; // Unique identifier for this screen
+  currentScreenId: number | null; // The currently active screen ID
+  setCurrentScreenId: React.Dispatch<React.SetStateAction<number | null>>; // Function to set the active screen ID
 } & AuthProps;
 
-const ViewEditApptScreen = ({ navigation, setRegisteredUser, isAiEnabled }: Props) => {
+const ViewEditApptScreen = ({ navigation, setRegisteredUser, isAiEnabled, screenId, currentScreenId, setCurrentScreenId }: Props) => {
   const [showAi, setShowAi] = useState(isAiEnabled);
   const [isSpeaking, setIsSpeaking] = useState(false);
 
-  useEffect(() => {
-    if (isAiEnabled) {
-      playVoice();
-    }
-  }, [isAiEnabled]);
+  useFocusEffect(
+    useCallback(() => {
+      // Set the current screen ID when this screen becomes active
+      setCurrentScreenId(screenId);
+
+      if (isAiEnabled && currentScreenId === screenId) {
+        playVoice();
+      }
+
+      // Stop the voice when leaving the screen
+      return () => stopVoice();
+    }, [isAiEnabled, currentScreenId])
+  );
 
   const playVoice = () => {
     Speech.speak('This is the View or Edit Appointment Page. Click on the Pencil icon to get started.', {
@@ -95,7 +107,7 @@ const ViewEditApptScreen = ({ navigation, setRegisteredUser, isAiEnabled }: Prop
 
       {/* Main Appointment Card */}
       <TouchableOpacity style={styles.card} onPress={handleNavigateToEdit}>
-      <Image source={require('../../assets/edit.jpg')} style={styles.icon} />
+        <Image source={require('../../assets/edit.jpg')} style={styles.icon} />
         <Text style={styles.cardTitle}>View/Edit Appointment</Text>
         <Text style={styles.cardSubtitle}>UI Card-based</Text>
       </TouchableOpacity>
