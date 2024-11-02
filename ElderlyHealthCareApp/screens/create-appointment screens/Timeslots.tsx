@@ -9,14 +9,18 @@ import { RootStackParamList } from '../../types';
 type TimeslotsScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Timeslots'>;
 
 type Props = {
-  navigation: TimeslotsScreenNavigationProp;
   isAiEnabled: boolean;
+  navigation: TimeslotsScreenNavigationProp,
+  date: string | undefined;
+  setTime: (time: string) => void;
 };
 
-const TimeslotsScreen = ({ navigation, isAiEnabled }: Props) => {
+const TimeslotsScreen = ({ isAiEnabled, navigation, date, setTime }: Props) => {
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [showAi, setShowAi] = useState(isAiEnabled);
   const [hasVisited, setHasVisited] = useState(false); // Track initial visit
+  const [selectedTime, setSelectedTime] = useState('');
+  const selectedDate = date;
 
   // Play AI voice on first screen load
   useEffect(() => {
@@ -63,25 +67,27 @@ const TimeslotsScreen = ({ navigation, isAiEnabled }: Props) => {
     }
   };
 
-  const handleBack = () => {
-    navigation.goBack();
-  };
-
-  const handleNavigateToConfirm = () => {
+  const handleNavigateToConfirm = (time : { time : string }) => {
+    setSelectedTime(time.time);
+    setTime(time.time);
     navigation.navigate('CreateApptConfirmation');
   };
 
+  const Timeslot = ({ time = "00:00" }: { time: string }) => {
+    return (
+      <TouchableOpacity style={styles.timeslot} onPress={() => handleNavigateToConfirm({time})}>
+        <Text style={styles.timeslotText}>{time}</Text>
+      </TouchableOpacity> 
+    );
+  };
+
   return (
-    <View style={[globalStyles.container, styles.background]}>
+    <View style={styles.background}>
+
       {/* Header */}
-      <View style={styles.header}>
-        <TouchableOpacity style={styles.logoutButton} onPress={handleBack}>
-          <Text style={styles.logoutText}>Back</Text>
-        </TouchableOpacity>
-        <Text style={styles.headerText}>Choose timeslot</Text>
-        <TouchableOpacity style={styles.logoutButton} onPress={handleNavigateToConfirm}>
-          <Text style={styles.logoutText}>Confirm</Text>
-        </TouchableOpacity>
+      <Text style={styles.chosenDateText}>You have chosen date: {selectedDate}</Text>
+      <View>
+        <Text style={styles.headerText}>Please choose a timeslot</Text>
       </View>
 
       {/* AI Assistance Section */}
@@ -99,6 +105,33 @@ const TimeslotsScreen = ({ navigation, isAiEnabled }: Props) => {
           </View>
         </View>
       )}
+      
+      <View style={styles.timeslotContainer}>
+        <Timeslot time="08:00"/>
+        <Timeslot time="08:30"/>
+        <Timeslot time="09:00"/>
+        <Timeslot time="09:30"/>
+        <Timeslot time="10:00"/>
+        <Timeslot time="10:30"/>
+        <Timeslot time="11:00"/>
+        <Timeslot time="11:30"/>
+        <Timeslot time="12:00"/>
+        <Timeslot time="12:30"/>
+        <Timeslot time="01:00"/>
+        <Timeslot time="01:30"/>
+        <Timeslot time="02:00"/>
+        <Timeslot time="02:30"/>
+        <Timeslot time="03:00"/>
+        <Timeslot time="03:30"/>
+        <Timeslot time="04:00"/>
+      </View>
+      {/* 
+      <View style={styles.confirmBtnContainer}>
+        <TouchableOpacity style={styles.confirmBtn} onPress={handleNavigateToConfirm}>
+          <Text style={styles.confirmBtnText}>Confirm</Text>
+        </TouchableOpacity>
+      </View> 
+      */}
     </View>
   );
 };
@@ -106,33 +139,69 @@ const TimeslotsScreen = ({ navigation, isAiEnabled }: Props) => {
 const styles = StyleSheet.create({
   background: {
     backgroundColor: '#fbe4e4',
+    height: '100%',
   },
-  header: {
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    width: '100%',
-    padding: 20,
-    flexDirection: 'row',
-  },
-  logoutButton: {
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    backgroundColor: '#e0e0e0',
-    borderRadius: 5,
-  },
-  logoutText: {
-    color: '#333',
-    fontWeight: 'bold',
+  chosenDateText: {
+    fontSize: 20,
+    alignSelf: 'center',
+    paddingTop: 20,
   },
   headerText: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: 'bold',
+    alignSelf: 'center',
     color: '#333',
+    padding: 20,
   },
+
+  timeslotContainer: {
+    flexDirection: 'column',
+    flexWrap: 'wrap',
+    alignItems: 'center',
+    alignSelf: 'center',
+    position: 'relative',
+    maxHeight: 470,
+  },
+  timeslot: {
+    margin: 5,
+    paddingTop: 10,
+    paddingBottom: 10,
+    paddingLeft: 20,
+    paddingRight: 20,
+    width: 150,
+    backgroundColor: 'white',
+    borderRadius: 10,
+  },
+  timeslotText: {
+    alignSelf: 'center',
+  },
+
+  confirmBtnContainer: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+  },
+  confirmBtn: {
+    width: '85%',
+    borderRadius: 18,
+    backgroundColor: 'white',
+    padding: 25,
+    marginTop: 20,
+    marginBottom: 20,
+    marginLeft: 'auto',
+    marginRight: 'auto',
+  },
+  confirmBtnText: {
+    fontSize: 28,
+    alignSelf: 'center',
+  },
+
   aiContainer: {
+    alignSelf: 'center',
     flexDirection: 'row',
     alignItems: 'center',
-    marginVertical: 20,
+    marginBottom: 20,
   },
   aiIcon: {
     width: 50,

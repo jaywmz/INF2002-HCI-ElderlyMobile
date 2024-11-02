@@ -11,9 +11,10 @@ type CalendarScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Cal
 type Props = {
   navigation: CalendarScreenNavigationProp;
   isAiEnabled: boolean;
+  setDate: (date : string) => void;
 };
 
-const CalendarScreen = ({ navigation, isAiEnabled }: Props) => {
+const CalendarScreen = ({ navigation, isAiEnabled, setDate }: Props) => {
   const [selectedDate, setSelectedDate] = useState('');
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [showAi, setShowAi] = useState(isAiEnabled);
@@ -53,6 +54,8 @@ const CalendarScreen = ({ navigation, isAiEnabled }: Props) => {
 
   const onDayPress = (day: { dateString: string }) => {
     setSelectedDate(day.dateString);
+    setDate(day.dateString);
+    navigation.navigate("Timeslots");
   };
 
   const handleCloseAi = () => {
@@ -67,6 +70,16 @@ const CalendarScreen = ({ navigation, isAiEnabled }: Props) => {
       playVoice();
     }
   };
+
+  // const handleConfirm = () => {
+  //   if (selectedDate === 'None') {
+  //     return;
+  //   }
+  //   else {
+  //     setDate({ selectedDate });
+  //     navigation.navigate("Timeslots");
+  //   }
+  // };
 
   return (
     <View style={styles.background}>
@@ -92,7 +105,7 @@ const CalendarScreen = ({ navigation, isAiEnabled }: Props) => {
       )}
 
       {/* Calendar and Selected Date */}
-      <View style={styles.container}>
+      <View style={styles.calendarContainer}>
         <Text style={styles.selectedDateText}>
           Selected Date: {selectedDate || 'None'}
         </Text>
@@ -115,20 +128,22 @@ const styles = StyleSheet.create({
   background: {
     flex: 1,
     backgroundColor: '#fbe4e4',
-    alignItems: 'center',
     height: '100%',
   },
-  container: {
-    flex: 1,
-    paddingTop: 20,
-    paddingBottom: 20,
+
+  calendarContainer: {
+    padding: 10,
     width: '90%',
+    height: 'auto',
+    marginRight: 'auto',
+    marginLeft: 'auto',
     backgroundColor: '#fff',
+    borderRadius: 18,
   },
   selectedDateText: {
     fontSize: 18,
     textAlign: 'center',
-    marginBottom: 10,
+    margin: 10,
   },
   header: {
     alignItems: 'center',
@@ -141,10 +156,31 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#333',
   },
+  confirmContainer: {
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    textAlign: 'right',
+  },
+  confirmBtn: {
+    padding: 30,
+    width: '85%',
+    borderRadius: 18,
+    backgroundColor: 'white',
+    marginTop: 20,
+    marginBottom: 20,
+    marginLeft: 'auto',
+    marginRight: 'auto',
+  },
+  confirmBtnText: {
+    fontSize: 28,
+    alignSelf: 'center',
+  },
+
   aiContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginVertical: 20,
+    alignSelf: 'center',
+    marginBottom: 20,
   },
   aiIcon: {
     width: 50,

@@ -137,7 +137,8 @@ export default function App() {
   const [registeredUser, setRegisteredUser] = useState<RegisteredUser | null>(null);
   const [isAiEnabled, setIsAiEnabled] = useState(true);
   const [currentScreenId, setCurrentScreenId] = useState<number | null>(1); // Default to Home screen ID
-
+  const [date, setDate] = useState('');
+  const [time, setTime] = useState('');
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
@@ -169,11 +170,11 @@ export default function App() {
           </Stack.Screen>
 
           <Stack.Screen name="Calendar">
-            {(props) => <CalendarScreen {...props} isAiEnabled={isAiEnabled} />}
+            {(props) => <CalendarScreen {...props} isAiEnabled={isAiEnabled} setDate={setDate}/>}
           </Stack.Screen>
 
           <Stack.Screen name="Timeslots">
-            {(props) => <TimeslotsScreen {...props} isAiEnabled={isAiEnabled} />}
+            {(props) => <TimeslotsScreen {...props} isAiEnabled={isAiEnabled} date={date} setTime={setTime}/>}
           </Stack.Screen>
 
           <Stack.Screen name="CreateApptConfirmation">

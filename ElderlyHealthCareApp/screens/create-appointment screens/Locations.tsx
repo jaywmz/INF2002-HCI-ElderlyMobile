@@ -71,15 +71,17 @@ const LocationsScreen = ({ navigation, isAiEnabled }: Props) => {
     setShowAi(false);
   };
 
-  const LocationCard = () => (
-    <View style={[styles.elevation, styles.card]}>
-      <Pressable onPress={handleNavigateToCalendar} style={({ pressed }) => [{ opacity: pressed ? 0.5 : 1 }]}>
-        <Image source={PlaceholderImage} style={styles.image} />
-        <Text style={styles.locationText}>Location 1</Text>
-        <Text style={styles.locationText}>Address</Text>
-      </Pressable>
-    </View>
-  );
+  const LocationCard = () => {
+    return (
+      <View style={[styles.elevation, styles.card]}>
+        <Pressable onPress={handleNavigateToCalendar} style={({ pressed }) => [{ opacity: pressed ? 0.5 : 1 }]}>
+          <Image source={PlaceholderImage} style={styles.image} />
+          <Text style={styles.locationText}>Location</Text>
+          <Text style={styles.locationText}>Address</Text>
+        </Pressable>
+      </View>
+    );
+  };
 
   return (
     <View style={styles.background}>
@@ -105,7 +107,7 @@ const LocationsScreen = ({ navigation, isAiEnabled }: Props) => {
       )}
 
       {/* Location Cards */}
-      <View style={{ height: 650, overflow: 'hidden' }}>
+      <View style={styles.scrollContainer}>
         <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollViewContent}>
           <LocationCard />
           <LocationCard />
@@ -135,14 +137,19 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#333',
   },
+  scrollContainer: {
+    height: '90%',
+    overflow: 'hidden',
+    marginBottom: 10,
+  },
   scrollView: {
     width: '100%',
-    height: '100%',
+    height: 'auto',
   },
   scrollViewContent: {
     flexGrow: 1,
     alignItems: 'center',
-    paddingBottom: 20,
+    paddingBottom: 'auto',
   },
   card: {
     width: 320,
@@ -168,7 +175,7 @@ const styles = StyleSheet.create({
   aiContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginVertical: 20,
+    marginBottom: 20,
   },
   aiIcon: {
     width: 50,
