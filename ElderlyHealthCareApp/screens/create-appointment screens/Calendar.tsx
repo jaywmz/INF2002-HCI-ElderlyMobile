@@ -154,11 +154,14 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     margin: 10,
   },
+
   aiContainer: {
+    width: '100%',
     flexDirection: 'row',
     alignItems: 'center',
-    alignSelf: 'center',
-    marginBottom: 20,
+    position: 'absolute',
+    bottom: 10,
+    left: 10,
   },
   aiIcon: {
     width: 50,

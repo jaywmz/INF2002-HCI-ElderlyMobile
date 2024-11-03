@@ -92,6 +92,15 @@ const LocationsScreen = ({ navigation, isAiEnabled, setLocation }: Props) => {
         <Text style={styles.headerText}>Choose location</Text>
       </View>
 
+      {/* Location Cards */}
+      <View style={styles.scrollContainer}>
+        <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollViewContent}>
+          <LocationCard locName='Sengkang General Hospital' address='110 Sengkang E Wy, Singapore 544886' />
+          <LocationCard locName='Farrer Park Hospital' address='1 Farrer Park Station Rd, #02-01 Connexion, Singapore 217562'/>
+          <LocationCard locName='Khoo Teck Puat Hospital' address='90 Yishun Central, Singapore 768828'/>
+        </ScrollView>
+      </View>
+    
       {/* AI Assistance Section */}
       {showAi && (
         <View style={styles.aiContainer}>
@@ -107,15 +116,6 @@ const LocationsScreen = ({ navigation, isAiEnabled, setLocation }: Props) => {
           </View>
         </View>
       )}
-
-      {/* Location Cards */}
-      <View style={styles.scrollContainer}>
-        <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollViewContent}>
-          <LocationCard locName='Sengkang General Hospital' address='110 Sengkang E Wy, Singapore 544886' />
-          <LocationCard locName='Farrer Park Hospital' address='1 Farrer Park Station Rd, #02-01 Connexion, Singapore 217562'/>
-          <LocationCard locName='Khoo Teck Puat Hospital' address='90 Yishun Central, Singapore 768828'/>
-        </ScrollView>
-      </View>
     </View>
   );
 };
@@ -132,17 +132,19 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: '100%',
     paddingTop: 20,
-    paddingBottom: 20,
+    paddingBottom: 10,
   },
   headerText: {
     fontSize: 28,
     fontWeight: 'bold',
     color: '#333',
   },
+
   scrollContainer: {
+    paddingTop: 10,
     height: '90%',
+    width: '100%',
     overflow: 'hidden',
-    marginBottom: 10,
   },
   scrollView: {
     width: '100%',
@@ -158,8 +160,8 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: '#ffffff',
     borderRadius: 18,
-    marginBottom: 20,
     alignItems: 'center',
+    marginBottom: 10,
   },
   elevation: {
     elevation: 4,
@@ -179,15 +181,18 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     fontSize: 20,
   },
+
   aiContainer: {
+    width: '100%',
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 20,
+    position: 'absolute',
+    bottom: 10,
+    left: 10,
   },
   aiIcon: {
     width: 50,
     height: 80,
-    marginRight: 10,
   },
   aiTextContainer: {
     backgroundColor: '#fff',

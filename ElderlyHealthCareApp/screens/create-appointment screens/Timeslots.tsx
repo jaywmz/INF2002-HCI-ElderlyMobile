@@ -86,7 +86,7 @@ const TimeslotsScreen = ({ isAiEnabled, navigation, date, setTime }: Props) => {
       {/* Header */}
       <Text style={styles.chosenDateText}>You have chosen date: {selectedDate}</Text>
       <View>
-        <Text style={styles.headerText}>Please choose a timeslot</Text>
+        <Text style={styles.headerText}>Choose timeslot</Text>
       </View>
 
       {/* AI Assistance Section */}
@@ -124,13 +124,7 @@ const TimeslotsScreen = ({ isAiEnabled, navigation, date, setTime }: Props) => {
         <Timeslot time="03:30pm"/>
         <Timeslot time="04:00pm"/>
       </View>
-      {/* 
-      <View style={styles.confirmBtnContainer}>
-        <TouchableOpacity style={styles.confirmBtn} onPress={handleNavigateToConfirm}>
-          <Text style={styles.confirmBtnText}>Confirm</Text>
-        </TouchableOpacity>
-      </View> 
-      */}
+      
     </View>
   );
 };
@@ -143,15 +137,14 @@ const styles = StyleSheet.create({
   chosenDateText: {
     fontSize: 20,
     alignSelf: 'center',
-    paddingTop: 10,
+    paddingTop: 20,
   },
   headerText: {
-    fontSize: 20,
+    fontSize: 28,
     fontWeight: 'bold',
     alignSelf: 'center',
     color: '#333',
-    paddingTop: 10,
-    paddingBottom: 10,
+    paddingVertical: 20,
   },
 
   timeslotContainer: {
@@ -199,10 +192,12 @@ const styles = StyleSheet.create({
   },
 
   aiContainer: {
-    alignSelf: 'center',
+    width: '100%',
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 20,
+    position: 'absolute',
+    bottom: 10,
+    left: 10,
   },
   aiIcon: {
     width: 50,
@@ -217,7 +212,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 6,
     elevation: 2,
-    width: 180, // Reduce width to make text box taller
+    width: 250,
     position: 'relative',
     alignItems: 'center',
   },
