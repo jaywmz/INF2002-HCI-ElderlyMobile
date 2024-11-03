@@ -105,7 +105,10 @@ const ReminderScreen = ({ navigation, setRegisteredUser, isAiEnabled, screenId, 
       )}
 
       {/* Reminder Card */}
-      <TouchableOpacity style={styles.card} onPress={() => alert('Reminder Saved!')}>
+      <TouchableOpacity
+        style={styles.card}
+        onPress={() => navigation.navigate('ReminderCalendar')}
+      >
         <Image
           source={require('../../assets/reminder.jpg')}
           style={styles.icon}
@@ -113,6 +116,7 @@ const ReminderScreen = ({ navigation, setRegisteredUser, isAiEnabled, screenId, 
         <Text style={styles.cardTitle}>Medicine Reminder</Text>
         <Text style={styles.cardSubtitle}>UI Card-based</Text>
       </TouchableOpacity>
+
 
       {/* Back to Home Button */}
       <TouchableOpacity

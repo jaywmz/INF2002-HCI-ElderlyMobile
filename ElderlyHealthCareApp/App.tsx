@@ -19,6 +19,10 @@ import EditYourApptScreen from './screens/edit-appt/EditYourApptScreen';
 import CreateApptScreen from './screens/mainscreens/CreateApptScreen';
 import HomeScreen from './screens/mainscreens/HomeScreen';
 import ReminderScreen from './screens/mainscreens/ReminderScreen';
+import ReminderCalendarScreen from './screens/create-reminder screens/ReminderCalendar';
+import ReminderTimeslotScreen from './screens/create-reminder screens/ReminderTimeslots';
+import ReminderConfirmScreen from './screens/create-reminder screens/ReminderConfirm';
+import ReminderSuccessScreen from './screens/create-reminder screens/ReminderSuccess';
 import ViewEditApptScreen from './screens/mainscreens/ViewEditApptScreen';
 import SettingScreen from './screens/SettingScreen';
 import { Appointment, AuthProps, RegisteredUser } from './types';
@@ -215,6 +219,22 @@ export default function App() {
                 />
               );
             }}
+          </Stack.Screen>
+
+          <Stack.Screen name="ReminderCalendar">
+            {(props) => <ReminderCalendarScreen {...props} isAiEnabled={isAiEnabled} locationProp={location} setDate={setDate} />}
+          </Stack.Screen>
+
+          <Stack.Screen name="ReminderTimeslots">
+            {(props) => <ReminderTimeslotScreen {...props} isAiEnabled={isAiEnabled} date={date} setTime={setTime} />}
+          </Stack.Screen>
+
+          <Stack.Screen name="ReminderConfirm">
+            {(props) => <ReminderConfirmScreen {...props} isAiEnabled={isAiEnabled} date={date} time={time} />}
+          </Stack.Screen>
+
+          <Stack.Screen name="ReminderSuccess">
+            {(props) => <ReminderSuccessScreen {...props} isAiEnabled={isAiEnabled} />}            
           </Stack.Screen>
 
           <Stack.Screen name="Setting" options={{ headerTitle: 'Settings' }}>

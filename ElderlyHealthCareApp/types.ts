@@ -14,6 +14,10 @@ export type RootStackParamList = {
     'Create Appointment': undefined;
     'View/Edit Appointment': undefined;
     Reminders: undefined;
+    ReminderCalendar : undefined;
+    ReminderConfirm : undefined;
+    ReminderSuccess : undefined;
+    ReminderTimeslots : undefined;
     Setting: undefined;
     'Current Appointment': undefined;
     'Edit Appointment': {
