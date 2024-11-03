@@ -3,7 +3,6 @@ import { useFocusEffect } from '@react-navigation/native';
 import * as Speech from 'expo-speech';
 import React, { useEffect, useState, useCallback } from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { globalStyles } from '../../styles/Theme';
 import { RootStackParamList } from '../../types';
 
 type TimeslotsScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Timeslots'>;
@@ -70,7 +69,7 @@ const TimeslotsScreen = ({ isAiEnabled, navigation, date, setTime }: Props) => {
   const handleNavigateToConfirm = (time : { time : string }) => {
     setSelectedTime(time.time);
     setTime(time.time);
-    navigation.navigate('CreateApptConfirmation');
+    navigation.navigate('Confirm');
   };
 
   const Timeslot = ({ time = "00:00" }: { time: string }) => {
@@ -107,23 +106,23 @@ const TimeslotsScreen = ({ isAiEnabled, navigation, date, setTime }: Props) => {
       )}
       
       <View style={styles.timeslotContainer}>
-        <Timeslot time="08:00"/>
-        <Timeslot time="08:30"/>
-        <Timeslot time="09:00"/>
-        <Timeslot time="09:30"/>
-        <Timeslot time="10:00"/>
-        <Timeslot time="10:30"/>
-        <Timeslot time="11:00"/>
-        <Timeslot time="11:30"/>
-        <Timeslot time="12:00"/>
-        <Timeslot time="12:30"/>
-        <Timeslot time="01:00"/>
-        <Timeslot time="01:30"/>
-        <Timeslot time="02:00"/>
-        <Timeslot time="02:30"/>
-        <Timeslot time="03:00"/>
-        <Timeslot time="03:30"/>
-        <Timeslot time="04:00"/>
+        <Timeslot time="08:00am"/>
+        <Timeslot time="08:30am"/>
+        <Timeslot time="09:00am"/>
+        <Timeslot time="09:30am"/>
+        <Timeslot time="10:00am"/>
+        <Timeslot time="10:30am"/>
+        <Timeslot time="11:00am"/>
+        <Timeslot time="11:30am"/>
+        <Timeslot time="12:00pm"/>
+        <Timeslot time="12:30pm"/>
+        <Timeslot time="01:00pm"/>
+        <Timeslot time="01:30pm"/>
+        <Timeslot time="02:00pm"/>
+        <Timeslot time="02:30pm"/>
+        <Timeslot time="03:00pm"/>
+        <Timeslot time="03:30pm"/>
+        <Timeslot time="04:00pm"/>
       </View>
       {/* 
       <View style={styles.confirmBtnContainer}>
@@ -144,14 +143,15 @@ const styles = StyleSheet.create({
   chosenDateText: {
     fontSize: 20,
     alignSelf: 'center',
-    paddingTop: 20,
+    paddingTop: 10,
   },
   headerText: {
     fontSize: 20,
     fontWeight: 'bold',
     alignSelf: 'center',
     color: '#333',
-    padding: 20,
+    paddingTop: 10,
+    paddingBottom: 10,
   },
 
   timeslotContainer: {
@@ -160,7 +160,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignSelf: 'center',
     position: 'relative',
-    maxHeight: 470,
+    maxHeight: 500,
   },
   timeslot: {
     margin: 5,
@@ -174,6 +174,7 @@ const styles = StyleSheet.create({
   },
   timeslotText: {
     alignSelf: 'center',
+    fontSize: 18,
   },
 
   confirmBtnContainer: {

@@ -14,9 +14,10 @@ type LocationsScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Lo
 type Props = {
   navigation: LocationsScreenNavigationProp;
   isAiEnabled: boolean;
+  setLocation: (location : string) => void;
 };
 
-const LocationsScreen = ({ navigation, isAiEnabled }: Props) => {
+const LocationsScreen = ({ navigation, isAiEnabled, setLocation }: Props) => {
   const [showAi, setShowAi] = useState(isAiEnabled);
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [hasVisited, setHasVisited] = useState(false); // Track if the screen has been visited before
@@ -54,7 +55,8 @@ const LocationsScreen = ({ navigation, isAiEnabled }: Props) => {
     setIsSpeaking(false);
   };
 
-  const handleNavigateToCalendar = () => {
+  const handleNavigateToCalendar = (location : { locName : string }) => {
+    setLocation(location.locName);
     navigation.navigate('Calendar');
   };
 
@@ -71,13 +73,13 @@ const LocationsScreen = ({ navigation, isAiEnabled }: Props) => {
     setShowAi(false);
   };
 
-  const LocationCard = () => {
+  const LocationCard = ({ locName, address }: { locName:string; address:string }) => {
     return (
       <View style={[styles.elevation, styles.card]}>
-        <Pressable onPress={handleNavigateToCalendar} style={({ pressed }) => [{ opacity: pressed ? 0.5 : 1 }]}>
+        <Pressable onPress={() => {handleNavigateToCalendar({locName})}} style={({ pressed }) => [{ opacity: pressed ? 0.5 : 1 }]}>
           <Image source={PlaceholderImage} style={styles.image} />
-          <Text style={styles.locationText}>Location</Text>
-          <Text style={styles.locationText}>Address</Text>
+          <Text style={styles.locationText}>{locName}</Text>
+          <Text style={styles.addressText}>{address}</Text>
         </Pressable>
       </View>
     );
@@ -109,9 +111,9 @@ const LocationsScreen = ({ navigation, isAiEnabled }: Props) => {
       {/* Location Cards */}
       <View style={styles.scrollContainer}>
         <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollViewContent}>
-          <LocationCard />
-          <LocationCard />
-          <LocationCard />
+          <LocationCard locName='Sengkang General Hospital' address='110 Sengkang E Wy, Singapore 544886' />
+          <LocationCard locName='Farrer Park Hospital' address='1 Farrer Park Station Rd, #02-01 Connexion, Singapore 217562'/>
+          <LocationCard locName='Khoo Teck Puat Hospital' address='90 Yishun Central, Singapore 768828'/>
         </ScrollView>
       </View>
     </View>
@@ -169,6 +171,11 @@ const styles = StyleSheet.create({
     borderRadius: 18,
   },
   locationText: {
+    paddingTop: 10,
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  addressText: {
     paddingTop: 10,
     fontSize: 20,
   },

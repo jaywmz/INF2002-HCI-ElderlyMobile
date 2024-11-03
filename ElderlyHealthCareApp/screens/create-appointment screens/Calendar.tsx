@@ -11,10 +11,11 @@ type CalendarScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Cal
 type Props = {
   navigation: CalendarScreenNavigationProp;
   isAiEnabled: boolean;
+  locationProp: string | undefined;
   setDate: (date : string) => void;
 };
 
-const CalendarScreen = ({ navigation, isAiEnabled, setDate }: Props) => {
+const CalendarScreen = ({ navigation, isAiEnabled, setDate, locationProp }: Props) => {
   const [selectedDate, setSelectedDate] = useState('');
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [showAi, setShowAi] = useState(isAiEnabled);
@@ -71,19 +72,11 @@ const CalendarScreen = ({ navigation, isAiEnabled, setDate }: Props) => {
     }
   };
 
-  // const handleConfirm = () => {
-  //   if (selectedDate === 'None') {
-  //     return;
-  //   }
-  //   else {
-  //     setDate({ selectedDate });
-  //     navigation.navigate("Timeslots");
-  //   }
-  // };
-
   return (
     <View style={styles.background}>
+
       {/* Header */}
+      <Text style={styles.chosenLocationText}>You have chosen location: {locationProp}</Text>
       <View style={styles.header}>
         <Text style={styles.headerText}>Choose date</Text>
       </View>
@@ -130,6 +123,22 @@ const styles = StyleSheet.create({
     backgroundColor: '#fbe4e4',
     height: '100%',
   },
+  header: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+    padding: 20,
+  },
+  headerText: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    color: '#333',
+  },
+  chosenLocationText: {
+    fontSize: 20,
+    alignSelf: 'center',
+    paddingTop: 20,
+  },
 
   calendarContainer: {
     padding: 10,
@@ -145,37 +154,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     margin: 10,
   },
-  header: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '100%',
-    padding: 20,
-  },
-  headerText: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    color: '#333',
-  },
-  confirmContainer: {
-    flexDirection: 'row',
-    alignItems: 'flex-end',
-    textAlign: 'right',
-  },
-  confirmBtn: {
-    padding: 30,
-    width: '85%',
-    borderRadius: 18,
-    backgroundColor: 'white',
-    marginTop: 20,
-    marginBottom: 20,
-    marginLeft: 'auto',
-    marginRight: 'auto',
-  },
-  confirmBtnText: {
-    fontSize: 28,
-    alignSelf: 'center',
-  },
-
   aiContainer: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -234,6 +212,26 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: 'bold',
   },
+
+  // confirmContainer: {
+  //   flexDirection: 'row',
+  //   alignItems: 'flex-end',
+  //   textAlign: 'right',
+  // },
+  // confirmBtn: {
+  //   padding: 30,
+  //   width: '85%',
+  //   borderRadius: 18,
+  //   backgroundColor: 'white',
+  //   marginTop: 20,
+  //   marginBottom: 20,
+  //   marginLeft: 'auto',
+  //   marginRight: 'auto',
+  // },
+  // confirmBtnText: {
+  //   fontSize: 28,
+  //   alignSelf: 'center',
+  // },
 });
 
 export default CalendarScreen;

@@ -11,7 +11,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import LoginScreen from './screens/auth/LoginScreen';
 import RegistrationScreen from './screens/auth/RegistrationScreen';
 import CalendarScreen from './screens/create-appointment screens/Calendar';
-import CreateApptConfirmationScreen from './screens/create-appointment screens/CreateApptConfirmation';
+import CreateApptConfirmationScreen from './screens/create-appointment screens/Confirm';
 import LocationsScreen from './screens/create-appointment screens/Locations';
 import TimeslotsScreen from './screens/create-appointment screens/Timeslots';
 import CurrentApptScreen from './screens/edit-appt/CurrentApptScreen';
@@ -22,6 +22,7 @@ import ReminderScreen from './screens/mainscreens/ReminderScreen';
 import ViewEditApptScreen from './screens/mainscreens/ViewEditApptScreen';
 import SettingScreen from './screens/SettingScreen';
 import { Appointment, AuthProps, RegisteredUser } from './types';
+import CreateApptSuccessScreen from './screens/create-appointment screens/Success';
 
 const Stack = createStackNavigator();
 const Tab = createMaterialTopTabNavigator();
@@ -139,6 +140,7 @@ export default function App() {
   const [currentScreenId, setCurrentScreenId] = useState<number | null>(1); // Default to Home screen ID
   const [date, setDate] = useState('');
   const [time, setTime] = useState('');
+  const [location, setLocation] = useState('');
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
@@ -166,23 +168,27 @@ export default function App() {
           </Stack.Screen>
 
           <Stack.Screen name="Locations">
-            {(props) => <LocationsScreen {...props} isAiEnabled={isAiEnabled} />}
+            {(props) => <LocationsScreen {...props} isAiEnabled={isAiEnabled} setLocation={setLocation} />}
           </Stack.Screen>
 
           <Stack.Screen name="Calendar">
-            {(props) => <CalendarScreen {...props} isAiEnabled={isAiEnabled} setDate={setDate}/>}
+            {(props) => <CalendarScreen {...props} isAiEnabled={isAiEnabled} locationProp={location} setDate={setDate} />}
           </Stack.Screen>
 
           <Stack.Screen name="Timeslots">
-            {(props) => <TimeslotsScreen {...props} isAiEnabled={isAiEnabled} date={date} setTime={setTime}/>}
+            {(props) => <TimeslotsScreen {...props} isAiEnabled={isAiEnabled} date={date} setTime={setTime} />}
           </Stack.Screen>
 
-          <Stack.Screen name="CreateApptConfirmation">
-            {(props) => <CreateApptConfirmationScreen {...props} isAiEnabled={isAiEnabled} />}
+          <Stack.Screen name="Confirm">
+            {(props) => <CreateApptConfirmationScreen {...props} isAiEnabled={isAiEnabled} location={location} date={date} time={time} />}
+          </Stack.Screen>
+
+          <Stack.Screen name="Success">
+            {(props) => <CreateApptSuccessScreen {...props} isAiEnabled={isAiEnabled} />}            
           </Stack.Screen>
 
           <Stack.Screen name="Current Appointment">
-            {(props) => <CurrentApptScreen {...props}  isAiEnabled={isAiEnabled} />}
+            {(props) => <CurrentApptScreen {...props} isAiEnabled={isAiEnabled} />}
           </Stack.Screen>
 
           <Stack.Screen name="Edit Appointment">
@@ -220,6 +226,7 @@ export default function App() {
               />
             )}
           </Stack.Screen>
+
         </Stack.Navigator>
       </NavigationContainer>
     </GestureHandlerRootView>

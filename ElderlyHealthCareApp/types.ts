@@ -6,13 +6,14 @@ export type RootStackParamList = {
       screen: 'Home' | 'Create Appointment' | 'View/Edit Appointment' | 'Reminders' | 'Current Appointment';
     };
     Home: undefined;
-    'Create Appointment': undefined;
-    'View/Edit Appointment': undefined;
-    Reminders: undefined;
     Calendar: undefined;
     Locations: undefined;
     Timeslots: undefined;
-    CreateApptConfirmation: undefined;
+    Confirm: undefined;
+    Success: undefined;
+    'Create Appointment': undefined;
+    'View/Edit Appointment': undefined;
+    Reminders: undefined;
     Setting: undefined;
     'Current Appointment': undefined;
     'Edit Appointment': {

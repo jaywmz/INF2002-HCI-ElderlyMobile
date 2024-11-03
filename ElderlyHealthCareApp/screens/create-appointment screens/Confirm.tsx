@@ -2,17 +2,19 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import * as Speech from 'expo-speech';
 import React, { useEffect, useState } from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { globalStyles } from '../../styles/Theme';
 import { RootStackParamList } from '../../types';
 
-type CreateApptConfirmationScreenNavigationProp = StackNavigationProp<RootStackParamList, 'CreateApptConfirmation'>;
+type CreateApptConfirmationScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Confirm'>;
 
 type Props = {
   navigation: CreateApptConfirmationScreenNavigationProp;
   isAiEnabled: boolean;
+  location: string | undefined;
+  date: string | undefined;
+  time: string | undefined;
 };
 
-const CreateApptConfirmationScreen = ({ navigation, isAiEnabled }: Props) => {
+const CreateApptConfirmationScreen = ({ navigation, isAiEnabled, location, date, time }: Props) => {
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [showAi, setShowAi] = useState(isAiEnabled);
 
@@ -49,35 +51,16 @@ const CreateApptConfirmationScreen = ({ navigation, isAiEnabled }: Props) => {
     }
   };
 
-  const handleBack = () => {
-    navigation.goBack();
-  };
-
-  const handleNavigateToHome = () => {
-    navigation.navigate('Home');
+  const handleNavigateToSuccess = () => {
+    navigation.navigate('Success');
   };
 
   return (
-    <View style={[globalStyles.container, styles.background]}>
+    <View style={[styles.background]}>
       {/* Header with Back button */}
       <View style={styles.header}>
-        <TouchableOpacity style={styles.logoutButton} onPress={handleBack}>
-          <Text style={styles.logoutText}>Back</Text>
-        </TouchableOpacity>
-        <Text style={styles.headerText}>Confirm?</Text>
+        <Text style={styles.headerText}>Confirm Appointment?</Text>
       </View>
-
-      {/* Confirmation Details */}
-      <View style={styles.detailsContainer}>
-        <Text style={styles.headerText}>Location</Text>
-        <Text style={styles.headerText}>Date</Text>
-        <Text style={styles.headerText}>Time</Text>
-      </View>
-
-      {/* Confirm Button */}
-      <TouchableOpacity style={styles.confirmButton} onPress={handleNavigateToHome}>
-        <Text style={styles.confirmButtonText}>Confirm</Text>
-      </TouchableOpacity>
 
       {/* AI Assistance Section */}
       {showAi && (
@@ -96,6 +79,26 @@ const CreateApptConfirmationScreen = ({ navigation, isAiEnabled }: Props) => {
           </View>
         </View>
       )}
+
+      {/* Confirmation Details */}
+      <View style={styles.detailsContainer}>
+        <View style={styles.detailsCard}>
+          <Text style={styles.detailsText}>Location:</Text>
+          <Text style={styles.detailsText}>{location}</Text>
+        </View>
+        <View style={styles.detailsCard}>
+          <Text style={styles.detailsText}>Date: {date}</Text>
+        </View>
+        <View style={styles.detailsCard}>
+          <Text style={styles.detailsText}>Time: {time}</Text>
+        </View>
+      </View>
+
+      {/* Confirm Button */}
+      <TouchableOpacity style={styles.confirmButton} onPress={handleNavigateToSuccess}>
+        <Text style={styles.confirmButtonText}>Confirm</Text>
+      </TouchableOpacity>
+
     </View>
   );
 };
@@ -103,39 +106,40 @@ const CreateApptConfirmationScreen = ({ navigation, isAiEnabled }: Props) => {
 const styles = StyleSheet.create({
   background: {
     backgroundColor: '#fbe4e4',
+    height: '100%',
   },
   header: {
     alignItems: 'center',
-    justifyContent: 'space-between',
     width: '100%',
     padding: 20,
-    flexDirection: 'row',
-  },
-  logoutButton: {
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    backgroundColor: '#e0e0e0',
-    borderRadius: 5,
-  },
-  logoutText: {
-    color: '#333',
-    fontWeight: 'bold',
   },
   headerText: {
-    fontSize: 18,
+    fontSize: 28,
     fontWeight: 'bold',
     color: '#333',
   },
+
   detailsContainer: {
-    padding: 20,
-    alignItems: 'center',
+    paddingVertical: 20,
+    alignSelf: 'center',
+    width: '90%',
   },
+  detailsCard: {
+    backgroundColor: 'white',
+    borderRadius: 10,
+    padding: 20,
+    margin: 10,
+  },
+  detailsText: {
+    fontSize: 26,
+  },
+  
   confirmButton: {
     backgroundColor: '#007AFF',
     borderRadius: 10,
     paddingHorizontal: 20,
     paddingVertical: 10,
-    marginTop: 20,
+    marginTop: 10,
     alignSelf: 'center',
   },
   confirmButtonText: {
@@ -143,10 +147,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
   },
+
   aiContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginVertical: 20,
+    alignSelf: 'center',
   },
   aiIcon: {
     width: 50,
@@ -154,7 +159,6 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   aiTextContainer: {
-    flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#fff',
     padding: 10,
@@ -164,9 +168,10 @@ const styles = StyleSheet.create({
     shadowRadius: 6,
     elevation: 2,
     position: 'relative',
+    width: '75%',
   },
   aiText: {
-    fontSize: 16,
+    fontSize: 18,
     color: '#333',
     marginRight: 10,
     textAlign: 'center',
@@ -177,6 +182,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 5,
     marginRight: 10,
+    marginTop: 10,
   },
   controlButtonText: {
     color: '#fff',
