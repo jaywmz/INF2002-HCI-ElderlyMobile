@@ -39,7 +39,7 @@ const ReminderCalendarScreen = ({ navigation, isAiEnabled, setDate, locationProp
     }, [isAiEnabled, hasVisited])
   );
 
-  const playVoice = (text: string = 'Please choose your medication date from the calendar below.') => {
+  const playVoice = (text: string = 'Please choose your medication date from the calendar above.') => {
     Speech.speak(text, {
       onStart: () => setIsSpeaking(true),
       onDone: () => setIsSpeaking(false),
@@ -89,7 +89,7 @@ const ReminderCalendarScreen = ({ navigation, isAiEnabled, setDate, locationProp
             <TouchableOpacity style={styles.closeButton} onPress={handleCloseAi}>
               <Text style={styles.closeButtonText}>X</Text>
             </TouchableOpacity>
-            <Text style={styles.aiText}>Please choose your medication date from the calendar below.</Text>
+            <Text style={styles.aiText}>Please choose your medication date from the calendar above.</Text>
             <TouchableOpacity style={styles.controlButton} onPress={handlePauseResume}>
               <Text style={styles.controlButtonText}>{isSpeaking ? 'Pause' : 'Play'}</Text>
             </TouchableOpacity>

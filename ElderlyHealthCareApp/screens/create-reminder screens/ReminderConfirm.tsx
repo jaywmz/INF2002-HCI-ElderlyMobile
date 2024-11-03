@@ -23,11 +23,11 @@ const ReminderConfirmScreen = ({ navigation, isAiEnabled, date, time }: Props) =
 
   useEffect(() => {
     if (isAiEnabled) {
-      playVoice('Please check and confirm that all details of the medicine reminder are correct, then click Confirm.');
+      playVoice('Please add your medicine picture and confirm that all details of the medicine reminder are correct, then click Confirm.');
     }
   }, [isAiEnabled]);
 
-  const playVoice = (text: string = 'Please check and confirm that all details of the medicine reminder are correct, then click Confirm.') => {
+  const playVoice = (text: string = 'Please add your medicine picture and confirm that all details of the medicine reminder are correct, then click Confirm.') => {
     Speech.speak(text, {
       onStart: () => setIsSpeaking(true),
       onDone: () => setIsSpeaking(false),
@@ -114,8 +114,7 @@ const ReminderConfirmScreen = ({ navigation, isAiEnabled, date, time }: Props) =
           <Image source={require('../../assets/AI_nurse.jpg')} style={styles.aiIcon} />
           <View style={styles.aiTextContainer}>
             <Text style={styles.aiText}>
-              Please check and confirm that all details of the medicine reminder are correct, then click Confirm.
-            </Text>
+            Please add your medicine picture and confirm that all details of the medicine reminder are correct, then click Confirm.  </Text>
             <TouchableOpacity style={styles.controlButton} onPress={handlePauseResume}>
               <Text style={styles.controlButtonText}>{isSpeaking ? 'Pause' : 'Play'}</Text>
             </TouchableOpacity>

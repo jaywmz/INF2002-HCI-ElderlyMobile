@@ -6,11 +6,11 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import { RootStackParamList } from '../../types';
 
-type TimeslotsScreenNavigationProp = StackNavigationProp<RootStackParamList, 'ReminderTimeslots'>;
+type ReminderTimeslotsScreen = StackNavigationProp<RootStackParamList, 'ReminderTimeslots'>;
 
 type Props = {
   isAiEnabled: boolean;
-  navigation: TimeslotsScreenNavigationProp,
+  navigation: ReminderTimeslotsScreen,
   date: string | undefined;
   setTime: (time: string) => void;
 };
