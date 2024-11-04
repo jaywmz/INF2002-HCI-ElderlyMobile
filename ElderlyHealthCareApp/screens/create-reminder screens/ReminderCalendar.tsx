@@ -76,7 +76,6 @@ const ReminderCalendarScreen = ({ navigation, isAiEnabled, setDate, locationProp
     <View style={styles.background}>
 
        {/* Header */}
-       <Text>You have chosen date: {selectedDate}</Text>
       <View>
         <Text style={styles.headerText}>Choose timeslot</Text>
       </View>
@@ -129,17 +128,19 @@ const styles = StyleSheet.create({
     width: '100%',
     padding: 20,
   },
-  headerText: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    color: '#333',
-  },
-  chosenLocationText: {
-    fontSize: 20,
+  chosenDateText: {
+    fontSize: 24,
     alignSelf: 'center',
     paddingTop: 20,
+    color: '#333',
   },
-
+  headerText: {
+    fontSize: 32,
+    fontWeight: 'bold',
+    alignSelf: 'center',
+    color: '#333',
+    paddingVertical: 20,
+  },
   calendarContainer: {
     padding: 10,
     width: '90%',
@@ -214,27 +215,7 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 12,
     fontWeight: 'bold',
-  },
-
-  // confirmContainer: {
-  //   flexDirection: 'row',
-  //   alignItems: 'flex-end',
-  //   textAlign: 'right',
-  // },
-  // confirmBtn: {
-  //   padding: 30,
-  //   width: '85%',
-  //   borderRadius: 18,
-  //   backgroundColor: 'white',
-  //   marginTop: 20,
-  //   marginBottom: 20,
-  //   marginLeft: 'auto',
-  //   marginRight: 'auto',
-  // },
-  // confirmBtnText: {
-  //   fontSize: 28,
-  //   alignSelf: 'center',
-  // },
+  }
 });
 
 export default ReminderCalendarScreen;
