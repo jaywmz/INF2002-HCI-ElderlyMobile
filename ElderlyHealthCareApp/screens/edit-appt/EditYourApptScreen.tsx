@@ -26,7 +26,7 @@ type Props = {
 // Dropdown data
 const locations = ['Woodlands Clinic', 'Khoo Teck Phuat Hospital', 'Sengkang Hospital'];
 const times = ['10:00 AM', '10:30 AM', '11:00 AM (Unavailable)', '11:30 AM (Unavailable)', '12:00 PM'];
-const types = ['Health Check-up', 'Blood Test', 'Surgery', 'Report Sick'];
+const types = ['Health Check-up', 'Blood Test', 'Surgery', 'Doctor\'s Consultation'];
 const days = Array.from({ length: 31 }, (_, i) => `${i + 1}`);
 const months = ['January', 'February', 'March', 'April'];
 const years = Array.from({ length: 7 }, (_, i) => `${2024 + i}`);

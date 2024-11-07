@@ -5,6 +5,8 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Calendar } from 'react-native-calendars';
 import { RootStackParamList } from '../../types';
+import dayjs from 'dayjs';
+import { AntDesign } from '@expo/vector-icons';
 
 type CalendarScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Calendar'>;
 
@@ -76,7 +78,7 @@ const CalendarScreen = ({ navigation, isAiEnabled, setDate, locationProp }: Prop
     <View style={styles.background}>
 
       {/* Header */}
-      <Text style={styles.chosenLocationText}>You have chosen location: {locationProp}</Text>
+      <Text style={styles.chosenLocationText}>You have chosen {locationProp}</Text>
       <View style={styles.header}>
         <Text style={styles.headerText}>Choose date</Text>
       </View>
@@ -103,6 +105,7 @@ const CalendarScreen = ({ navigation, isAiEnabled, setDate, locationProp }: Prop
           Selected Date: {selectedDate || 'None'}
         </Text>
         <Calendar
+          // renderArrow={renderArrow}
           onDayPress={onDayPress}
           markedDates={{
             [selectedDate]: { selected: true, marked: true, selectedColor: 'blue' },
@@ -137,6 +140,8 @@ const styles = StyleSheet.create({
   chosenLocationText: {
     fontSize: 20,
     alignSelf: 'center',
+    textAlign: 'center',
+    textDecorationLine: 'underline',
     paddingTop: 20,
   },
 
@@ -181,7 +186,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   aiText: {
-    fontSize: 14,
+    fontSize: 16,
     color: '#333',
     textAlign: 'center',
     marginVertical: 10,

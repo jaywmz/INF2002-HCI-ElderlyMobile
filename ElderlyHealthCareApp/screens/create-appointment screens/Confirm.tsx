@@ -12,9 +12,10 @@ type Props = {
   location: string | undefined;
   date: string | undefined;
   time: string | undefined;
+  type: string | undefined;
 };
 
-const CreateApptConfirmationScreen = ({ navigation, isAiEnabled, location, date, time }: Props) => {
+const CreateApptConfirmationScreen = ({ navigation, isAiEnabled, location, date, time, type }: Props) => {
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [showAi, setShowAi] = useState(isAiEnabled);
 
@@ -62,6 +63,28 @@ const CreateApptConfirmationScreen = ({ navigation, isAiEnabled, location, date,
         <Text style={styles.headerText}>Confirm appointment?</Text>
       </View>
 
+      {/* Confirmation Details */}
+      <View style={styles.detailsContainer}>
+        <View style={styles.detailsCard}>
+          <Text style={styles.detailsText}>Location:</Text>
+          <Text style={styles.detailsText}>{location}</Text>
+        </View>
+        <View style={styles.detailsCard}>
+          <Text style={styles.detailsText}>Date: {date}</Text>
+        </View>
+        <View style={styles.detailsCard}>
+          <Text style={styles.detailsText}>Time: {time}</Text>
+        </View>
+        <View style={styles.detailsCard}>
+            <Text style={styles.detailsText}>Type: {type}</Text>
+        </View>
+      </View>
+
+      {/* Confirm Button */}
+      <TouchableOpacity style={styles.confirmButton} onPress={handleNavigateToSuccess}>
+        <Text style={styles.confirmButtonText}>Confirm</Text>
+      </TouchableOpacity>
+
       {/* AI Assistance Section */}
       {showAi && (
         <View style={styles.aiContainer}>
@@ -79,25 +102,6 @@ const CreateApptConfirmationScreen = ({ navigation, isAiEnabled, location, date,
           </View>
         </View>
       )}
-
-      {/* Confirmation Details */}
-      <View style={styles.detailsContainer}>
-        <View style={styles.detailsCard}>
-          <Text style={styles.detailsText}>Location:</Text>
-          <Text style={styles.detailsText}>{location}</Text>
-        </View>
-        <View style={styles.detailsCard}>
-          <Text style={styles.detailsText}>Date: {date}</Text>
-        </View>
-        <View style={styles.detailsCard}>
-          <Text style={styles.detailsText}>Time: {time}</Text>
-        </View>
-      </View>
-
-      {/* Confirm Button */}
-      <TouchableOpacity style={styles.confirmButton} onPress={handleNavigateToSuccess}>
-        <Text style={styles.confirmButtonText}>Confirm</Text>
-      </TouchableOpacity>
 
     </View>
   );

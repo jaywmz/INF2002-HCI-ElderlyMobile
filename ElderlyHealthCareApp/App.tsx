@@ -14,6 +14,7 @@ import CalendarScreen from './screens/create-appointment screens/Calendar';
 import CreateApptConfirmationScreen from './screens/create-appointment screens/Confirm';
 import LocationsScreen from './screens/create-appointment screens/Locations';
 import TimeslotsScreen from './screens/create-appointment screens/Timeslots';
+import AppointmentTypeScreen from './screens/create-appointment screens/AppointmentType';
 import CurrentApptScreen from './screens/edit-appt/CurrentApptScreen';
 import EditYourApptScreen from './screens/edit-appt/EditYourApptScreen';
 import CreateApptScreen from './screens/mainscreens/CreateApptScreen';
@@ -145,6 +146,7 @@ export default function App() {
   const [date, setDate] = useState('');
   const [time, setTime] = useState('');
   const [location, setLocation] = useState('');
+  const [type, setType] = useState('');
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
@@ -183,8 +185,12 @@ export default function App() {
             {(props) => <TimeslotsScreen {...props} isAiEnabled={isAiEnabled} date={date} setTime={setTime} />}
           </Stack.Screen>
 
+          <Stack.Screen name="Appointment Type">
+          {(props) => <AppointmentTypeScreen {...props} isAiEnabled={isAiEnabled} time={time} setType={setType} />}
+          </Stack.Screen>
+
           <Stack.Screen name="Confirm">
-            {(props) => <CreateApptConfirmationScreen {...props} isAiEnabled={isAiEnabled} location={location} date={date} time={time} />}
+            {(props) => <CreateApptConfirmationScreen {...props} isAiEnabled={isAiEnabled} location={location} date={date} time={time} type={type} />}
           </Stack.Screen>
 
           <Stack.Screen name="Success">

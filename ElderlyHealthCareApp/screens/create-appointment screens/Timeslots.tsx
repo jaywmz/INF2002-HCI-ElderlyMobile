@@ -69,7 +69,7 @@ const TimeslotsScreen = ({ isAiEnabled, navigation, date, setTime }: Props) => {
   const handleNavigateToConfirm = (time : { time : string }) => {
     setSelectedTime(time.time);
     setTime(time.time);
-    navigation.navigate('Confirm');
+    navigation.navigate('Appointment Type');
   };
 
   const Timeslot = ({ time = "00:00" }: { time: string }) => {
@@ -84,26 +84,10 @@ const TimeslotsScreen = ({ isAiEnabled, navigation, date, setTime }: Props) => {
     <View style={styles.background}>
 
       {/* Header */}
-      <Text style={styles.chosenDateText}>You have chosen date: {selectedDate}</Text>
+      <Text style={styles.chosenDateText}>You have chosen {selectedDate}</Text>
       <View>
         <Text style={styles.headerText}>Choose timeslot</Text>
-      </View>
-
-      {/* AI Assistance Section */}
-      {showAi && (
-        <View style={styles.aiContainer}>
-          <Image source={require('../../assets/AI_nurse.jpg')} style={styles.aiIcon} />
-          <View style={styles.aiTextContainer}>
-            <TouchableOpacity style={styles.closeButton} onPress={handleCloseAi}>
-              <Text style={styles.closeButtonText}>X</Text>
-            </TouchableOpacity>
-            <Text style={styles.aiText}>Please choose your preferred appointment timeslot.</Text>
-            <TouchableOpacity style={styles.controlButton} onPress={handlePauseResume}>
-              <Text style={styles.controlButtonText}>{isSpeaking ? 'Pause' : 'Play'}</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      )}
+      </View>      
       
       <View style={styles.timeslotContainer}>
         <Timeslot time="08:00am"/>
@@ -125,6 +109,22 @@ const TimeslotsScreen = ({ isAiEnabled, navigation, date, setTime }: Props) => {
         <Timeslot time="04:00pm"/>
       </View>
       
+      {/* AI Assistance Section */}
+      {showAi && (
+        <View style={styles.aiContainer}>
+          <Image source={require('../../assets/AI_nurse.jpg')} style={styles.aiIcon} />
+          <View style={styles.aiTextContainer}>
+            <TouchableOpacity style={styles.closeButton} onPress={handleCloseAi}>
+              <Text style={styles.closeButtonText}>X</Text>
+            </TouchableOpacity>
+            <Text style={styles.aiText}>Please choose your preferred appointment timeslot.</Text>
+            <TouchableOpacity style={styles.controlButton} onPress={handlePauseResume}>
+              <Text style={styles.controlButtonText}>{isSpeaking ? 'Pause' : 'Play'}</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      )}
+    
     </View>
   );
 };
@@ -137,6 +137,8 @@ const styles = StyleSheet.create({
   chosenDateText: {
     fontSize: 20,
     alignSelf: 'center',
+    textAlign: 'center',
+    textDecorationLine: 'underline',
     paddingTop: 20,
   },
   headerText: {

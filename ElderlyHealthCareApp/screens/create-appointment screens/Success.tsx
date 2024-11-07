@@ -54,14 +54,29 @@ const CreateApptSuccessScreen = ({ navigation, isAiEnabled }: Props) => {
 
   return (
     <View style={[styles.background]}>
-      
+
+      {/* Header with Back button */}
+      <View style={styles.header}>
+        <Text style={styles.headerText}>Appointment created successfully!</Text>
+      </View>
+
+      {/* Thumbs up icon */}
+      <View>
+        <Image source={require('../../assets/thumbsup-icon.png')} style={styles.image} />
+      </View>
+
+      {/* Confirm Button */}
+      <TouchableOpacity style={styles.confirmButton} onPress={handleNavigateToHome}>
+        <Text style={styles.confirmButtonText}>Go back to home screen</Text>
+      </TouchableOpacity>
+
       {/* AI Assistance Section */}
       {showAi && (
         <View style={styles.aiContainer}>
           <Image source={require('../../assets/AI_nurse.jpg')} style={styles.aiIcon} />
           <View style={styles.aiTextContainer}>
             <Text style={styles.aiText}>
-              Appointment has been created. Please click the button below to go back to home screen.
+              Appointment has been created successfully! Click the button in the center to go back to home screen.
             </Text>
             <TouchableOpacity style={styles.controlButton} onPress={handlePauseResume}>
               <Text style={styles.controlButtonText}>{isSpeaking ? 'Pause' : 'Play'}</Text>
@@ -72,17 +87,6 @@ const CreateApptSuccessScreen = ({ navigation, isAiEnabled }: Props) => {
           </View>
         </View>
       )}
-
-      {/* Header with Back button */}
-      <View style={styles.header}>
-        <Text style={styles.headerText}>Appointment created successfully!</Text>
-      </View>
-
-
-      {/* Confirm Button */}
-      <TouchableOpacity style={styles.confirmButton} onPress={handleNavigateToHome}>
-        <Text style={styles.confirmButtonText}>Go back to home screen</Text>
-      </TouchableOpacity>
 
     </View>
   );
@@ -99,7 +103,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     flexDirection: 'row',
     width: '100%',
-    height: '50%',
+    paddingVertical: 30,
   },
   headerText: {
     textAlign: 'center',
@@ -107,13 +111,19 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#333',
   },
+
+  image: {
+    width: 200,
+    height: 210,
+    alignSelf: 'center',
+  },
   
   confirmButton: {
     backgroundColor: '#007AFF',
     borderRadius: 10,
     paddingHorizontal: 20,
     paddingVertical: 10,
-    marginTop: 10,
+    marginTop: 30,
     alignSelf: 'center',
   },
   confirmButtonText: {
@@ -123,10 +133,12 @@ const styles = StyleSheet.create({
   },
 
   aiContainer: {
-    marginTop: 20,
+    width: '100%',
     flexDirection: 'row',
     alignItems: 'center',
-    alignSelf: 'center',
+    position: 'absolute',
+    bottom: 10,
+    left: 10,
   },
   aiIcon: {
     width: 50,

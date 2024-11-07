@@ -9,6 +9,7 @@ export type RootStackParamList = {
     Calendar: undefined;
     Locations: undefined;
     Timeslots: undefined;
+    'Appointment Type': undefined;
     Confirm: undefined;
     Success: undefined;
     'Create Appointment': undefined;
