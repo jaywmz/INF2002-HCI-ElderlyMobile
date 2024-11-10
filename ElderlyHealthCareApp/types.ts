@@ -1,10 +1,7 @@
-// types.ts
 export type RootStackParamList = {
     Login: undefined;
     Registration: undefined;
-    Main: {
-      screen: 'Home' | 'Create Appointment' | 'View/Edit Appointment' | 'Reminders' | 'Current Appointment';
-    };
+    Main: { screen: 'Home' | 'Create Appointment' | 'View/Edit Appointment' | 'Reminders' | 'Current Appointment' };
     Home: undefined;
     Calendar: undefined;
     Locations: undefined;
@@ -15,34 +12,35 @@ export type RootStackParamList = {
     'Create Appointment': undefined;
     'View/Edit Appointment': undefined;
     Reminders: undefined;
-    ReminderCalendar : undefined;
-    ReminderConfirm : undefined;
-    ReminderSuccess : undefined;
-    ReminderTimeslots : undefined;
+    ReminderCalendar: undefined;
+    ReminderConfirm: undefined;
+    ReminderSuccess: undefined;
+    ReminderTimeslots: undefined;
     Setting: undefined;
     'Current Appointment': undefined;
     'Edit Appointment': {
-        appointment: Appointment;
-        onSave: (newAppointment: Appointment) => void;
+      appointment: Appointment;
+      onSave: (newAppointment: Appointment) => void;
     };
-};
-
-// Define Appointment type for ease of use
-export type Appointment = {
+    EditTime: { selectedDate: string; isAiEnabled: boolean };
+  };
+  
+  export type Appointment = {
     location: string;
     day: string;
     month: string;
     year: string;
     time: string;
     type: string;
-};
-
-export type RegisteredUser = {
+  };
+  
+  export type RegisteredUser = {
     username: string;
     password: string;
-} | null;
-
-export type AuthProps = {
+  } | null;
+  
+  export type AuthProps = {
     registeredUser: RegisteredUser | null;
     setRegisteredUser: (user: RegisteredUser | null) => void;
-};
+  };
+  

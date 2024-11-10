@@ -32,8 +32,7 @@ import CreateApptSuccessScreen from './screens/create-appointment screens/Succes
 const Stack = createStackNavigator();
 const Tab = createMaterialTopTabNavigator();
 
-function MainTabs({ registeredUser, setRegisteredUser, isAiEnabled,  currentScreenId,
-  setCurrentScreenId }: AuthProps & { isAiEnabled: boolean , currentScreenId: number | null, setCurrentScreenId: React.Dispatch<React.SetStateAction<number | null>> }) {
+function MainTabs({ registeredUser, setRegisteredUser, isAiEnabled, currentScreenId, setCurrentScreenId }: AuthProps & { isAiEnabled: boolean, currentScreenId: number | null, setCurrentScreenId: React.Dispatch<React.SetStateAction<number | null>> }) {
   return (
     <View style={{ flex: 1 }}>
       <Tab.Navigator
@@ -68,7 +67,7 @@ function MainTabs({ registeredUser, setRegisteredUser, isAiEnabled,  currentScre
             />
           )}
         </Tab.Screen>
-        
+
         <Tab.Screen
           name="Create Appointment"
           options={{
@@ -90,7 +89,7 @@ function MainTabs({ registeredUser, setRegisteredUser, isAiEnabled,  currentScre
             />
           )}
         </Tab.Screen>
-        
+
         <Tab.Screen
           name="View/Edit Appointment"
           options={{
@@ -112,7 +111,7 @@ function MainTabs({ registeredUser, setRegisteredUser, isAiEnabled,  currentScre
             />
           )}
         </Tab.Screen>
-        
+
         <Tab.Screen
           name="Reminders"
           options={{
@@ -186,7 +185,7 @@ export default function App() {
           </Stack.Screen>
 
           <Stack.Screen name="Appointment Type">
-          {(props) => <AppointmentTypeScreen {...props} isAiEnabled={isAiEnabled} time={time} setType={setType} />}
+            {(props) => <AppointmentTypeScreen {...props} isAiEnabled={isAiEnabled} time={time} setType={setType} />}
           </Stack.Screen>
 
           <Stack.Screen name="Confirm">
@@ -194,7 +193,7 @@ export default function App() {
           </Stack.Screen>
 
           <Stack.Screen name="Success">
-            {(props) => <CreateApptSuccessScreen {...props} isAiEnabled={isAiEnabled} />}            
+            {(props) => <CreateApptSuccessScreen {...props} isAiEnabled={isAiEnabled} />}
           </Stack.Screen>
 
           <Stack.Screen name="Current Appointment">
@@ -240,7 +239,7 @@ export default function App() {
           </Stack.Screen>
 
           <Stack.Screen name="ReminderSuccess">
-            {(props) => <ReminderSuccessScreen {...props} isAiEnabled={isAiEnabled} />}            
+            {(props) => <ReminderSuccessScreen {...props} isAiEnabled={isAiEnabled} />}
           </Stack.Screen>
 
           <Stack.Screen name="Setting" options={{ headerTitle: 'Settings' }}>
