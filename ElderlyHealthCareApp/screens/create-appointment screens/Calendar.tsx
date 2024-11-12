@@ -5,8 +5,6 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Calendar } from 'react-native-calendars';
 import { RootStackParamList } from '../../types';
-import dayjs from 'dayjs';
-import { AntDesign } from '@expo/vector-icons';
 
 type CalendarScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Calendar'>;
 
@@ -114,8 +112,10 @@ const CalendarScreen = ({ navigation, isAiEnabled, setDate, locationProp }: Prop
             todayTextColor: 'red',
             arrowColor: 'blue',
           }}
+          minDate={new Date().toISOString().split('T')[0]}
         />
       </View>
+
     </View>
   );
 };
@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
   },
 
   aiContainer: {
-    width: '100%',
+    width: '60%',
     flexDirection: 'row',
     alignItems: 'center',
     position: 'absolute',
@@ -183,7 +183,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 6,
     elevation: 2,
-    maxWidth: 260,
     position: 'relative',
     alignItems: 'center',
   },
@@ -222,26 +221,6 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: 'bold',
   },
-
-  // confirmContainer: {
-  //   flexDirection: 'row',
-  //   alignItems: 'flex-end',
-  //   textAlign: 'right',
-  // },
-  // confirmBtn: {
-  //   padding: 30,
-  //   width: '85%',
-  //   borderRadius: 18,
-  //   backgroundColor: 'white',
-  //   marginTop: 20,
-  //   marginBottom: 20,
-  //   marginLeft: 'auto',
-  //   marginRight: 'auto',
-  // },
-  // confirmBtnText: {
-  //   fontSize: 28,
-  //   alignSelf: 'center',
-  // },
 });
 
 export default CalendarScreen;
