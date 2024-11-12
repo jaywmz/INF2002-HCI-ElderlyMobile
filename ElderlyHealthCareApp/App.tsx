@@ -17,15 +17,12 @@ import TimeslotsScreen from './screens/create-appointment screens/Timeslots';
 import AppointmentTypeScreen from './screens/create-appointment screens/AppointmentType';
 import CurrentApptScreen from './screens/edit-appt/CurrentApptScreen';
 import EditYourApptScreen from './screens/edit-appt/EditYourApptScreen';
-import CreateApptScreen from './screens/mainscreens/CreateApptScreen';
 import HomeScreen from './screens/mainscreens/HomeScreen';
-import ReminderScreen from './screens/mainscreens/ReminderScreen';
 import ReminderCalendarScreen from './screens/create-reminder screens/ReminderCalendar';
 import ReminderTimeslotScreen from './screens/create-reminder screens/ReminderTimeslots';
 import ReminderConfirmScreen from './screens/create-reminder screens/ReminderConfirm';
 import ReminderSuccessScreen from './screens/create-reminder screens/ReminderSuccess';
-import ViewEditApptScreen from './screens/mainscreens/ViewEditApptScreen';
-import SettingScreen from './screens/SettingScreen';
+import SettingScreen from './screens/mainscreens/SettingScreen';
 import { Appointment, AuthProps, RegisteredUser } from './types';
 import CreateApptSuccessScreen from './screens/create-appointment screens/Success';
 
@@ -69,16 +66,16 @@ function MainTabs({ registeredUser, setRegisteredUser, isAiEnabled, currentScree
         </Tab.Screen>
 
         <Tab.Screen
-          name="Create Appointment"
+          name="Setting"
           options={{
-            tabBarLabel: 'Appt',
+            tabBarLabel: 'Settings',
             tabBarIcon: ({ color, focused }) => (
-              <Icon name="calendar" type="font-awesome" color={color} size={focused ? 30 : 24} />
+              <Icon name="cog" type="font-awesome" color={color} size={focused ? 30 : 24} />
             ),
           }}
         >
           {(props) => (
-            <CreateApptScreen
+            <SettingScreen
               {...props}
               registeredUser={registeredUser}
               setRegisteredUser={setRegisteredUser}
@@ -90,7 +87,7 @@ function MainTabs({ registeredUser, setRegisteredUser, isAiEnabled, currentScree
           )}
         </Tab.Screen>
 
-        <Tab.Screen
+        {/* <Tab.Screen
           name="View/Edit Appointment"
           options={{
             tabBarLabel: 'View/Edit',
@@ -110,9 +107,9 @@ function MainTabs({ registeredUser, setRegisteredUser, isAiEnabled, currentScree
               setCurrentScreenId={setCurrentScreenId}
             />
           )}
-        </Tab.Screen>
+        </Tab.Screen> */}
 
-        <Tab.Screen
+        {/* <Tab.Screen
           name="Reminders"
           options={{
             tabBarLabel: 'Reminders',
@@ -132,7 +129,7 @@ function MainTabs({ registeredUser, setRegisteredUser, isAiEnabled, currentScree
               setCurrentScreenId={setCurrentScreenId}
             />
           )}
-        </Tab.Screen>
+        </Tab.Screen> */}
       </Tab.Navigator>
     </View>
   );
@@ -151,7 +148,7 @@ export default function App() {
     <GestureHandlerRootView style={{ flex: 1 }}>
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Login">
-          <Stack.Screen name="Login">
+          <Stack.Screen name=" ">
             {(props) => <LoginScreen {...props} registeredUser={registeredUser} />}
           </Stack.Screen>
 
@@ -172,7 +169,7 @@ export default function App() {
             )}
           </Stack.Screen>
 
-          <Stack.Screen name="Locations">
+          <Stack.Screen name="Choose Appointment Location">
             {(props) => <LocationsScreen {...props} isAiEnabled={isAiEnabled} setLocation={setLocation} />}
           </Stack.Screen>
 
@@ -226,7 +223,7 @@ export default function App() {
             }}
           </Stack.Screen>
 
-          <Stack.Screen name="ReminderCalendar">
+          <Stack.Screen name="Reminder Calendar">
             {(props) => <ReminderCalendarScreen {...props} isAiEnabled={isAiEnabled} locationProp={location} setDate={setDate} />}
           </Stack.Screen>
 

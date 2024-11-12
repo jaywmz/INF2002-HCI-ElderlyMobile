@@ -60,7 +60,7 @@ const CreateApptConfirmationScreen = ({ navigation, isAiEnabled, location, date,
     <View style={[styles.background]}>
       {/* Header with Back button */}
       <View style={styles.header}>
-        <Text style={styles.headerText}>Confirm appointment?</Text>
+        <Text style={styles.headerText}>Confirm Appointment Details</Text>
       </View>
 
       {/* Confirmation Details */}
@@ -145,12 +145,14 @@ const styles = StyleSheet.create({
     marginTop: 10,
     width: 200,
     alignSelf: 'center',
+    width: '85%'
   },
   confirmButtonText: {
     alignSelf: 'center',
     color: '#fff',
-    fontSize: 20,
+    fontSize: 28,
     fontWeight: 'bold',
+    textAlign: 'center'
   },
 
   aiContainer: {

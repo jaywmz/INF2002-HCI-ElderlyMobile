@@ -55,19 +55,19 @@ const CreateApptSuccessScreen = ({ navigation, isAiEnabled }: Props) => {
   return (
     <View style={[styles.background]}>
 
-      {/* Header with Back button */}
-      <View style={styles.header}>
-        <Text style={styles.headerText}>Appointment created successfully!</Text>
-      </View>
-
       {/* Thumbs up icon */}
       <View>
         <Image source={require('../../assets/thumbsup-icon.png')} style={styles.image} />
       </View>
 
+      {/* Header with Back button */}
+      <View style={styles.header}>
+        <Text style={styles.headerText}>Appointment created successfully!</Text>
+      </View>
+
       {/* Confirm Button */}
       <TouchableOpacity style={styles.confirmButton} onPress={handleNavigateToHome}>
-        <Text style={styles.confirmButtonText}>Go back to home screen</Text>
+        <Text style={styles.confirmButtonText}>Go Back to Home Screen</Text>
       </TouchableOpacity>
 
       {/* AI Assistance Section */}
@@ -87,7 +87,6 @@ const CreateApptSuccessScreen = ({ navigation, isAiEnabled }: Props) => {
           </View>
         </View>
       )}
-
     </View>
   );
 };
@@ -95,19 +94,20 @@ const CreateApptSuccessScreen = ({ navigation, isAiEnabled }: Props) => {
 const styles = StyleSheet.create({
   background: {
     backgroundColor: '#fbe4e4',
+    flex: 1,
     height: '100%',
+    justifyContent: 'center',
   },
 
   header: {
     alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'row',
     width: '100%',
-    paddingVertical: 30,
+    marginVertical: 30,
   },
+
   headerText: {
     textAlign: 'center',
-    fontSize: 28,
+    fontSize: 35,
     fontWeight: 'bold',
     color: '#333',
   },
@@ -116,6 +116,7 @@ const styles = StyleSheet.create({
     width: 200,
     height: 210,
     alignSelf: 'center',
+    marginBottom: 15
   },
   
   confirmButton: {
@@ -128,7 +129,7 @@ const styles = StyleSheet.create({
   },
   confirmButtonText: {
     color: '#fff',
-    fontSize: 16,
+    fontSize: 30,
     fontWeight: 'bold',
   },
 

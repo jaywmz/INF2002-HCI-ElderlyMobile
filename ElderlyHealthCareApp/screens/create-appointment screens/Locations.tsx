@@ -87,11 +87,6 @@ const LocationsScreen = ({ navigation, isAiEnabled, setLocation }: Props) => {
 
   return (
     <View style={styles.background}>
-      {/* Header */}
-      <View style={styles.header}>
-        <Text style={styles.headerText}>Choose location</Text>
-      </View>
-
       {/* Location Cards */}
       <View style={styles.scrollContainer}>
         <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollViewContent}>
@@ -127,13 +122,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     height: '100%',
   },
-  header: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '100%',
-    paddingTop: 20,
-    paddingBottom: 10,
-  },
   headerText: {
     fontSize: 28,
     fontWeight: 'bold',
@@ -141,8 +129,8 @@ const styles = StyleSheet.create({
   },
 
   scrollContainer: {
-    paddingTop: 10,
-    height: '90%',
+    paddingTop: 25,
+    height: '100%',
     width: '100%',
     overflow: 'hidden',
   },
@@ -156,30 +144,32 @@ const styles = StyleSheet.create({
     paddingBottom: 'auto',
   },
   card: {
-    width: 320,
+    width: 350,
     padding: 20,
     backgroundColor: '#ffffff',
     borderRadius: 18,
     alignItems: 'center',
-    marginBottom: 10,
+    marginBottom: 25,
   },
   elevation: {
     elevation: 4,
     shadowColor: '#171717',
   },
   image: {
-    width: 280,
+    width: 300,
     height: 200,
     borderRadius: 18,
   },
   locationText: {
-    paddingTop: 10,
-    fontSize: 20,
+    paddingTop: 15,
+    fontSize: 25,
     fontWeight: 'bold',
+    alignSelf: 'center',
   },
   addressText: {
     paddingTop: 10,
-    fontSize: 20,
+    fontSize: 25,
+    textAlign: 'center',
   },
 
   aiContainer: {

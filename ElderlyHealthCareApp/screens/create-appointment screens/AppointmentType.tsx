@@ -166,7 +166,7 @@ const styles = StyleSheet.create({
     paddingBottom: 'auto',
   },
   card: {
-    width: 300,
+    width: '85%',
     padding: 20,
     backgroundColor: '#ffffff',
     borderRadius: 18,
@@ -179,18 +179,20 @@ const styles = StyleSheet.create({
   },
   image: {
     alignSelf: 'center',
-    width: 200,
-    height: 100,
+    width: '85%',
+    height: 150,
     borderRadius: 18,
   },
   locationText: {
-    paddingTop: 10,
-    fontSize: 20,
+    marginTop: 10,
+    fontSize: 24,
     fontWeight: 'bold',
+    textAlign: 'center'
   },
   addressText: {
-    paddingTop: 10,
-    fontSize: 20,
+    marginTop: 10,
+    fontSize: 24,
+    textAlign: 'center'
   },
 
   aiContainer: {

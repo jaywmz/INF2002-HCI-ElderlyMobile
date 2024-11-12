@@ -93,7 +93,8 @@ const EditYourApptScreen: React.FC<Props> = ({ route, navigation, isAiEnabled })
   ];
 
   return (
-    <ScrollView contentContainerStyle={styles.background}>
+    <View style={styles.background}>
+      <ScrollView contentContainerStyle={{ width: 350, alignSelf: 'center', paddingBottom: 25 }}>
       
       {/* AI Assistance Section */}
       {showAi && (
@@ -112,20 +113,34 @@ const EditYourApptScreen: React.FC<Props> = ({ route, navigation, isAiEnabled })
       )}
 
       <Text style={styles.header}>Current Appointment</Text>
-      <Text style={styles.appointmentText}>Location: {appointment.location}</Text>
-      <Text style={styles.appointmentText}>Type: {appointment.type}</Text>
-      <Text style={styles.appointmentText}>Time: {appointment.time}</Text>
-      <Text style={styles.appointmentText}>Date: {`${appointment.day} ${appointment.month} ${appointment.year}`}</Text>
+      <View style={{ backgroundColor: '#e0e0e0', padding: 20, borderRadius: 10, marginBottom: 20 }}>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10 }}>
+          <Text style={styles.label}>Location:</Text>
+          <Text style={styles.appointmentText}>{appointment.location}</Text>
+        </View>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10 }}>
+          <Text style={styles.label}>Type: </Text>
+          <Text style={styles.appointmentText}>{appointment.type}</Text>
+        </View>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10 }}>
+          <Text style={styles.label}>Time: </Text>
+          <Text style={styles.appointmentText}>{appointment.time}</Text>
+        </View>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10 }}>
+          <Text style={styles.label}>Date:</Text>
+          <Text style={styles.appointmentText}>{`${appointment.day} ${appointment.month} ${appointment.year}`}</Text>
+        </View>
+      </View>
 
-      <Text style={styles.header}>Reschedule</Text>
+      <Text style={styles.header}>Choose New Date</Text>
+
+      <Text style={styles.selectedDateText}>You have chosen: {selectedDate}</Text>
       <Calendar
         onDayPress={(day: { dateString: string }) => setSelectedDate(day.dateString)}
         markedDates={{
           [selectedDate]: { selected: true, selectedColor: 'blue' },
         }}
       />
-
-      <Text style={styles.selectedDateText}>You have chosen: {selectedDate}</Text>
 
       <TouchableOpacity style={styles.button} onPress={handleConfirmDate}>
         <Text style={styles.buttonText}>Confirm</Text>
@@ -139,7 +154,7 @@ const EditYourApptScreen: React.FC<Props> = ({ route, navigation, isAiEnabled })
       >
         <View style={styles.modalBackground}>
           <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>Choose an available time</Text>
+            <Text style={styles.modalTitle}>Choose an Available Time</Text>
 
             <View style={styles.timeList}>
               {timeslots.map(({ time, isUnavailable }) => (
@@ -172,15 +187,17 @@ const EditYourApptScreen: React.FC<Props> = ({ route, navigation, isAiEnabled })
         </View>
       </Modal>
     </ScrollView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  background: { backgroundColor: '#fbe4e4', padding: 20 },
+  background: { backgroundColor: '#fbe4e4', flex: 1 },
   header: { fontSize: 24, fontWeight: 'bold', marginBottom: 20, textAlign: 'center' },
-  appointmentText: { fontSize: 18, marginBottom: 10 },
-  button: { backgroundColor: '#e0e0e0', padding: 15, borderRadius: 10, alignItems: 'center', marginTop: 20 },
-  buttonText: { fontSize: 16, fontWeight: 'bold' },
+  label: { fontSize: 24, marginBottom: 10, fontWeight: 'bold' },
+  appointmentText: { fontSize: 24, marginBottom: 10 },
+  button: { backgroundColor: '#007AFF', padding: 15, borderRadius: 10, alignItems: 'center', marginTop: 20 },
+  buttonText: { fontSize: 20, fontWeight: 'bold', color: 'white' },
   aiContainer: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -236,7 +253,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: 'bold',
   },
-  selectedDateText: { fontSize: 18, color: 'blue', textAlign: 'center', marginTop: 10 },
+  selectedDateText: { fontSize: 28, color: 'black', textAlign: 'center', marginBottom: 20 },
 
   modalBackground: {
     flex: 1,
@@ -252,7 +269,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   modalTitle: {
-    fontSize: 18,
+    fontSize: 25,
     fontWeight: 'bold',
     marginBottom: 10,
   },
@@ -269,7 +286,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   unavailableTimeSlot: { backgroundColor: 'red' },
-  selectedTimeSlot: { backgroundColor: 'lightblue' },
+  selectedTimeSlot: { backgroundColor: 'lightgreen' },
   timeText: { fontSize: 16, color: '#333' },
   unavailableText: { color: 'white' },
   modalButtons: {
@@ -280,9 +297,12 @@ const styles = StyleSheet.create({
   },
   modalButton: {
     backgroundColor: '#007AFF',
-    padding: 10,
+    paddingTop: 15,
+    paddingBottom: 15,
+    paddingLeft: 5,
+    paddingRight: 5,
     borderRadius: 5,
-    width: '40%',
+    width: '45%',
     alignItems: 'center',
   },
   modalButtonText: {

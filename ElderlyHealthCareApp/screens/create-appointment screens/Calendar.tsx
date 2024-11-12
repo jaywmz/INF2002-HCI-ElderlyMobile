@@ -76,9 +76,9 @@ const CalendarScreen = ({ navigation, isAiEnabled, setDate, locationProp }: Prop
     <View style={styles.background}>
 
       {/* Header */}
-      <Text style={styles.chosenLocationText}>You have chosen {locationProp}</Text>
+      <Text style={styles.chosenLocationText}>You have chosen: {locationProp}</Text>
       <View style={styles.header}>
-        <Text style={styles.headerText}>Choose date</Text>
+        <Text style={styles.headerText}>Choose Appointment Date</Text>
       </View>
 
       {/* AI Assistance Section */}
@@ -136,13 +136,15 @@ const styles = StyleSheet.create({
     fontSize: 28,
     fontWeight: 'bold',
     color: '#333',
+    marginTop: 25,
+    marginBottom: 25,
   },
   chosenLocationText: {
     fontSize: 20,
     alignSelf: 'center',
     textAlign: 'center',
     textDecorationLine: 'underline',
-    paddingTop: 20,
+    paddingTop: 40,
   },
 
   calendarContainer: {
