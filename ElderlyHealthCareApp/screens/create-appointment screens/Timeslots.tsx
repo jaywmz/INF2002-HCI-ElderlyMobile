@@ -39,7 +39,7 @@ const TimeslotsScreen = ({ isAiEnabled, navigation, date, setTime }: Props) => {
     }, [isAiEnabled, hasVisited])
   );
 
-  const playVoice = (text: string = 'Please choose your preferred appointment timeslot.') => {
+  const playVoice = (text: string = 'Please choose your preferred appointment timeslot. Red timeslots are full.') => {
     Speech.speak(text, {
       onStart: () => setIsSpeaking(true),
       onDone: () => setIsSpeaking(false),
@@ -72,12 +72,22 @@ const TimeslotsScreen = ({ isAiEnabled, navigation, date, setTime }: Props) => {
     navigation.navigate('Appointment Type');
   };
 
-  const Timeslot = ({ time = "00:00" }: { time: string }) => {
-    return (
-      <TouchableOpacity style={styles.timeslot} onPress={() => handleNavigateToConfirm({time})}>
-        <Text style={styles.timeslotText}>{time}</Text>
-      </TouchableOpacity> 
-    );
+  const Timeslot = ({ time = "00:00", avail }: { time: string, avail: string }) => {
+    if (avail === 'no') {
+      return (
+        <View style={styles.unavailTimeslot}>
+          <Text style={styles.timeslotText}>{time}</Text>
+          {/* <Text style={styles.timeslotText}>(full)</Text> */}
+        </View> 
+      );
+    }
+    else if (avail === 'yes') {
+      return (
+        <TouchableOpacity style={styles.availTimeslot} onPress={() => handleNavigateToConfirm({time})}>
+          <Text style={styles.timeslotText}>{time}</Text>
+        </TouchableOpacity> 
+      );
+    }
   };
 
   return (
@@ -90,23 +100,23 @@ const TimeslotsScreen = ({ isAiEnabled, navigation, date, setTime }: Props) => {
       </View>      
       
       <View style={styles.timeslotContainer}>
-        <Timeslot time="08:00am"/>
-        <Timeslot time="08:30am"/>
-        <Timeslot time="09:00am"/>
-        <Timeslot time="09:30am"/>
-        <Timeslot time="10:00am"/>
-        <Timeslot time="10:30am"/>
-        <Timeslot time="11:00am"/>
-        <Timeslot time="11:30am"/>
-        <Timeslot time="12:00pm"/>
-        <Timeslot time="12:30pm"/>
-        <Timeslot time="01:00pm"/>
-        <Timeslot time="01:30pm"/>
-        <Timeslot time="02:00pm"/>
-        <Timeslot time="02:30pm"/>
-        <Timeslot time="03:00pm"/>
-        <Timeslot time="03:30pm"/>
-        <Timeslot time="04:00pm"/>
+        <Timeslot time="08:00am" avail="no"/>
+        <Timeslot time="08:30am" avail="no"/>
+        <Timeslot time="09:00am" avail="no"/>
+        <Timeslot time="09:30am" avail="no"/>
+        <Timeslot time="10:00am" avail="no"/>
+        <Timeslot time="10:30am" avail="no"/>
+        <Timeslot time="11:00am" avail="yes"/>
+        <Timeslot time="11:30am" avail="yes"/>
+        <Timeslot time="12:00pm" avail="yes"/>
+        <Timeslot time="12:30pm" avail="yes"/>
+        <Timeslot time="01:00pm" avail="yes"/>
+        <Timeslot time="01:30pm" avail="yes"/>
+        <Timeslot time="02:00pm" avail="yes"/>
+        <Timeslot time="02:30pm" avail="yes"/>
+        <Timeslot time="03:00pm" avail="yes"/>
+        <Timeslot time="03:30pm" avail="yes"/>
+        <Timeslot time="04:00pm" avail="yes"/>
       </View>
       
       {/* AI Assistance Section */}
@@ -117,7 +127,7 @@ const TimeslotsScreen = ({ isAiEnabled, navigation, date, setTime }: Props) => {
             <TouchableOpacity style={styles.closeButton} onPress={handleCloseAi}>
               <Text style={styles.closeButtonText}>X</Text>
             </TouchableOpacity>
-            <Text style={styles.aiText}>Please choose your preferred appointment timeslot.</Text>
+            <Text style={styles.aiText}>Please choose your preferred appointment timeslot. Red timeslots are full.</Text>
             <TouchableOpacity style={styles.controlButton} onPress={handlePauseResume}>
               <Text style={styles.controlButtonText}>{isSpeaking ? 'Pause' : 'Play'}</Text>
             </TouchableOpacity>
@@ -157,7 +167,7 @@ const styles = StyleSheet.create({
     position: 'relative',
     maxHeight: 500,
   },
-  timeslot: {
+  availTimeslot: {
     margin: 5,
     paddingTop: 10,
     paddingBottom: 10,
@@ -165,6 +175,16 @@ const styles = StyleSheet.create({
     paddingRight: 20,
     width: 150,
     backgroundColor: 'white',
+    borderRadius: 10,
+  },
+  unavailTimeslot: {
+    margin: 5,
+    paddingTop: 10,
+    paddingBottom: 10,
+    paddingLeft: 20,
+    paddingRight: 20,
+    width: 150,
+    backgroundColor: 'red',
     borderRadius: 10,
   },
   timeslotText: {

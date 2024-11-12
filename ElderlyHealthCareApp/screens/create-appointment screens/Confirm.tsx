@@ -143,11 +143,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 10,
     marginTop: 10,
+    width: 200,
     alignSelf: 'center',
   },
   confirmButtonText: {
+    alignSelf: 'center',
     color: '#fff',
-    fontSize: 16,
+    fontSize: 20,
     fontWeight: 'bold',
   },
 
