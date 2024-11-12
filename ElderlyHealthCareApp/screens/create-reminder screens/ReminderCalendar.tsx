@@ -74,8 +74,8 @@ const ReminderCalendarScreen = ({ navigation, isAiEnabled, setDate, locationProp
 
   return (
     <View style={styles.background}>
-
-       {/* Header */}
+      <View style={{}}>
+      {/* Header */}
       <View>
         <Text style={styles.headerText}>Choose timeslot</Text>
       </View>
@@ -112,6 +112,7 @@ const ReminderCalendarScreen = ({ navigation, isAiEnabled, setDate, locationProp
           }}
         />
       </View>
+      </View>
     </View>
   );
 };
@@ -121,6 +122,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fbe4e4',
     height: '100%',
+    justifyContent: 'center', 
   },
   header: {
     alignItems: 'center',
@@ -161,7 +163,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     position: 'absolute',
-    bottom: 10,
+    top: 500,
     left: 10,
   },
   aiIcon: {

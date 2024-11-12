@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { View, Text, Switch, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '../types';
+import { RootStackParamList } from '../../types';
 import * as Speech from 'expo-speech';
 import { useFocusEffect } from '@react-navigation/native';
 
@@ -13,7 +13,7 @@ type Props = {
   setIsAiEnabled: (enabled: boolean) => void;
 };
 
-const SettingScreen: React.FC<Props> = ({ isAiEnabled, setIsAiEnabled }) => {
+const SettingScreen: React.FC<Props> = ({ navigation, isAiEnabled, setIsAiEnabled }) => {
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [hasVisit, sethasVisit] = useState(false); // Track the first visit
 
@@ -67,6 +67,10 @@ const SettingScreen: React.FC<Props> = ({ isAiEnabled, setIsAiEnabled }) => {
     }
   };
 
+  const handleLogout = () => {
+    navigation.navigate(' ');
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Settings</Text>
@@ -85,7 +89,7 @@ const SettingScreen: React.FC<Props> = ({ isAiEnabled, setIsAiEnabled }) => {
       {/* AI Info Section */}
       {isAiEnabled && (
         <View style={styles.aiContainer}>
-          <Image source={require('../assets/AI_nurse.jpg')} style={styles.aiIcon} />
+          <Image source={require('../../assets/AI_nurse.jpg')} style={styles.aiIcon} />
           <View style={styles.aiTextContainer}>
             <TouchableOpacity style={styles.closeButton} onPress={stopVoice}>
               <Text style={styles.closeButtonText}>X</Text>
@@ -97,6 +101,11 @@ const SettingScreen: React.FC<Props> = ({ isAiEnabled, setIsAiEnabled }) => {
           </View>
         </View>
       )}
+      <View style={styles.aiContainer}>
+        <TouchableOpacity style={styles.logOutButton} onPress={handleLogout}>
+          <Text style={styles.logOutButtonText}>Log Out</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -109,7 +118,8 @@ const styles = StyleSheet.create({
     alignItems: 'center', // Center content horizontally
   },
   title: {
-    fontSize: 24,
+    fontSize: 36,
+    marginTop: 200,
     marginBottom: 40,
     fontWeight: 'bold',
   },
@@ -121,7 +131,7 @@ const styles = StyleSheet.create({
     width: '100%', // Takes up full width for balanced centering
   },
   label: {
-    fontSize: 18,
+    fontSize: 25,
     marginRight: 10,
   },
   aiContainer: {
@@ -180,6 +190,19 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: 'bold',
   },
+  logOutButton: {
+    backgroundColor: '#007AFF',
+    borderRadius: 5,
+    paddingHorizontal: 5,
+    paddingVertical: 10,
+    width: 200,
+    alignItems: 'center',
+  },
+  logOutButtonText: {
+    color: '#fff',
+    fontSize: 20,
+    fontWeight: 'bold',
+  }
 });
 
 export default SettingScreen;

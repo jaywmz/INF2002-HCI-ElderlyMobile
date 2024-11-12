@@ -134,6 +134,7 @@ const styles = StyleSheet.create({
     height: '100%',
     padding: 20,
     alignItems: 'center',
+    justifyContent: 'center', 
   },
   headerText: {
     fontSize: 24,
@@ -181,23 +182,24 @@ const styles = StyleSheet.create({
   detailsContainer: {
     marginTop: 20,
     width: '90%',
-    alignItems: 'flex-start',
+    alignItems: 'center',
   },
   detailsText: {
-    fontSize: 20,
+    fontSize: 25,
     marginBottom: 10,
   },
   confirmButton: {
     backgroundColor: '#007AFF',
     borderRadius: 10,
-    paddingHorizontal: 40,
-    paddingVertical: 15,
-    marginTop: 30,
+    padding: 15,
+    marginTop: 15,
+    width: '50%',
   },
   confirmButtonText: {
     color: '#fff',
     fontSize: 18,
     fontWeight: 'bold',
+    textAlign: 'center',
   },
   aiContainer: {
     width: '100%',

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
+import { Image } from 'expo-image';
 import { View, Text, TextInput, TouchableOpacity } from 'react-native';
-import { globalStyles } from '../../styles/Theme';
+import { authPage } from '../../styles/Theme';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList, RegisteredUser } from '../../types';
 
@@ -25,26 +26,30 @@ const LoginScreen = ({ navigation, registeredUser }: Props) => {
   };
 
   return (
-    <View style={globalStyles.container}>
-      <Text style={globalStyles.headerText}>Login</Text>
+    <View style={authPage.container}>
+      <Text style={{ fontSize: 35, fontWeight: 'bold', marginBottom: 35}}>ElderlyWell</Text>
+      <Text style={authPage.headerText}>Login with SingPass</Text>
+      <Image style={{width: 200, height: 200}} source={require('../../assets/singpass-qr.png')}/>
+      <View style={{ width: '100%', height: 1, backgroundColor: '#ccc', marginVertical: 20 }} />
+      <Text style={authPage.headerText}>Login with Password</Text>
       <TextInput
-        style={globalStyles.input}
-        placeholder="Username"
+        style={authPage.input}
+        placeholder="Enter Singpass ID"
         value={username}
         onChangeText={setUsername}
       />
       <TextInput
-        style={globalStyles.input}
-        placeholder="Password"
+        style={authPage.input}
+        placeholder="Enter Password"
         value={password}
         onChangeText={setPassword}
         secureTextEntry
       />
-      <TouchableOpacity style={globalStyles.button} onPress={handleLogin}>
-        <Text style={globalStyles.buttonText}>Login</Text>
+      <TouchableOpacity style={authPage.button} onPress={handleLogin}>
+        <Text style={authPage.buttonText}>Sign In</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate('Registration')} style={{ marginTop: 10 }}>
-        <Text style={{ color: '#007AFF' }}>Don't have an account? Register</Text>
+        <Text style={{ color: '#007AFF', fontSize: 22.5, marginTop: 25}}>Register with Singpass</Text>
       </TouchableOpacity>
     </View>
   );

@@ -127,6 +127,7 @@ const styles = StyleSheet.create({
     height: '100%',
     padding: 10,
     alignItems: 'center',
+    justifyContent: 'center'
   },
   chosenDateText: {
     fontSize: 24,

@@ -73,6 +73,10 @@ const ReminderSuccessScreen = ({ navigation, isAiEnabled }: Props) => {
         </View>
       )}
 
+      <View style={{ alignItems: 'center' }}>
+        <Image source={require('../../assets/thumbsup-icon.png')} style={{ width: 100, height: 100 }} />
+      </View>
+
       {/* Header with Back button */}
       <View style={styles.header}>
         <Text style={styles.headerText}>Your medicine reminder has been set successfully!</Text>
@@ -81,7 +85,7 @@ const ReminderSuccessScreen = ({ navigation, isAiEnabled }: Props) => {
 
       {/* Confirm Button */}
       <TouchableOpacity style={styles.confirmButton} onPress={handleNavigateToHome}>
-        <Text style={styles.confirmButtonText}>Go back to home screen</Text>
+        <Text style={styles.confirmButtonText}>Go Back to Home Screen</Text>
       </TouchableOpacity>
 
     </View>
@@ -92,14 +96,14 @@ const styles = StyleSheet.create({
   background: {
     backgroundColor: '#fbe4e4',
     height: '100%',
+    justifyContent: 'center',
   },
 
   header: {
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
-    width: '100%',
-    height: '50%',
+    height: '20%',
   },
   headerText: {
     textAlign: 'center',
@@ -118,7 +122,7 @@ const styles = StyleSheet.create({
   },
   confirmButtonText: {
     color: '#fff',
-    fontSize: 16,
+    fontSize: 30,
     fontWeight: 'bold',
   },
 
