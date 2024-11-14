@@ -25,6 +25,9 @@ import ReminderSuccessScreen from './screens/create-reminder screens/ReminderSuc
 import SettingScreen from './screens/mainscreens/SettingScreen';
 import { Appointment, AuthProps, RegisteredUser } from './types';
 import CreateApptSuccessScreen from './screens/create-appointment screens/Success';
+import CurrentReminderScreen from './screens/edit-reminder/CurrentReminder';
+import EditReminderScreen from './screens/edit-reminder/EditReminder';
+import EditSuccessScreen from './screens/edit-reminder/EditSuccess';
 
 const Stack = createStackNavigator();
 const Tab = createMaterialTopTabNavigator();
@@ -237,6 +240,18 @@ export default function App() {
 
           <Stack.Screen name="ReminderSuccess">
             {(props) => <ReminderSuccessScreen {...props} isAiEnabled={isAiEnabled} />}
+          </Stack.Screen>
+
+          <Stack.Screen name="CurrentReminder">
+            {(props) => <CurrentReminderScreen {...props} isAiEnabled={isAiEnabled} />}
+          </Stack.Screen>
+
+          <Stack.Screen name="EditReminder">
+            {(props) => <EditReminderScreen {...props} isAiEnabled={isAiEnabled} />}
+          </Stack.Screen>
+
+          <Stack.Screen name="EditSuccess">
+            {(props) => <EditSuccessScreen {...props} isAiEnabled={isAiEnabled} />}
           </Stack.Screen>
 
           <Stack.Screen name="Setting" options={{ headerTitle: 'Settings' }}>
