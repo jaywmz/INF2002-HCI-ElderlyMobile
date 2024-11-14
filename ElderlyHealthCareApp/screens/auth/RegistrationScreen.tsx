@@ -19,7 +19,7 @@ const RegistrationScreen = ({ navigation, setRegisteredUser }: Props) => {
     if (username && password) {
       setRegisteredUser({ username, password });
       alert('Registration successful');
-      navigation.navigate('Login');
+      navigation.navigate(' ');
     } else {
       alert('Please fill in all fields');
     }
@@ -44,7 +44,7 @@ const RegistrationScreen = ({ navigation, setRegisteredUser }: Props) => {
       <TouchableOpacity style={authPage.button} onPress={handleRegister}>
         <Text style={authPage.buttonText}>Register</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('Login')} style={{ marginTop: 10 }}>
+      <TouchableOpacity onPress={() => navigation.navigate(' ')} style={{ marginTop: 10 }}>
         <Text style={{ color: '#007AFF', fontSize: 20, marginTop: 15 }}>Already have an account? Login</Text>
       </TouchableOpacity>
     </View>

@@ -1,7 +1,7 @@
 import { useFocusEffect } from '@react-navigation/native';
 import * as Speech from 'expo-speech';
 import React, { useCallback, useState } from 'react';
-import { Image, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
+import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
 import { globalStyles } from '../../styles/Theme';
 import { AuthProps } from '../../types';
 
@@ -76,6 +76,10 @@ const HomeScreen = ({ navigation, registeredUser, setRegisteredUser, isAiEnabled
         <TouchableOpacity style={styles.serviceButton} onPress={() => navigation.navigate('Reminder Calendar')}>
           <Image source={require('../../assets/reminder.jpg')} style={styles.icon} />
           <Text style={styles.buttonText}>Medicine Reminders</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.serviceButton} onPress={() => navigation.navigate('CurrentReminder')}>
+          <Image source={require('../../assets/reminder.jpg')} style={styles.icon} />
+          <Text style={styles.buttonText}>View Current Reminders</Text>
         </TouchableOpacity>
 
       </View>
