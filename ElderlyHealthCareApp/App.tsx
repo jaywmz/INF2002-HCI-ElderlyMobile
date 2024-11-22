@@ -28,6 +28,7 @@ import CreateApptSuccessScreen from './screens/create-appointment screens/Succes
 import CurrentReminderScreen from './screens/edit-reminder/CurrentReminder';
 import EditReminderScreen from './screens/edit-reminder/EditReminder';
 import EditSuccessScreen from './screens/edit-reminder/EditSuccess';
+import { TimerProvider } from './timer';
 
 const Stack = createStackNavigator();
 const Tab = createMaterialTopTabNavigator();
@@ -148,6 +149,7 @@ export default function App() {
   const [type, setType] = useState('');
 
   return (
+    <TimerProvider>
     <GestureHandlerRootView style={{ flex: 1 }}>
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Login">
@@ -267,5 +269,6 @@ export default function App() {
         </Stack.Navigator>
       </NavigationContainer>
     </GestureHandlerRootView>
+    </TimerProvider>
   );
 }

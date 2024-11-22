@@ -4,6 +4,8 @@ import { View, Text, TextInput, TouchableOpacity } from 'react-native';
 import { authPage } from '../../styles/Theme';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList, RegisteredUser } from '../../types';
+import { useTimer } from '../../timer';
+
 
 type LoginScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Login'>;
 
@@ -16,12 +18,15 @@ const LoginScreen = ({ navigation, registeredUser }: Props) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
+  const { startTimer } = useTimer();
+
   const handleLogin = () => {
     // if (registeredUser && username === registeredUser.username && password === registeredUser.password) {
     //   navigation.navigate('Main', { screen: 'Home' });
     // } else {
     //   alert('Incorrect username or password');
     // }
+    startTimer();
     navigation.navigate('Main', { screen: 'Home' });
   };
 

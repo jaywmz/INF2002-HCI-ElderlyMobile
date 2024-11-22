@@ -3,6 +3,7 @@ import * as Speech from 'expo-speech';
 import React, { useEffect, useState } from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { RootStackParamList } from '../../types';
+import { useTimer } from '../../timer';
 
 type CreateApptSuccessScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Success'>;
 
@@ -14,14 +15,23 @@ type Props = {
 const CreateApptSuccessScreen = ({ navigation, isAiEnabled }: Props) => {
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [showAi, setShowAi] = useState(isAiEnabled);
+  const { getElapsedTime } = useTimer();
 
   useEffect(() => {
+    // Calculate the elapsed time and log it to the terminal
+    const elapsedTime = getElapsedTime();
+    if (elapsedTime !== null) {
+      console.log(`Time taken to navigate to CreateApptSuccessScreen: ${elapsedTime.toFixed(2)} ms`);
+    }
+
     if (isAiEnabled) {
       playVoice();
     }
-  }, [isAiEnabled]);
+  }, [isAiEnabled, getElapsedTime]);
 
-  const playVoice = (text: string = 'Appointment has been created. Please click the button below to go back to home screen.') => {
+  const playVoice = (
+    text: string = 'Appointment has been created. Please click the button below to go back to the home screen.'
+  ) => {
     Speech.speak(text, {
       onStart: () => setIsSpeaking(true),
       onDone: () => setIsSpeaking(false),
@@ -54,7 +64,6 @@ const CreateApptSuccessScreen = ({ navigation, isAiEnabled }: Props) => {
 
   return (
     <View style={[styles.background]}>
-
       {/* Thumbs up icon */}
       <View>
         <Image source={require('../../assets/thumbsup-icon.png')} style={styles.image} />
@@ -76,7 +85,7 @@ const CreateApptSuccessScreen = ({ navigation, isAiEnabled }: Props) => {
           <Image source={require('../../assets/AI_nurse.jpg')} style={styles.aiIcon} />
           <View style={styles.aiTextContainer}>
             <Text style={styles.aiText}>
-              Appointment has been created successfully! Click the button in the center to go back to home screen.
+              Appointment has been created successfully! Click the button in the center to go back to the home screen.
             </Text>
             <TouchableOpacity style={styles.controlButton} onPress={handlePauseResume}>
               <Text style={styles.controlButtonText}>{isSpeaking ? 'Pause' : 'Play'}</Text>
@@ -116,9 +125,9 @@ const styles = StyleSheet.create({
     width: 200,
     height: 210,
     alignSelf: 'center',
-    marginBottom: 15
+    marginBottom: 15,
   },
-  
+
   confirmButton: {
     backgroundColor: '#007AFF',
     borderRadius: 10,
@@ -127,6 +136,7 @@ const styles = StyleSheet.create({
     marginTop: 30,
     alignSelf: 'center',
   },
+
   confirmButtonText: {
     color: '#fff',
     fontSize: 30,
@@ -141,11 +151,13 @@ const styles = StyleSheet.create({
     bottom: 10,
     left: 10,
   },
+
   aiIcon: {
     width: 50,
     height: 80,
     marginRight: 10,
   },
+
   aiTextContainer: {
     alignItems: 'center',
     backgroundColor: '#fff',
@@ -158,12 +170,14 @@ const styles = StyleSheet.create({
     position: 'relative',
     width: '75%',
   },
+
   aiText: {
     fontSize: 18,
     color: '#333',
     marginRight: 10,
     textAlign: 'center',
   },
+
   controlButton: {
     backgroundColor: '#007AFF',
     borderRadius: 15,
@@ -172,11 +186,13 @@ const styles = StyleSheet.create({
     marginRight: 10,
     marginTop: 10,
   },
+
   controlButtonText: {
     color: '#fff',
     fontSize: 12,
     fontWeight: 'bold',
   },
+
   closeButton: {
     backgroundColor: '#ff4d4d',
     borderRadius: 15,
@@ -188,6 +204,7 @@ const styles = StyleSheet.create({
     top: 5,
     right: 5,
   },
+
   closeButtonText: {
     color: '#fff',
     fontSize: 12,

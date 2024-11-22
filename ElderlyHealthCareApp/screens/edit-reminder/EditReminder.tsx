@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
   container: {
     padding: 20,
     flex: 1,
-    backgroundColor: '#f9f9f9',
+    backgroundColor: '#fbe4e4',
   },
   header: {
     fontSize: 24,

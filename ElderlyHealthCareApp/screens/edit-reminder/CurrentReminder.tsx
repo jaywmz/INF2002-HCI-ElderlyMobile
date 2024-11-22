@@ -50,8 +50,10 @@ const CurrentReminder: React.FC = () => {
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <View style={styles.reminderCard}>
-            <Image source={item.image} style={styles.image} />
-            <View style={styles.reminderInfo}>
+            <View style={{}}>
+              <Image source={item.image} style={styles.image} />
+            </View>
+            <View style={{}}>
               <Text style={styles.medicine}>{item.name}</Text>
               <Text style={styles.date}>Date: {item.date}</Text>
               <Text style={styles.time}>Time: {item.time}</Text>
@@ -73,7 +75,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: '#f9f9f9',
+    backgroundColor: '#fbe4e4',
+    overflow: 'hidden'
   },
   header: {
     fontSize: 24,
@@ -83,7 +86,6 @@ const styles = StyleSheet.create({
     color: '#333',
   },
   reminderCard: {
-    flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#fff',
     borderRadius: 8,
@@ -96,13 +98,10 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
   image: {
-    width: 60,
-    height: 60,
+    width: 100,
+    height: 100,
     borderRadius: 8,
     marginRight: 15,
-  },
-  reminderInfo: {
-    flex: 1,
   },
   medicine: {
     fontSize: 18,

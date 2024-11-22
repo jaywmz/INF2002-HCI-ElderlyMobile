@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity } from 'react-native';
-import { authPage } from '../../styles/Theme';
+import { globalStyles } from '../../styles/Theme';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList, RegisteredUser } from '../../types';
 
@@ -19,30 +19,30 @@ const RegistrationScreen = ({ navigation, setRegisteredUser }: Props) => {
     if (username && password) {
       setRegisteredUser({ username, password });
       alert('Registration successful');
-      navigation.navigate(' ');
+      navigation.navigate('Login');
     } else {
       alert('Please fill in all fields');
     }
   };
 
   return (
-    <View style={authPage.container}>
-      <Text style={authPage.headerText}>Register</Text>
+    <View style={globalStyles.container}>
+      <Text style={globalStyles.headerText}>Register</Text>
       <TextInput
-        style={authPage.input}
-        placeholder="Enter Singpass ID"
+        style={globalStyles.input}
+        placeholder="Username"
         value={username}
         onChangeText={setUsername}
       />
       <TextInput
-        style={authPage.input}
-        placeholder="Enter Password"
+        style={globalStyles.input}
+        placeholder="Password"
         value={password}
         onChangeText={setPassword}
         secureTextEntry
       />
-      <TouchableOpacity style={authPage.button} onPress={handleRegister}>
-        <Text style={authPage.buttonText}>Register</Text>
+      <TouchableOpacity style={globalStyles.button} onPress={handleRegister}>
+        <Text style={globalStyles.buttonText}>Register</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate(' ')} style={{ marginTop: 10 }}>
         <Text style={{ color: '#007AFF', fontSize: 20, marginTop: 15 }}>Already have an account? Login</Text>

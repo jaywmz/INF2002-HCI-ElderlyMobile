@@ -4,6 +4,7 @@ import React, { useCallback, useState } from 'react';
 import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
 import { globalStyles } from '../../styles/Theme';
 import { AuthProps } from '../../types';
+import { useTimer } from '../../timer'; 
 
 type Props = {
   navigation: any;
@@ -17,16 +18,18 @@ const HomeScreen = ({ navigation, registeredUser, setRegisteredUser, isAiEnabled
   const [showAi, setShowAi] = useState(isAiEnabled);
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [showNextMessage, setShowNextMessage] = useState(false);
+  const { startTimer } = useTimer();
 
   useFocusEffect(
     useCallback(() => {
+      startTimer();
       setCurrentScreenId(screenId);
       setShowNextMessage(false);
       if (isAiEnabled && currentScreenId === screenId) {
         playVoice('Welcome, I am Joy. How can I assist you today? To turn off AI, please head towards Setting page.');
       }
       return () => stopVoice();
-    }, [isAiEnabled, currentScreenId])
+    }, [isAiEnabled, currentScreenId, startTimer])
   );
 
   const playVoice = (text: string) => {
@@ -44,46 +47,46 @@ const HomeScreen = ({ navigation, registeredUser, setRegisteredUser, isAiEnabled
   };
 
   return (
-    <TouchableWithoutFeedback onPress={() => setShowNextMessage(true)}>
-      <View style={[globalStyles.container, styles.background]}>
-        <View>
-          <Text style={styles.titleText}>ElderlyWell</Text>
-        </View>
-        {/* AI Assistance Section */}
-        {isAiEnabled && showAi && (
-          <View style={styles.aiContainer}>
-            <Image source={require('../../assets/AI_nurse.jpg')} style={styles.aiIcon} />
-            <View style={styles.aiTextContainer}>
-              <TouchableOpacity style={styles.closeButton} onPress={() => setShowAi(false)}>
-                <Text style={styles.closeButtonText}>X</Text>
-              </TouchableOpacity>
-              <Text style={styles.aiText}>
-                Welcome, I am Joy, How can I assist you today? To turn off AI, please head towards Settings page.
-              </Text>
-            </View>
+      <TouchableWithoutFeedback onPress={() => setShowNextMessage(true)}>
+        <View style={[globalStyles.container, styles.background]}>
+          <View>
+            <Text style={styles.titleText}>ElderlyWell</Text>
           </View>
-        )}
+          {/* AI Assistance Section */}
+          {isAiEnabled && showAi && (
+            <View style={styles.aiContainer}>
+              <Image source={require('../../assets/AI_nurse.jpg')} style={styles.aiIcon} />
+              <View style={styles.aiTextContainer}>
+                <TouchableOpacity style={styles.closeButton} onPress={() => setShowAi(false)}>
+                  <Text style={styles.closeButtonText}>X</Text>
+                </TouchableOpacity>
+                <Text style={styles.aiText}>
+                  Welcome, I am Joy, How can I assist you today? To turn off AI, please head towards Settings page.
+                </Text>
+              </View>
+            </View>
+          )}
 
-        {/* Navigation Buttons with Icons for Services */}
-        <TouchableOpacity style={[styles.serviceButton, { marginTop: 20 }]} onPress={() => navigation.navigate('Choose Appointment Location')}>
-          <Image source={require('../../assets/calendar.jpg')} style={styles.icon} />
-          <Text style={styles.buttonText}>Create Appointment</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.serviceButton} onPress={() => navigation.navigate('Current Appointment')}>
-          <Image source={require('../../assets/edit.jpg')} style={styles.icon} />
-          <Text style={styles.buttonText}>View/Reschedule Appointment</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.serviceButton} onPress={() => navigation.navigate('Reminder Calendar')}>
-          <Image source={require('../../assets/reminder.jpg')} style={styles.icon} />
-          <Text style={styles.buttonText}>Medicine Reminders</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.serviceButton} onPress={() => navigation.navigate('CurrentReminder')}>
-          <Image source={require('../../assets/reminder.jpg')} style={styles.icon} />
-          <Text style={styles.buttonText}>View Current Reminders</Text>
-        </TouchableOpacity>
+          {/* Navigation Buttons with Icons for Services */}
+          <TouchableOpacity style={[styles.serviceButton, { marginTop: 20 }]} onPress={() => navigation.navigate('Choose Appointment Location')}>
+            <Image source={require('../../assets/calendar.jpg')} style={styles.icon} />
+            <Text style={styles.buttonText}>Create Appointment</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.serviceButton} onPress={() => navigation.navigate('Current Appointment')}>
+            <Image source={require('../../assets/edit.jpg')} style={styles.icon} />
+            <Text style={styles.buttonText}>View/Reschedule Appointment</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.serviceButton} onPress={() => navigation.navigate('Reminder Calendar')}>
+            <Image source={require('../../assets/reminder.jpg')} style={styles.icon} />
+            <Text style={styles.buttonText}>Medicine Reminders</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.serviceButton} onPress={() => navigation.navigate('CurrentReminder')}>
+            <Image source={require('../../assets/reminder.jpg')} style={styles.icon} />
+            <Text style={styles.buttonText}>View Current Reminders</Text>
+          </TouchableOpacity>
 
-      </View>
-    </TouchableWithoutFeedback>
+        </View>
+      </TouchableWithoutFeedback>
   );
 };
 
