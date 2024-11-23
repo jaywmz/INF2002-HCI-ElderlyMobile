@@ -1,7 +1,6 @@
 import { StackNavigationProp } from '@react-navigation/stack';
-import { useFocusEffect } from '@react-navigation/native';
 import * as Speech from 'expo-speech';
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Calendar } from 'react-native-calendars';
 import { RootStackParamList } from '../../types';
@@ -12,32 +11,13 @@ type Props = {
   navigation: CalendarScreenNavigationProp;
   isAiEnabled: boolean;
   locationProp: string | undefined;
-  setDate: (date : string) => void;
+  setDate: (date: string) => void;
 };
 
 const ReminderCalendarScreen = ({ navigation, isAiEnabled, setDate, locationProp }: Props) => {
   const [selectedDate, setSelectedDate] = useState('');
   const [isSpeaking, setIsSpeaking] = useState(false);
-  const [showAi, setShowAi] = useState(isAiEnabled);
-  const [hasVisited, setHasVisited] = useState(false); // Track if the screen has been visited
-
-  // Play AI voice on initial load if not previously visited
-  useEffect(() => {
-    if (isAiEnabled && !hasVisited) {
-      playVoice();
-      setHasVisited(true); // Mark as visited after first play
-    }
-  }, [isAiEnabled, hasVisited]);
-
-  // Handle screen focus and re-focus events
-  useFocusEffect(
-    useCallback(() => {
-      if (isAiEnabled && hasVisited) {
-        playVoice();
-      }
-      return () => stopVoice(); // Stop voice when navigating away
-    }, [isAiEnabled, hasVisited])
-  );
+  const [showAi, setShowAi] = useState(false); // AI assistant initially hidden
 
   const playVoice = (text: string = 'Please choose your medication date from the calendar above.') => {
     Speech.speak(text, {
@@ -53,50 +33,45 @@ const ReminderCalendarScreen = ({ navigation, isAiEnabled, setDate, locationProp
     setIsSpeaking(false);
   };
 
+  const toggleAiAssistant = () => {
+    setShowAi(!showAi);
+    if (!showAi) {
+      playVoice();
+    } else {
+      stopVoice();
+    }
+  };
+
   const onDayPress = (day: { dateString: string }) => {
     setSelectedDate(day.dateString);
     setDate(day.dateString);
-    navigation.navigate("ReminderTimeslots");
-  };
-
-  const handleCloseAi = () => {
-    stopVoice();
-    setShowAi(false);
-  };
-
-  const handlePauseResume = () => {
-    if (isSpeaking) {
-      stopVoice();
-    } else {
-      playVoice();
-    }
+    navigation.navigate('ReminderTimeslots');
   };
 
   return (
     <View style={styles.background}>
-      <View style={{}}>
-      {/* Header */}
       <View>
-        <Text style={styles.headerText}>Choose timeslot</Text>
+        {/* Header */}
+        <Text style={styles.headerText}>Choose Timeslot</Text>
       </View>
 
-      {/* AI Assistance Section */}
+      {/* AI Assistant Section */}
       {showAi && (
         <View style={styles.aiContainer}>
           <Image source={require('../../assets/AI_nurse.jpg')} style={styles.aiIcon} />
           <View style={styles.aiTextContainer}>
-            <TouchableOpacity style={styles.closeButton} onPress={handleCloseAi}>
-              <Text style={styles.closeButtonText}>X</Text>
-            </TouchableOpacity>
             <Text style={styles.aiText}>Please choose your medication date from the calendar above.</Text>
-            <TouchableOpacity style={styles.controlButton} onPress={handlePauseResume}>
+            <TouchableOpacity style={styles.controlButton} onPress={toggleAiAssistant}>
               <Text style={styles.controlButtonText}>{isSpeaking ? 'Pause' : 'Play'}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.closeButton} onPress={toggleAiAssistant}>
+              <Text style={styles.closeButtonText}>X</Text>
             </TouchableOpacity>
           </View>
         </View>
       )}
 
-      {/* Calendar and Selected Date */}
+      {/* Calendar */}
       <View style={styles.calendarContainer}>
         <Text style={styles.selectedDateText}>
           Selected Date: {selectedDate || 'None'}
@@ -112,7 +87,11 @@ const ReminderCalendarScreen = ({ navigation, isAiEnabled, setDate, locationProp
           }}
         />
       </View>
-      </View>
+
+      {/* Help Button */}
+      <TouchableOpacity style={styles.helpButton} onPress={toggleAiAssistant}>
+        <Text style={styles.helpButtonText}>Help</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -122,19 +101,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fbe4e4',
     height: '100%',
-    justifyContent: 'center', 
-  },
-  header: {
-    alignItems: 'center',
     justifyContent: 'center',
-    width: '100%',
-    padding: 20,
-  },
-  chosenDateText: {
-    fontSize: 24,
-    alignSelf: 'center',
-    paddingTop: 20,
-    color: '#333',
   },
   headerText: {
     fontSize: 32,
@@ -157,38 +124,33 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     margin: 10,
   },
-
   aiContainer: {
-    width: '100%',
-    flexDirection: 'row',
-    alignItems: 'center',
-    position: 'absolute',
-    top: 500,
-    left: 10,
-  },
-  aiIcon: {
-    width: 50,
-    height: 80,
-    marginRight: 10,
-  },
-  aiTextContainer: {
+    width: '90%',
+    alignSelf: 'center',
     backgroundColor: '#fff',
-    padding: 10,
+    padding: 15,
     borderRadius: 10,
     shadowColor: '#000',
     shadowOpacity: 0.1,
     shadowRadius: 6,
     elevation: 2,
-    maxWidth: 260,
-    position: 'relative',
+    marginTop: 10,
+  },
+  aiIcon: {
+    width: 50,
+    height: 80,
+    marginBottom: 10,
+    alignSelf: 'center',
+  },
+  aiTextContainer: {
     alignItems: 'center',
+    position: 'relative',
   },
   aiText: {
-    fontSize: 14,
+    fontSize: 16,
     color: '#333',
     textAlign: 'center',
-    marginVertical: 10,
-    flexWrap: 'wrap',
+    marginBottom: 10,
   },
   controlButton: {
     backgroundColor: '#007AFF',
@@ -196,6 +158,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 5,
     marginTop: 10,
+    alignSelf: 'center',
   },
   controlButtonText: {
     color: '#fff',
@@ -217,8 +180,21 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 12,
     fontWeight: 'bold',
-  }
+  },
+  helpButton: {
+    position: 'absolute',
+    bottom: 20,
+    right: 20,
+    backgroundColor: '#007AFF',
+    borderRadius: 30,
+    padding: 15,
+    elevation: 5,
+  },
+  helpButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
 });
 
 export default ReminderCalendarScreen;
-
