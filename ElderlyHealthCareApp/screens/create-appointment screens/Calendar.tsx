@@ -39,7 +39,7 @@ const CalendarScreen = ({ navigation, isAiEnabled, setDate, locationProp }: Prop
     }, [isAiEnabled, hasVisited])
   );
 
-  const playVoice = (text: string = 'Please choose your preferred appointment date from the calendar below.') => {
+  const playVoice = (text: string = 'Please choose your preferred appointment date from the calendar.') => {
     Speech.speak(text, {
       onStart: () => setIsSpeaking(true),
       onDone: () => setIsSpeaking(false),
@@ -108,7 +108,7 @@ const CalendarScreen = ({ navigation, isAiEnabled, setDate, locationProp }: Prop
             <TouchableOpacity style={styles.closeButton} onPress={handleCloseAi}>
               <Text style={styles.closeButtonText}>X</Text>
             </TouchableOpacity>
-            <Text style={styles.aiText}>Please choose your preferred appointment date from the calendar below.</Text>
+            <Text style={styles.aiText}>Please choose your preferred appointment date from the calendar.</Text>
             <TouchableOpacity style={styles.controlButton} onPress={handlePauseResume}>
               <Text style={styles.controlButtonText}>{isSpeaking ? 'Pause' : 'Play'}</Text>
             </TouchableOpacity>
