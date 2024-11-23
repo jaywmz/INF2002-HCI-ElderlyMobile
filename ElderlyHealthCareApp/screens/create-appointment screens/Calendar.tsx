@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     textAlign: 'center',
     textDecorationLine: 'underline',
-    paddingTop: 40,
+    paddingTop: 20,
   },
 
   calendarContainer: {
@@ -153,6 +153,9 @@ const styles = StyleSheet.create({
     marginLeft: 'auto',
     backgroundColor: '#fff',
     borderRadius: 18,
+  },
+  calendar: {
+    fontSize: 30,
   },
   selectedDateText: {
     fontSize: 18,

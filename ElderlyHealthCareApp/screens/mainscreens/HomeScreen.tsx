@@ -22,14 +22,14 @@ const HomeScreen = ({ navigation, registeredUser, setRegisteredUser, isAiEnabled
 
   useFocusEffect(
     useCallback(() => {
-      startTimer();
+      // startTimer();
       setCurrentScreenId(screenId);
       setShowNextMessage(false);
       if (isAiEnabled && currentScreenId === screenId) {
         playVoice('Welcome, I am Joy. How can I assist you today? To turn off AI, please head towards Setting page.');
       }
       return () => stopVoice();
-    }, [isAiEnabled, currentScreenId, startTimer])
+    }, [isAiEnabled, currentScreenId])
   );
 
   const playVoice = (text: string) => {
@@ -52,20 +52,6 @@ const HomeScreen = ({ navigation, registeredUser, setRegisteredUser, isAiEnabled
           <View>
             <Text style={styles.titleText}>ElderlyWell</Text>
           </View>
-          {/* AI Assistance Section */}
-          {isAiEnabled && showAi && (
-            <View style={styles.aiContainer}>
-              <Image source={require('../../assets/AI_nurse.jpg')} style={styles.aiIcon} />
-              <View style={styles.aiTextContainer}>
-                <TouchableOpacity style={styles.closeButton} onPress={() => setShowAi(false)}>
-                  <Text style={styles.closeButtonText}>X</Text>
-                </TouchableOpacity>
-                <Text style={styles.aiText}>
-                  Welcome, I am Joy, How can I assist you today? To turn off AI, please head towards Settings page.
-                </Text>
-              </View>
-            </View>
-          )}
 
           {/* Navigation Buttons with Icons for Services */}
           <TouchableOpacity style={[styles.serviceButton, { marginTop: 20 }]} onPress={() => navigation.navigate('Choose Appointment Location')}>
@@ -85,6 +71,21 @@ const HomeScreen = ({ navigation, registeredUser, setRegisteredUser, isAiEnabled
             <Text style={styles.buttonText}>View Current Reminders</Text>
           </TouchableOpacity>
 
+          {/* AI Assistance Section */}
+          {isAiEnabled && showAi && (
+            <View style={styles.aiContainer}>
+              <Image source={require('../../assets/AI_nurse.jpg')} style={styles.aiIcon} />
+              <View style={styles.aiTextContainer}>
+                <TouchableOpacity style={styles.closeButton} onPress={() => setShowAi(false)}>
+                  <Text style={styles.closeButtonText}>X</Text>
+                </TouchableOpacity>
+                <Text style={styles.aiText}>
+                  Welcome, I am Joy, How can I assist you today? To turn off AI, please head towards Settings page.
+                </Text>
+              </View>
+            </View>
+          )}
+
         </View>
       </TouchableWithoutFeedback>
   );
@@ -92,7 +93,14 @@ const HomeScreen = ({ navigation, registeredUser, setRegisteredUser, isAiEnabled
 
 const styles = StyleSheet.create({
   background: { backgroundColor: '#fbe4e4', flex: 1 },
-  aiContainer: { flexDirection: 'row', alignItems: 'center' },
+  aiContainer: {
+    width: '80%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    position: 'absolute',
+    bottom: 10,
+    left: 10,
+  },
   aiIcon: { width: 50, height: 80, marginRight: 10 },
   aiTextContainer: {
     backgroundColor: '#fff',
@@ -102,7 +110,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 6,
     elevation: 2,
-    width: 180,
+    width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
     position: 'relative',
