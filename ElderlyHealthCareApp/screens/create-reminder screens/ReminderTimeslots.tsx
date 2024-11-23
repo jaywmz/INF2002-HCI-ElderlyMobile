@@ -10,16 +10,33 @@ type ReminderTimeslotsScreen = StackNavigationProp<RootStackParamList, 'Reminder
 
 type Props = {
   isAiEnabled: boolean;
-  navigation: ReminderTimeslotsScreen;
+  navigation: ReminderTimeslotsScreen,
   date: string | undefined;
   setTime: (time: string) => void;
 };
 
 const ReminderTimeslotsScreen = ({ isAiEnabled, navigation, date, setTime }: Props) => {
   const [isSpeaking, setIsSpeaking] = useState(false);
-  const [showAi, setShowAi] = useState(false); // Initially set to false
+  const [showAi, setShowAi] = useState(isAiEnabled);
+  const [hasVisited, setHasVisited] = useState(false);
   const [selectedTime, setSelectedTime] = useState('');
   const selectedDate = date;
+
+  useEffect(() => {
+    if (isAiEnabled && !hasVisited) {
+      playVoice();
+      setHasVisited(true);
+    }
+  }, [isAiEnabled, hasVisited]);
+
+  useFocusEffect(
+    useCallback(() => {
+      if (isAiEnabled && hasVisited) {
+        playVoice();
+      }
+      return () => stopVoice();
+    }, [isAiEnabled, hasVisited])
+  );
 
   const playVoice = (text: string = 'Please choose your preferred time to take medicine.') => {
     Speech.speak(text, {
@@ -35,14 +52,9 @@ const ReminderTimeslotsScreen = ({ isAiEnabled, navigation, date, setTime }: Pro
     setIsSpeaking(false);
   };
 
-  const toggleAiAssistant = () => {
-    if (!showAi) {
-      setShowAi(true);
-      playVoice(); // Play voice when enabling AI
-    } else {
-      stopVoice(); // Stop voice when disabling AI
-      setShowAi(false);
-    }
+  const handleCloseAi = () => {
+    stopVoice();
+    setShowAi(false);
   };
 
   const handleConfirm = () => {
@@ -50,7 +62,7 @@ const ReminderTimeslotsScreen = ({ isAiEnabled, navigation, date, setTime }: Pro
       setTime(selectedTime);
       navigation.navigate('ReminderConfirm');
     } else {
-      alert('Please select a time before confirming.');
+      alert("Please select a time before confirming.");
     }
   };
 
@@ -66,6 +78,7 @@ const ReminderTimeslotsScreen = ({ isAiEnabled, navigation, date, setTime }: Pro
 
   return (
     <View style={styles.background}>
+
       {/* Header */}
       <Text style={styles.chosenDateText}>Selected date: {selectedDate}</Text>
       <View>
@@ -77,15 +90,12 @@ const ReminderTimeslotsScreen = ({ isAiEnabled, navigation, date, setTime }: Pro
         <View style={styles.aiContainer}>
           <Image source={require('../../assets/AI_nurse.jpg')} style={styles.aiIcon} />
           <View style={styles.aiTextContainer}>
-            <Text style={styles.aiText}>Please choose your preferred time to take medicine.</Text>
-            <TouchableOpacity
-              style={styles.controlButton}
-              onPress={() => (isSpeaking ? stopVoice() : playVoice())}
-            >
-              <Text style={styles.controlButtonText}>{isSpeaking ? 'Pause' : 'Play'}</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.closeButton} onPress={() => setShowAi(false)}>
+            <TouchableOpacity style={styles.closeButton} onPress={handleCloseAi}>
               <Text style={styles.closeButtonText}>X</Text>
+            </TouchableOpacity>
+            <Text style={styles.aiText}>Please choose your preferred time to take medicine.</Text>
+            <TouchableOpacity style={styles.controlButton} onPress={() => setIsSpeaking(!isSpeaking)}>
+              <Text style={styles.controlButtonText}>{isSpeaking ? 'Pause' : 'Play'}</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -107,11 +117,6 @@ const ReminderTimeslotsScreen = ({ isAiEnabled, navigation, date, setTime }: Pro
       <TouchableOpacity style={styles.confirmButton} onPress={handleConfirm}>
         <Text style={styles.confirmButtonText}>Confirm Time</Text>
       </TouchableOpacity>
-
-      {/* Help Button */}
-      <TouchableOpacity style={styles.helpButton} onPress={toggleAiAssistant}>
-        <Text style={styles.helpButtonText}>Help</Text>
-      </TouchableOpacity>
     </View>
   );
 };
@@ -122,7 +127,7 @@ const styles = StyleSheet.create({
     height: '100%',
     padding: 10,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   chosenDateText: {
     fontSize: 24,
@@ -213,20 +218,6 @@ const styles = StyleSheet.create({
   closeButtonText: {
     color: '#fff',
     fontSize: 12,
-    fontWeight: 'bold',
-  },
-  helpButton: {
-    position: 'absolute',
-    bottom: 20,
-    right: 20,
-    backgroundColor: '#007AFF',
-    borderRadius: 30,
-    padding: 15,
-    elevation: 5,
-  },
-  helpButtonText: {
-    color: '#fff',
-    fontSize: 16,
     fontWeight: 'bold',
   },
 });
