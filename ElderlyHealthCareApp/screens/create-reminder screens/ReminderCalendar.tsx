@@ -19,7 +19,7 @@ const ReminderCalendarScreen = ({ navigation, isAiEnabled, setDate, locationProp
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [showAi, setShowAi] = useState(false); // AI assistant initially hidden
 
-  const playVoice = (text: string = 'Please choose your medication date from the calendar above.') => {
+  const playVoice = (text: string = 'Please choose your medication date from the calendar below.') => {
     Speech.speak(text, {
       onStart: () => setIsSpeaking(true),
       onDone: () => setIsSpeaking(false),
@@ -34,13 +34,23 @@ const ReminderCalendarScreen = ({ navigation, isAiEnabled, setDate, locationProp
   };
 
   const toggleAiAssistant = () => {
-    setShowAi(!showAi);
     if (!showAi) {
+      setShowAi(true); // Show AI assistant
       playVoice();
     } else {
-      stopVoice();
+      stopVoice(); // Stop speech when closing the AI
+      setShowAi(false); // Hide AI assistant
     }
   };
+
+  const handlePauseResume = () => {
+    if (isSpeaking) {
+      stopVoice(); // Pause the speech
+    } else {
+      playVoice(); // Resume the speech
+    }
+  };
+  
 
   const onDayPress = (day: { dateString: string }) => {
     setSelectedDate(day.dateString);
@@ -60,8 +70,8 @@ const ReminderCalendarScreen = ({ navigation, isAiEnabled, setDate, locationProp
         <View style={styles.aiContainer}>
           <Image source={require('../../assets/AI_nurse.jpg')} style={styles.aiIcon} />
           <View style={styles.aiTextContainer}>
-            <Text style={styles.aiText}>Please choose your medication date from the calendar above.</Text>
-            <TouchableOpacity style={styles.controlButton} onPress={toggleAiAssistant}>
+            <Text style={styles.aiText}>Please choose your medication date from the calendar below.</Text>
+            <TouchableOpacity style={styles.controlButton} onPress={handlePauseResume}>
               <Text style={styles.controlButtonText}>{isSpeaking ? 'Pause' : 'Play'}</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.closeButton} onPress={toggleAiAssistant}>
