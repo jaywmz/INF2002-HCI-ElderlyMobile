@@ -25,6 +25,7 @@ const HomeScreen = ({ navigation, registeredUser, setRegisteredUser, isAiEnabled
       // startTimer();
       setCurrentScreenId(screenId);
       setShowNextMessage(false);
+      setShowAi(isAiEnabled);
       if (isAiEnabled && currentScreenId === screenId) {
         playVoice('Welcome, I am Joy. How can I assist you today? To turn off AI, please head towards Setting page.');
       }
@@ -72,7 +73,7 @@ const HomeScreen = ({ navigation, registeredUser, setRegisteredUser, isAiEnabled
           </TouchableOpacity>
 
           {/* AI Assistance Section */}
-          {showAi && (
+          {isAiEnabled && showAi && (
             <View style={styles.aiContainer}>
               <Image source={require('../../assets/AI_nurse.jpg')} style={styles.aiIcon} />
               <View style={styles.aiTextContainer}>
