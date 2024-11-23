@@ -60,7 +60,7 @@ const HomeScreen = ({ navigation, registeredUser, setRegisteredUser, isAiEnabled
           </TouchableOpacity>
           <TouchableOpacity style={styles.serviceButton} onPress={() => navigation.navigate('Current Appointment')}>
             <Image source={require('../../assets/edit.jpg')} style={styles.icon} />
-            <Text style={styles.buttonText}>View/Reschedule Appointment</Text>
+            <Text style={styles.buttonText}>Reschedule Appointment</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.serviceButton} onPress={() => navigation.navigate('Reminder Calendar')}>
             <Image source={require('../../assets/reminder.jpg')} style={styles.icon} />
