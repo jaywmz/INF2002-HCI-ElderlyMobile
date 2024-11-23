@@ -72,7 +72,7 @@ const HomeScreen = ({ navigation, registeredUser, setRegisteredUser, isAiEnabled
           </TouchableOpacity>
 
           {/* AI Assistance Section */}
-          {isAiEnabled && showAi && (
+          {showAi && (
             <View style={styles.aiContainer}>
               <Image source={require('../../assets/AI_nurse.jpg')} style={styles.aiIcon} />
               <View style={styles.aiTextContainer}>

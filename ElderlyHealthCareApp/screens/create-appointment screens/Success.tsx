@@ -14,7 +14,7 @@ type Props = {
 
 const CreateApptSuccessScreen = ({ navigation, isAiEnabled }: Props) => {
   const [isSpeaking, setIsSpeaking] = useState(false);
-  const [showAi, setShowAi] = useState(isAiEnabled);
+  const [showAi, setShowAi] = useState(!isAiEnabled);
   const { getElapsedTime } = useTimer();
 
   useEffect(() => {
@@ -24,10 +24,11 @@ const CreateApptSuccessScreen = ({ navigation, isAiEnabled }: Props) => {
       console.log(`Time taken to navigate to CreateApptSuccessScreen: ${elapsedTime.toFixed(2)} ms`);
     }
 
-    if (isAiEnabled) {
-      playVoice();
-    }
-  }, [isAiEnabled, getElapsedTime]);
+    // if (isAiEnabled) {
+    //   playVoice();
+    // }
+  // }, [isAiEnabled, getElapsedTime]);
+  }, [getElapsedTime]);
 
   const playVoice = (
     text: string = 'Appointment has been created. Please click the button below to go back to the home screen.'
@@ -48,6 +49,11 @@ const CreateApptSuccessScreen = ({ navigation, isAiEnabled }: Props) => {
   const handleCloseAi = () => {
     stopVoice();
     setShowAi(false);
+  };
+
+  const handleOpenAi = () => {
+    playVoice();
+    setShowAi(true);
   };
 
   const handlePauseResume = () => {
@@ -78,6 +84,12 @@ const CreateApptSuccessScreen = ({ navigation, isAiEnabled }: Props) => {
       <TouchableOpacity style={styles.confirmButton} onPress={handleNavigateToHome}>
         <Text style={styles.confirmButtonText}>Go Back to Home Screen</Text>
       </TouchableOpacity>
+
+      <View style={styles.helpBtnContainer}>
+        <TouchableOpacity style={styles.aiIcon} onPress={handleOpenAi}>
+          <Text style={styles.helpButton}>Help</Text>
+        </TouchableOpacity>
+      </View>
 
       {/* AI Assistance Section */}
       {showAi && (
@@ -142,6 +154,27 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontWeight: 'bold',
     textAlign: 'center',
+  },
+
+  helpBtnContainer: {
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    position: 'absolute',
+    bottom: 10,
+    left: 10,
+  },
+  helpButton: {
+    position: 'absolute',
+    backgroundColor: '#007AFF',
+    borderRadius: 15,
+    width: 50,
+    height: 50,
+    textAlign: 'center',
+    textAlignVertical: 'center',
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 
   aiContainer: {

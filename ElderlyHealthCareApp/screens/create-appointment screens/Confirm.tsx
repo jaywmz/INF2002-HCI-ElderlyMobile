@@ -17,13 +17,13 @@ type Props = {
 
 const CreateApptConfirmationScreen = ({ navigation, isAiEnabled, location, date, time, type }: Props) => {
   const [isSpeaking, setIsSpeaking] = useState(false);
-  const [showAi, setShowAi] = useState(isAiEnabled);
+  const [showAi, setShowAi] = useState(!isAiEnabled);
 
-  useEffect(() => {
-    if (isAiEnabled) {
-      playVoice('Please check and confirm that all details of the appointment are correct, then click Confirm.');
-    }
-  }, [isAiEnabled]);
+  // useEffect(() => {
+  //   if (isAiEnabled) {
+  //     playVoice('Please check and confirm that all details of the appointment are correct, then click Confirm.');
+  //   }
+  // }, [isAiEnabled]);
 
   const playVoice = (text: string = 'Please check and confirm that all details of the appointment are correct, then click Confirm.') => {
     Speech.speak(text, {
@@ -42,6 +42,11 @@ const CreateApptConfirmationScreen = ({ navigation, isAiEnabled, location, date,
   const handleCloseAi = () => {
     stopVoice();
     setShowAi(false);
+  };
+
+  const handleOpenAi = () => {
+    playVoice();
+    setShowAi(true);
   };
 
   const handlePauseResume = () => {
@@ -84,6 +89,12 @@ const CreateApptConfirmationScreen = ({ navigation, isAiEnabled, location, date,
       <TouchableOpacity style={styles.confirmButton} onPress={handleNavigateToSuccess}>
         <Text style={styles.confirmButtonText}>Confirm</Text>
       </TouchableOpacity>
+
+      <View style={styles.helpBtnContainer}>
+        <TouchableOpacity style={styles.aiIcon} onPress={handleOpenAi}>
+          <Text style={styles.helpButton}>Help</Text>
+        </TouchableOpacity>
+      </View>
 
       {/* AI Assistance Section */}
       {showAi && (
@@ -144,7 +155,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 10,
     marginTop: 10,
-    width: '85%',
+    width: '50%',
     alignSelf: 'center',
   },
   confirmButtonText: {
@@ -153,6 +164,27 @@ const styles = StyleSheet.create({
     fontSize: 28,
     fontWeight: 'bold',
     textAlign: 'center'
+  },
+
+  helpBtnContainer: {
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    position: 'absolute',
+    bottom: 10,
+    left: 10,
+  },
+  helpButton: {
+    position: 'absolute',
+    backgroundColor: '#007AFF',
+    borderRadius: 15,
+    width: 50,
+    height: 50,
+    textAlign: 'center',
+    textAlignVertical: 'center',
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 
   aiContainer: {

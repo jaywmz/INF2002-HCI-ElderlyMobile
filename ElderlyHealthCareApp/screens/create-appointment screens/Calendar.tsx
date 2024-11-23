@@ -18,26 +18,26 @@ type Props = {
 const CalendarScreen = ({ navigation, isAiEnabled, setDate, locationProp }: Props) => {
   const [selectedDate, setSelectedDate] = useState('');
   const [isSpeaking, setIsSpeaking] = useState(false);
-  const [showAi, setShowAi] = useState(isAiEnabled);
+  const [showAi, setShowAi] = useState(!isAiEnabled);
   const [hasVisited, setHasVisited] = useState(false); // Track if the screen has been visited
 
   // Play AI voice on initial load if not previously visited
-  useEffect(() => {
-    if (isAiEnabled && !hasVisited) {
-      playVoice();
-      setHasVisited(true); // Mark as visited after first play
-    }
-  }, [isAiEnabled, hasVisited]);
+  // useEffect(() => {
+  //   if (isAiEnabled && !hasVisited) {
+  //     playVoice();
+  //     setHasVisited(true); // Mark as visited after first play
+  //   }
+  // }, [isAiEnabled, hasVisited]);
 
-  // Handle screen focus and re-focus events
-  useFocusEffect(
-    useCallback(() => {
-      if (isAiEnabled && hasVisited) {
-        playVoice();
-      }
-      return () => stopVoice(); // Stop voice when navigating away
-    }, [isAiEnabled, hasVisited])
-  );
+  // // Handle screen focus and re-focus events
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     if (isAiEnabled && hasVisited) {
+  //       playVoice();
+  //     }
+  //     return () => stopVoice(); // Stop voice when navigating away
+  //   }, [isAiEnabled, hasVisited])
+  // );
 
   const playVoice = (text: string = 'Please choose your preferred appointment date from the calendar.') => {
     Speech.speak(text, {
@@ -62,6 +62,11 @@ const CalendarScreen = ({ navigation, isAiEnabled, setDate, locationProp }: Prop
   const handleCloseAi = () => {
     stopVoice();
     setShowAi(false);
+  };
+
+  const handleOpenAi = () => {
+    playVoice();
+    setShowAi(true);
   };
 
   const handlePauseResume = () => {
@@ -98,6 +103,12 @@ const CalendarScreen = ({ navigation, isAiEnabled, setDate, locationProp }: Prop
           }}
           minDate={new Date().toISOString().split('T')[0]}
         />
+      </View>
+
+      <View style={styles.helpBtnContainer}>
+        <TouchableOpacity style={styles.aiIcon} onPress={handleOpenAi}>
+          <Text style={styles.helpButton}>Help</Text>
+        </TouchableOpacity>
       </View>
 
       {/* AI Assistance Section */}
@@ -161,6 +172,27 @@ const styles = StyleSheet.create({
     fontSize: 18,
     textAlign: 'center',
     margin: 10,
+  },
+
+  helpBtnContainer: {
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    position: 'absolute',
+    bottom: 10,
+    left: 10,
+  },
+  helpButton: {
+    position: 'absolute',
+    backgroundColor: '#007AFF',
+    borderRadius: 15,
+    width: 50,
+    height: 50,
+    textAlign: 'center',
+    textAlignVertical: 'center',
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 
   aiContainer: {

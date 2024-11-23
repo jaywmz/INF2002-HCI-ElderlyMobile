@@ -18,28 +18,28 @@ type Props = {
 };
 
 const LocationsScreen = ({ navigation, isAiEnabled, setLocation }: Props) => {
-  const [showAi, setShowAi] = useState(isAiEnabled);
+  const [showAi, setShowAi] = useState(!isAiEnabled);
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [hasVisited, setHasVisited] = useState(false); // Track if the screen has been visited before
 
   // Play AI voice on initial load if not previously visited
-  useEffect(() => {
-    if (isAiEnabled && !hasVisited) {
-      playVoice();
-      setHasVisited(true); // Mark as visited after playing the first time
-    }
-  }, [isAiEnabled, hasVisited]);
+  // useEffect(() => {
+  //   if (isAiEnabled && !hasVisited) {
+  //     playVoice();
+  //     setHasVisited(true); // Mark as visited after playing the first time
+  //   }
+  // }, [isAiEnabled, hasVisited]);
 
-  useFocusEffect(
-    useCallback(() => {
-      // Play AI voice every time the screen regains focus (after initial load)
-      if (isAiEnabled && hasVisited) {
-        playVoice();
-      }
-      // Stop voice when navigating away
-      return () => stopVoice();
-    }, [isAiEnabled, hasVisited])
-  );
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     // Play AI voice every time the screen regains focus (after initial load)
+  //     if (isAiEnabled && hasVisited) {
+  //       playVoice();
+  //     }
+  //     // Stop voice when navigating away
+  //     return () => stopVoice();
+  //   }, [isAiEnabled, hasVisited])
+  // );
 
   const playVoice = (text: string = 'Please click on your preferred location for your appointment.') => {
     Speech.speak(text, {
@@ -73,6 +73,11 @@ const LocationsScreen = ({ navigation, isAiEnabled, setLocation }: Props) => {
     setShowAi(false);
   };
 
+  const handleOpenAi = () => {
+    playVoice();
+    setShowAi(true);
+  };
+
   const LocationCard = ({ locName, address }: { locName:string; address:string }) => {
     return (
       <View style={[styles.elevation, styles.card]}>
@@ -96,10 +101,16 @@ const LocationsScreen = ({ navigation, isAiEnabled, setLocation }: Props) => {
         </ScrollView>
       </View>
     
+      <View style={styles.helpBtnContainer}>
+        <TouchableOpacity style={styles.aiIcon} onPress={handleOpenAi}>
+          <Text style={styles.helpButton}>Help</Text>
+        </TouchableOpacity>
+      </View>
+
       {/* AI Assistance Section */}
       {showAi && (
         <View style={styles.aiContainer}>
-          <Image source={require('../../assets/AI_nurse.jpg')} style={styles.aiIcon} />
+          <Image source={require('../../assets/AI_nurse.jpg')} style={styles.aiIcon}/>
           <View style={styles.aiTextContainer}>
             <TouchableOpacity style={styles.closeButton} onPress={handleCloseAi}>
               <Text style={styles.closeButtonText}>X</Text>
@@ -170,6 +181,27 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     fontSize: 25,
     textAlign: 'center',
+  },
+
+  helpBtnContainer: {
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    position: 'absolute',
+    bottom: 10,
+    left: 10,
+  },
+  helpButton: {
+    position: 'absolute',
+    backgroundColor: '#007AFF',
+    borderRadius: 15,
+    width: 50,
+    height: 50,
+    textAlign: 'center',
+    textAlignVertical: 'center',
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 
   aiContainer: {
