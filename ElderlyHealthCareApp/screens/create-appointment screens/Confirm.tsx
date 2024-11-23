@@ -121,6 +121,7 @@ const styles = StyleSheet.create({
     fontSize: 28,
     fontWeight: 'bold',
     color: '#333',
+    textAlign: 'center',
   },
 
   detailsContainer: {
@@ -143,9 +144,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 10,
     marginTop: 10,
-    width: 200,
+    width: '85%',
     alignSelf: 'center',
-    width: '85%'
   },
   confirmButtonText: {
     alignSelf: 'center',

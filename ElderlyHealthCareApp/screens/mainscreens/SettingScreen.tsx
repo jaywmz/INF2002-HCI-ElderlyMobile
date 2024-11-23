@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { View, Text, Switch, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '../../types';
+import { RegisteredUser, RootStackParamList } from '../../types';
 import * as Speech from 'expo-speech';
 import { useFocusEffect } from '@react-navigation/native';
 
@@ -68,7 +68,7 @@ const SettingScreen: React.FC<Props> = ({ navigation, isAiEnabled, setIsAiEnable
   };
 
   const handleLogout = () => {
-    navigation.navigate(' ');
+    navigation.navigate('Login');
   };
 
   return (

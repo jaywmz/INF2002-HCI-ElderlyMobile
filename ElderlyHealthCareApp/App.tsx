@@ -33,7 +33,13 @@ import { TimerProvider } from './timer';
 const Stack = createStackNavigator();
 const Tab = createMaterialTopTabNavigator();
 
-function MainTabs({ registeredUser, setRegisteredUser, isAiEnabled, currentScreenId, setCurrentScreenId }: AuthProps & { isAiEnabled: boolean, currentScreenId: number | null, setCurrentScreenId: React.Dispatch<React.SetStateAction<number | null>> }) {
+function MainTabs({ registeredUser, setRegisteredUser, isAiEnabled, currentScreenId, setCurrentScreenId, setIsAiEnabled }: 
+  AuthProps & { 
+  isAiEnabled: boolean, 
+  currentScreenId: number | null, 
+  setCurrentScreenId: React.Dispatch<React.SetStateAction<number | null>>, 
+  setIsAiEnabled: (enabled: boolean) => void;}) 
+{
   return (
     <View style={{ flex: 1 }}>
       <Tab.Navigator
@@ -81,59 +87,12 @@ function MainTabs({ registeredUser, setRegisteredUser, isAiEnabled, currentScree
           {(props) => (
             <SettingScreen
               {...props}
-              registeredUser={registeredUser}
-              setRegisteredUser={setRegisteredUser}
               isAiEnabled={isAiEnabled}
-              screenId={2}  // Assign a unique screen ID
-              currentScreenId={currentScreenId}
-              setCurrentScreenId={setCurrentScreenId}
+              setIsAiEnabled={setIsAiEnabled}
             />
           )}
         </Tab.Screen>
 
-        {/* <Tab.Screen
-          name="View/Edit Appointment"
-          options={{
-            tabBarLabel: 'View/Edit',
-            tabBarIcon: ({ color, focused }) => (
-              <Icon name="edit" type="font-awesome" color={color} size={focused ? 30 : 24} />
-            ),
-          }}
-        >
-          {(props) => (
-            <ViewEditApptScreen
-              {...props}
-              registeredUser={registeredUser}
-              setRegisteredUser={setRegisteredUser}
-              isAiEnabled={isAiEnabled}
-              screenId={3}  // Assign a unique screen ID
-              currentScreenId={currentScreenId}
-              setCurrentScreenId={setCurrentScreenId}
-            />
-          )}
-        </Tab.Screen> */}
-
-        {/* <Tab.Screen
-          name="Reminders"
-          options={{
-            tabBarLabel: 'Reminders',
-            tabBarIcon: ({ color, focused }) => (
-              <Icon name="bell" type="font-awesome" color={color} size={focused ? 30 : 24} />
-            ),
-          }}
-        >
-          {(props) => (
-            <ReminderScreen
-              {...props}
-              registeredUser={registeredUser}
-              setRegisteredUser={setRegisteredUser}
-              isAiEnabled={isAiEnabled}
-              screenId={4}  // Assign a unique screen ID
-              currentScreenId={currentScreenId}
-              setCurrentScreenId={setCurrentScreenId}
-            />
-          )}
-        </Tab.Screen> */}
       </Tab.Navigator>
     </View>
   );
@@ -153,7 +112,7 @@ export default function App() {
     <GestureHandlerRootView style={{ flex: 1 }}>
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Login">
-          <Stack.Screen name=" ">
+          <Stack.Screen name="Login">
             {(props) => <LoginScreen {...props} registeredUser={registeredUser} />}
           </Stack.Screen>
 
@@ -170,6 +129,7 @@ export default function App() {
                 isAiEnabled={isAiEnabled}
                 currentScreenId={currentScreenId}
                 setCurrentScreenId={setCurrentScreenId}
+                setIsAiEnabled={setIsAiEnabled}
               />
             )}
           </Stack.Screen>
@@ -245,15 +205,15 @@ export default function App() {
           </Stack.Screen>
 
           <Stack.Screen name="CurrentReminder">
-            {(props) => <CurrentReminderScreen {...props} isAiEnabled={isAiEnabled} />}
+            {(props) => <CurrentReminderScreen />}
           </Stack.Screen>
 
           <Stack.Screen name="EditReminder">
-            {(props) => <EditReminderScreen {...props} isAiEnabled={isAiEnabled} />}
+            {(props) => <EditReminderScreen />}
           </Stack.Screen>
 
           <Stack.Screen name="EditSuccess">
-            {(props) => <EditSuccessScreen {...props} isAiEnabled={isAiEnabled} />}
+            {(props) => <EditSuccessScreen />}
           </Stack.Screen>
 
           <Stack.Screen name="Setting" options={{ headerTitle: 'Settings' }}>

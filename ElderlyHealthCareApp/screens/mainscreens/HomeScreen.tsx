@@ -92,7 +92,7 @@ const HomeScreen = ({ navigation, registeredUser, setRegisteredUser, isAiEnabled
 
 const styles = StyleSheet.create({
   background: { backgroundColor: '#fbe4e4', flex: 1 },
-  aiContainer: { flexDirection: 'row', alignItems: 'center', marginVertical: 20 },
+  aiContainer: { flexDirection: 'row', alignItems: 'center' },
   aiIcon: { width: 50, height: 80, marginRight: 10 },
   aiTextContainer: {
     backgroundColor: '#fff',
@@ -113,14 +113,14 @@ const styles = StyleSheet.create({
   serviceButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingTop: 35,
+    paddingTop: 25,
     paddingRight: 35,
-    paddingBottom: 35,
+    paddingBottom: 25,
     paddingLeft: 15,
     backgroundColor: '#fff',
     borderRadius: 10,
     marginVertical: 10,
-    width: '80%',
+    width: '90%',
     alignSelf: 'center',
     shadowColor: '#000',
     shadowOpacity: 0.1,
@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
   buttonText: { fontSize: 18, fontWeight: 'bold', color: '#333' },
   navButton: { alignItems: 'center', flex: 1 },
   navText: { color: '#007AFF', fontWeight: 'bold', fontSize: 16 },
-  titleText : { fontSize: 50, fontWeight: 'bold', marginTop: 25, marginBottom: 25},
+  titleText : { fontSize: 50, fontWeight: 'bold', marginTop: 15, marginBottom: 5},
 });
 
 export default HomeScreen;

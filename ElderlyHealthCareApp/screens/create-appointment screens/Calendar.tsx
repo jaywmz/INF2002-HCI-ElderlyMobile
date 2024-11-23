@@ -81,22 +81,6 @@ const CalendarScreen = ({ navigation, isAiEnabled, setDate, locationProp }: Prop
         <Text style={styles.headerText}>Choose Appointment Date</Text>
       </View>
 
-      {/* AI Assistance Section */}
-      {showAi && (
-        <View style={styles.aiContainer}>
-          <Image source={require('../../assets/AI_nurse.jpg')} style={styles.aiIcon} />
-          <View style={styles.aiTextContainer}>
-            <TouchableOpacity style={styles.closeButton} onPress={handleCloseAi}>
-              <Text style={styles.closeButtonText}>X</Text>
-            </TouchableOpacity>
-            <Text style={styles.aiText}>Please choose your preferred appointment date from the calendar below.</Text>
-            <TouchableOpacity style={styles.controlButton} onPress={handlePauseResume}>
-              <Text style={styles.controlButtonText}>{isSpeaking ? 'Pause' : 'Play'}</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      )}
-
       {/* Calendar and Selected Date */}
       <View style={styles.calendarContainer}>
         <Text style={styles.selectedDateText}>
@@ -116,6 +100,21 @@ const CalendarScreen = ({ navigation, isAiEnabled, setDate, locationProp }: Prop
         />
       </View>
 
+      {/* AI Assistance Section */}
+      {showAi && (
+        <View style={styles.aiContainer}>
+          <Image source={require('../../assets/AI_nurse.jpg')} style={styles.aiIcon} />
+          <View style={styles.aiTextContainer}>
+            <TouchableOpacity style={styles.closeButton} onPress={handleCloseAi}>
+              <Text style={styles.closeButtonText}>X</Text>
+            </TouchableOpacity>
+            <Text style={styles.aiText}>Please choose your preferred appointment date from the calendar below.</Text>
+            <TouchableOpacity style={styles.controlButton} onPress={handlePauseResume}>
+              <Text style={styles.controlButtonText}>{isSpeaking ? 'Pause' : 'Play'}</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      )}
     </View>
   );
 };
@@ -136,8 +135,7 @@ const styles = StyleSheet.create({
     fontSize: 28,
     fontWeight: 'bold',
     color: '#333',
-    marginTop: 25,
-    marginBottom: 25,
+    textAlign: 'center',
   },
   chosenLocationText: {
     fontSize: 20,
