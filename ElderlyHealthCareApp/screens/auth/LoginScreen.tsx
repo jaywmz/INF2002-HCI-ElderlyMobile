@@ -21,14 +21,19 @@ const LoginScreen = ({ navigation, registeredUser }: Props) => {
   const { startTimer } = useTimer();
 
   const handleLogin = () => {
-    // if (registeredUser && username === registeredUser.username && password === registeredUser.password) {
-    //   navigation.navigate('Main', { screen: 'Home' });
-    // } else {
-    //   alert('Incorrect username or password');
-    // }
-    startTimer();
-    navigation.navigate('Main', { screen: 'Home' });
+    if (!registeredUser) {
+      alert('No registered user found. Please register first.');
+      return;
+    }
+  
+    if (username === registeredUser.username && password === registeredUser.password) {
+      startTimer();
+      navigation.navigate('Main', { screen: 'Home' });
+    } else {
+      alert('Incorrect username or password');
+    }
   };
+  
 
   return (
     <View style={authPage.container}>
