@@ -196,7 +196,7 @@ const styles = StyleSheet.create({
   },
 
   aiContainer: {
-    width: '60%',
+    width: '80%',
     flexDirection: 'row',
     alignItems: 'center',
     position: 'absolute',
@@ -216,15 +216,16 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 6,
     elevation: 2,
-    position: 'relative',
+    width: '80%',
     alignItems: 'center',
+    justifyContent: 'center',
+    position: 'relative',
   },
   aiText: {
     fontSize: 16,
     color: '#333',
     textAlign: 'center',
-    marginVertical: 10,
-    flexWrap: 'wrap',
+    marginRight: 10,
   },
   controlButton: {
     backgroundColor: '#007AFF',
