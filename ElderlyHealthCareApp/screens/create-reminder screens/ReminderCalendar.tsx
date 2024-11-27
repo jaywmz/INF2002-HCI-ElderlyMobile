@@ -80,6 +80,24 @@ const ReminderCalendarScreen = ({ navigation, isAiEnabled, setDate, locationProp
         <Text style={styles.headerText}>Choose timeslot</Text>
       </View>
 
+      {/* Calendar and Selected Date */}
+      <View style={styles.calendarContainer}>
+        <Text style={styles.selectedDateText}>
+          Selected Date: {selectedDate || 'None'}
+        </Text>
+        <Calendar
+          onDayPress={onDayPress}
+          markedDates={{
+            [selectedDate]: { selected: true, marked: true, selectedColor: 'blue' },
+          }}
+          theme={{
+            todayTextColor: 'red',
+            arrowColor: 'blue',
+          }}
+        />
+        </View>
+      </View>
+
       {/* AI Assistance Section */}
       {showAi && (
         <View style={styles.aiContainer}>
@@ -96,23 +114,6 @@ const ReminderCalendarScreen = ({ navigation, isAiEnabled, setDate, locationProp
         </View>
       )}
 
-      {/* Calendar and Selected Date */}
-      <View style={styles.calendarContainer}>
-        <Text style={styles.selectedDateText}>
-          Selected Date: {selectedDate || 'None'}
-        </Text>
-        <Calendar
-          onDayPress={onDayPress}
-          markedDates={{
-            [selectedDate]: { selected: true, marked: true, selectedColor: 'blue' },
-          }}
-          theme={{
-            todayTextColor: 'red',
-            arrowColor: 'blue',
-          }}
-        />
-      </View>
-      </View>
     </View>
   );
 };
@@ -159,11 +160,11 @@ const styles = StyleSheet.create({
   },
 
   aiContainer: {
-    width: '100%',
+    width: '60%',
     flexDirection: 'row',
     alignItems: 'center',
     position: 'absolute',
-    top: 500,
+    bottom: 10,
     left: 10,
   },
   aiIcon: {

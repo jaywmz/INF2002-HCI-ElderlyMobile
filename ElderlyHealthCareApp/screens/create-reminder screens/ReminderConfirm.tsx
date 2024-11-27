@@ -23,7 +23,7 @@ const ReminderConfirmScreen = ({ navigation, isAiEnabled, date, time }: Props) =
 
   useEffect(() => {
     if (isAiEnabled) {
-      playVoice('Please add your medicine picture and confirm that all details of the medicine reminder are correct, then click Confirm.');
+      playVoice();
     }
   }, [isAiEnabled]);
 
