@@ -68,7 +68,7 @@ const EditYourApptScreen: React.FC<Props> = ({ route, navigation, isAiEnabled })
     }
     const updatedAppointment = { ...appointment, day: selectedDate, time: selectedTime };
     onSave(updatedAppointment);
-    navigation.navigate('Current Appointment');
+    navigation.navigate('Edit Appointment Success');
     setIsModalVisible(false);
   };
 

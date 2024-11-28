@@ -1,6 +1,9 @@
 import React from 'react';
-import { View, Text, Button, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { Image } from 'expo-image';
+
+const thumbsUpImage = require('../../assets/thumbsup-icon.png');
 
 const MedicineUpdateSuccess: React.FC = () => {
   const navigation = useNavigation();
@@ -11,8 +14,13 @@ const MedicineUpdateSuccess: React.FC = () => {
 
   return (
     <View style={styles.container}>
+      <View style={{ alignItems: 'center' }}>
+        <Image source={thumbsUpImage} style={{ width: 100, height: 100 }} />
+      </View>
       <Text style={styles.successMessage}>Medicine Reminder Updated Successfully!</Text>
-      <Button title="Back to Reminders" onPress={handleGoBack} />
+      <TouchableOpacity style={styles.button} onPress={handleGoBack}>
+        <Text style={styles.buttonText}>Back to Reminders</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -26,10 +34,23 @@ const styles = StyleSheet.create({
     backgroundColor: '#fbe4e4',
   },
   successMessage: {
-    fontSize: 20,
+    fontSize: 32,
     color: '#4CAF50',
-    marginBottom: 20,
+    margin: 20,
     textAlign: 'center',
+    fontWeight: 'bold',
+  },
+  button: {
+    marginTop: 20,
+    padding: 15,
+    backgroundColor: '#007AFF',
+    borderRadius: 5,
+    alignItems: 'center',
+    width: '80%',
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 18,
     fontWeight: 'bold',
   },
 });

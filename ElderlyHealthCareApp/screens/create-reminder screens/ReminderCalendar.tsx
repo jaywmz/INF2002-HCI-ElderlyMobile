@@ -77,7 +77,7 @@ const ReminderCalendarScreen = ({ navigation, isAiEnabled, setDate, locationProp
       <View style={{}}>
       {/* Header */}
       <View>
-        <Text style={styles.headerText}>Choose timeslot</Text>
+        <Text style={styles.headerText}>Choose Timeslot</Text>
       </View>
 
       {/* Calendar and Selected Date */}

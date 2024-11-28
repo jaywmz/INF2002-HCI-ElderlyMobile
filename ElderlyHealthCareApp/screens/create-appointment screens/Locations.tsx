@@ -7,7 +7,9 @@ import { Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-nativ
 import { ScrollView } from 'react-native-gesture-handler';
 import { RootStackParamList } from '../../types';
 
-const PlaceholderImage = require('../../assets/background-image.png');
+const PlaceholderImage = require('../../assets/sgh.png');
+const PlaceholderImage1 = require('../../assets/farrer-park-hospital.jpg');
+const PlaceholderImage2 = require('../../assets/khoo-teck-puat-hospital.jpeg');
 
 type LocationsScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Locations'>;
 
@@ -73,29 +75,46 @@ const LocationsScreen = ({ navigation, isAiEnabled, setLocation }: Props) => {
     setShowAi(false);
   };
 
-  const LocationCard = ({ locName, address }: { locName:string; address:string }) => {
+  const LocationCard = ({ locName, address, image }: { locName: string; address: string; image: any }) => {
     return (
       <View style={[styles.elevation, styles.card]}>
-        <Pressable onPress={() => {handleNavigateToCalendar({locName})}} style={({ pressed }) => [{ opacity: pressed ? 0.5 : 1 }]}>
-          <Image source={PlaceholderImage} style={styles.image} />
+        <Pressable
+          onPress={() => {
+            handleNavigateToCalendar({ locName });
+          }}
+          style={({ pressed }) => [{ opacity: pressed ? 0.5 : 1 }]}
+        >
+          <Image source={image} style={styles.image} />
           <Text style={styles.locationText}>{locName}</Text>
           <Text style={styles.addressText}>{address}</Text>
         </Pressable>
       </View>
     );
   };
-
+  
   return (
     <View style={styles.background}>
       {/* Location Cards */}
       <View style={styles.scrollContainer}>
         <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollViewContent}>
-          <LocationCard locName='Sengkang General Hospital' address='110 Sengkang E Wy, Singapore 544886' />
-          <LocationCard locName='Farrer Park Hospital' address='1 Farrer Park Station Rd, #02-01 Connexion, Singapore 217562'/>
-          <LocationCard locName='Khoo Teck Puat Hospital' address='90 Yishun Central, Singapore 768828'/>
+          <LocationCard
+            locName="Sengkang General Hospital"
+            address="110 Sengkang E Wy, Singapore 544886"
+            image={PlaceholderImage}
+          />
+          <LocationCard
+            locName="Farrer Park Hospital"
+            address="1 Farrer Park Station Rd, #02-01 Connexion, Singapore 217562"
+            image={PlaceholderImage1}
+          />
+          <LocationCard
+            locName="Khoo Teck Puat Hospital"
+            address="90 Yishun Central, Singapore 768828"
+            image={PlaceholderImage2}
+          />
         </ScrollView>
       </View>
-    
+  
       {/* AI Assistance Section */}
       {showAi && (
         <View style={styles.aiContainer}>
@@ -130,7 +149,7 @@ const styles = StyleSheet.create({
 
   scrollContainer: {
     paddingTop: 25,
-    height: '100%',
+    height: '85%',
     width: '100%',
     overflow: 'hidden',
   },

@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
   scrollContainer: {
     marginTop: 10,
     width: '100%',
-    height: 590,
+    height: '70%',
     marginBottom: 10,
   },
   scrollView: {
