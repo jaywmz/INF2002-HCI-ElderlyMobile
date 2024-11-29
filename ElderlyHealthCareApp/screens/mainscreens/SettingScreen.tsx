@@ -18,24 +18,22 @@ const SettingScreen: React.FC<Props> = ({ navigation, isAiEnabled, setIsAiEnable
   const [hasVisit, sethasVisit] = useState(false); // Track the first visit
 
   // Play AI guidance message on initial load if AI is enabled
-  useEffect(() => {
-    if (isAiEnabled && !hasVisit) {
-      playVoice('To turn off AI, press the green slide button.');
-      sethasVisit(true); // Reset after first visit
-    }
-  }, [isAiEnabled, hasVisit]);
+  // useEffect(() => {
+  //   if (isAiEnabled && !hasVisit) {
+  //     playVoice('To turn off AI, press the green slide button.');
+  //     sethasVisit(true); // Reset after first visit
+  //   }
+  // }, [isAiEnabled, hasVisit]);
 
   // Play AI guidance message each time the screen is focused
   useFocusEffect(
     useCallback(() => {
-      if (isAiEnabled && !isSpeaking && hasVisit) {
-        playVoice('To turn off AI, press the green slide button.');
-      }
+      playVoice();
       return () => stopVoice();
     }, [isAiEnabled])
   );
 
-  const playVoice = (text: string) => {
+  const playVoice = (text: string = 'To turn off AI, press the green slide button.') => {
     Speech.speak(text, {
       onStart: () => setIsSpeaking(true),
       onDone: () => setIsSpeaking(false),
@@ -153,7 +151,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 6,
     elevation: 2,
-    width: 200, // Smaller and centered
+    width: 250, // Smaller and centered
     alignItems: 'center',
     position: 'relative',
   },
@@ -162,6 +160,7 @@ const styles = StyleSheet.create({
     color: '#333',
     textAlign: 'center',
     marginBottom: 10,
+    marginRight: 10,
   },
   controlButton: {
     backgroundColor: '#007AFF',

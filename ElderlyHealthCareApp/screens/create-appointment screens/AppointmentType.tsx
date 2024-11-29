@@ -19,28 +19,28 @@ type Props = {
 };
 
 const LocationsScreen = ({ navigation, isAiEnabled, time, setType }: Props) => {
-  const [showAi, setShowAi] = useState(isAiEnabled);
+  const [showAi, setShowAi] = useState(!isAiEnabled);
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [hasVisited, setHasVisited] = useState(false); // Track if the screen has been visited before
 
   // Play AI voice on initial load if not previously visited
-  useEffect(() => {
-    if (isAiEnabled && !hasVisited) {
-      playVoice();
-      setHasVisited(true); // Mark as visited after playing the first time
-    }
-  }, [isAiEnabled, hasVisited]);
+  // useEffect(() => {
+  //   if (isAiEnabled && !hasVisited) {
+  //     playVoice();
+  //     setHasVisited(true); // Mark as visited after playing the first time
+  //   }
+  // }, [isAiEnabled, hasVisited]);
 
-  useFocusEffect(
-    useCallback(() => {
-      // Play AI voice every time the screen regains focus (after initial load)
-      if (isAiEnabled && hasVisited) {
-        playVoice();
-      }
-      // Stop voice when navigating away
-      return () => stopVoice();
-    }, [isAiEnabled, hasVisited])
-  );
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     // Play AI voice every time the screen regains focus (after initial load)
+  //     if (isAiEnabled && hasVisited) {
+  //       playVoice();
+  //     }
+  //     // Stop voice when navigating away
+  //     return () => stopVoice();
+  //   }, [isAiEnabled, hasVisited])
+  // );
 
   const playVoice = (text: string = 'Please select the type of appointment.') => {
     Speech.speak(text, {
@@ -74,13 +74,18 @@ const LocationsScreen = ({ navigation, isAiEnabled, time, setType }: Props) => {
     setShowAi(false);
   };
 
+  const handleOpenAi = () => {
+    playVoice();
+    setShowAi(true);
+  };
+
   const ApptTypeCard = ({ typeName, desc }: { typeName:string; desc:string }) => {
     return (
       <View style={[styles.elevation, styles.card]}>
         <Pressable onPress={() => {handleNavigateToConfirm({typeName})}} style={({ pressed }) => [{ opacity: pressed ? 0.5 : 1 }]}>
           <Image source={PlaceholderImage} style={styles.image} />
-          <Text style={styles.locationText}>{typeName}</Text>
-          <Text style={styles.addressText}>{desc}</Text>
+          <Text style={styles.typeText}>{typeName}</Text>
+          <Text style={styles.descText}>{desc}</Text>
         </Pressable>
       </View>
     );
@@ -94,7 +99,7 @@ const LocationsScreen = ({ navigation, isAiEnabled, time, setType }: Props) => {
         <Text style={styles.headerText}>Choose Appointment Type</Text>
       </View>
 
-      {/* Location Cards */}
+      {/* Appointment Type Cards */}
       <View style={styles.scrollContainer}>
         <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollViewContent}>
           <ApptTypeCard typeName='Health Check-up' desc='Routine health check-up by a doctor' />
@@ -102,6 +107,12 @@ const LocationsScreen = ({ navigation, isAiEnabled, time, setType }: Props) => {
           <ApptTypeCard typeName='Surgery' desc='For non-critical surgeries'/>
           <ApptTypeCard typeName="Doctor's Consultation" desc='For normal illness or injuries'/>
         </ScrollView>
+      </View>
+
+      <View style={styles.helpBtnContainer}>
+        <TouchableOpacity style={styles.aiIcon} onPress={handleOpenAi}>
+          <Text style={styles.helpButton}>Help</Text>
+        </TouchableOpacity>
       </View>
     
       {/* AI Assistance Section */}
@@ -183,16 +194,37 @@ const styles = StyleSheet.create({
     height: 150,
     borderRadius: 18,
   },
-  locationText: {
+  typeText: {
     marginTop: 10,
     fontSize: 24,
     fontWeight: 'bold',
     textAlign: 'center'
   },
-  addressText: {
+  descText: {
     marginTop: 10,
     fontSize: 24,
     textAlign: 'center'
+  },
+
+  helpBtnContainer: {
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    position: 'absolute',
+    bottom: 10,
+    left: 10,
+  },
+  helpButton: {
+    position: 'absolute',
+    backgroundColor: '#007AFF',
+    borderRadius: 15,
+    width: 50,
+    height: 50,
+    textAlign: 'center',
+    textAlignVertical: 'center',
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 
   aiContainer: {

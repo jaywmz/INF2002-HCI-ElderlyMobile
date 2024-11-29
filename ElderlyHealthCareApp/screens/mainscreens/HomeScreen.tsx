@@ -15,24 +15,24 @@ type Props = {
 } & AuthProps;
 
 const HomeScreen = ({ navigation, registeredUser, setRegisteredUser, isAiEnabled, screenId, currentScreenId, setCurrentScreenId }: Props) => {
-  const [showAi, setShowAi] = useState(isAiEnabled);
+  const [showAi, setShowAi] = useState(!isAiEnabled);
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [showNextMessage, setShowNextMessage] = useState(false);
   const { startTimer } = useTimer();
 
-  useFocusEffect(
-    useCallback(() => {
-      // startTimer();
-      setCurrentScreenId(screenId);
-      setShowNextMessage(false);
-      if (isAiEnabled && currentScreenId === screenId) {
-        playVoice('Welcome, I am Joy. How can I assist you today? To turn off AI, please head towards Setting page.');
-      }
-      return () => stopVoice();
-    }, [isAiEnabled, currentScreenId])
-  );
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     // startTimer();
+  //     setCurrentScreenId(screenId);
+  //     setShowNextMessage(false);
+  //     // setShowAi(isAiEnabled);
+  //     // if (isAiEnabled && currentScreenId === screenId) {
+  //     //   playVoice('Welcome, I am Joy. How can I assist you today? To turn off AI, please head towards Setting page.');
+  //     // }
+  //   }, [isAiEnabled, currentScreenId])
+  // );
 
-  const playVoice = (text: string) => {
+  const playVoice = (text: string = 'Welcome, I am Joy. How can I assist you today? To turn off AI, please head towards Setting page.') => {
     Speech.speak(text, {
       onStart: () => setIsSpeaking(true),
       onDone: () => setIsSpeaking(false),
@@ -44,6 +44,16 @@ const HomeScreen = ({ navigation, registeredUser, setRegisteredUser, isAiEnabled
   const stopVoice = () => {
     Speech.stop();
     setIsSpeaking(false);
+  };
+
+  const handleCloseAi = () => {
+    stopVoice();
+    setShowAi(false);
+  };
+
+  const handleOpenAi = () => {
+    playVoice();
+    setShowAi(true);
   };
 
   return (
@@ -71,12 +81,18 @@ const HomeScreen = ({ navigation, registeredUser, setRegisteredUser, isAiEnabled
             <Text style={styles.buttonText}>View Current Reminders</Text>
           </TouchableOpacity>
 
+          <View style={styles.helpBtnContainer}>
+            <TouchableOpacity style={styles.aiIcon} onPress={handleOpenAi}>
+              <Text style={styles.helpButton}>Help</Text>
+            </TouchableOpacity>
+          </View>
+
           {/* AI Assistance Section */}
-          {isAiEnabled && showAi && (
+          {showAi && (
             <View style={styles.aiContainer}>
               <Image source={require('../../assets/AI_nurse.jpg')} style={styles.aiIcon} />
               <View style={styles.aiTextContainer}>
-                <TouchableOpacity style={styles.closeButton} onPress={() => setShowAi(false)}>
+                <TouchableOpacity style={styles.closeButton} onPress={handleCloseAi}>
                   <Text style={styles.closeButtonText}>X</Text>
                 </TouchableOpacity>
                 <Text style={styles.aiText}>
@@ -93,6 +109,26 @@ const HomeScreen = ({ navigation, registeredUser, setRegisteredUser, isAiEnabled
 
 const styles = StyleSheet.create({
   background: { backgroundColor: '#fbe4e4', flex: 1 },
+  helpBtnContainer: {
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    position: 'absolute',
+    bottom: 10,
+    left: 10,
+  },
+  helpButton: {
+    position: 'absolute',
+    backgroundColor: '#007AFF',
+    borderRadius: 15,
+    width: 50,
+    height: 50,
+    textAlign: 'center',
+    textAlignVertical: 'center',
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
   aiContainer: {
     width: '80%',
     flexDirection: 'row',
@@ -101,7 +137,11 @@ const styles = StyleSheet.create({
     bottom: 10,
     left: 10,
   },
-  aiIcon: { width: 50, height: 80, marginRight: 10 },
+  aiIcon: { 
+    width: 50, 
+    height: 80,
+    marginRight: 10 
+  },
   aiTextContainer: {
     backgroundColor: '#fff',
     padding: 10,
@@ -115,9 +155,27 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     position: 'relative',
   },
-  aiText: { fontSize: 16, color: '#333', textAlign: 'center' },
-  closeButton: { position: 'absolute', top: 5, right: 5, backgroundColor: '#ff4d4d', borderRadius: 15, width: 20, height: 20, alignItems: 'center', justifyContent: 'center' },
-  closeButtonText: { color: '#fff', fontSize: 12, fontWeight: 'bold' },
+  aiText: { 
+    fontSize: 16, 
+    color: '#333', 
+    textAlign: 'center' 
+  },
+  closeButton: { 
+    position: 'absolute', 
+    top: 5, 
+    right: 5, 
+    backgroundColor: '#ff4d4d', 
+    borderRadius: 15, 
+    width: 20, 
+    height: 20, 
+    alignItems: 'center', 
+    justifyContent: 'center' 
+  },
+  closeButtonText: { 
+    color: '#fff', 
+    fontSize: 12, 
+    fontWeight: 'bold' 
+  },
   serviceButton: {
     flexDirection: 'row',
     alignItems: 'center',

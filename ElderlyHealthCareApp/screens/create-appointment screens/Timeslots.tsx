@@ -16,28 +16,28 @@ type Props = {
 
 const TimeslotsScreen = ({ isAiEnabled, navigation, date, setTime }: Props) => {
   const [isSpeaking, setIsSpeaking] = useState(false);
-  const [showAi, setShowAi] = useState(isAiEnabled);
+  const [showAi, setShowAi] = useState(!isAiEnabled);
   const [hasVisited, setHasVisited] = useState(false); // Track initial visit
   const [selectedTime, setSelectedTime] = useState('');
   const selectedDate = date;
 
   // Play AI voice on first screen load
-  useEffect(() => {
-    if (isAiEnabled && !hasVisited) {
-      playVoice();
-      setHasVisited(true); // Mark as visited to prevent auto-play on every return
-    }
-  }, [isAiEnabled, hasVisited]);
+  // useEffect(() => {
+  //   if (isAiEnabled && !hasVisited) {
+  //     playVoice();
+  //     setHasVisited(true); // Mark as visited to prevent auto-play on every return
+  //   }
+  // }, [isAiEnabled, hasVisited]);
 
-  // Use `useFocusEffect` to handle re-focus events and play voice if revisited
-  useFocusEffect(
-    useCallback(() => {
-      if (isAiEnabled && hasVisited) {
-        playVoice();
-      }
-      return () => stopVoice(); // Stop voice when navigating away
-    }, [isAiEnabled, hasVisited])
-  );
+  // // Use `useFocusEffect` to handle re-focus events and play voice if revisited
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     if (isAiEnabled && hasVisited) {
+  //       playVoice();
+  //     }
+  //     return () => stopVoice(); // Stop voice when navigating away
+  //   }, [isAiEnabled, hasVisited])
+  // );
 
   const playVoice = (text: string = 'Please choose your preferred appointment timeslot. Red timeslots are full.') => {
     Speech.speak(text, {
@@ -56,6 +56,11 @@ const TimeslotsScreen = ({ isAiEnabled, navigation, date, setTime }: Props) => {
   const handleCloseAi = () => {
     stopVoice();
     setShowAi(false);
+  };
+
+  const handleOpenAi = () => {
+    playVoice();
+    setShowAi(true);
   };
 
   const handlePauseResume = () => {
@@ -117,6 +122,12 @@ const TimeslotsScreen = ({ isAiEnabled, navigation, date, setTime }: Props) => {
         <Timeslot time="03:00pm" avail="yes"/>
         <Timeslot time="03:30pm" avail="yes"/>
         <Timeslot time="04:00pm" avail="yes"/>
+      </View>
+
+      <View style={styles.helpBtnContainer}>
+        <TouchableOpacity style={styles.aiIcon} onPress={handleOpenAi}>
+          <Text style={styles.helpButton}>Help</Text>
+        </TouchableOpacity>
       </View>
       
       {/* AI Assistance Section */}
@@ -192,29 +203,29 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
 
-  confirmBtnContainer: {
+  helpBtnContainer: {
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
     position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
+    bottom: 10,
+    left: 10,
   },
-  confirmBtn: {
-    width: '85%',
-    borderRadius: 18,
-    backgroundColor: 'white',
-    padding: 25,
-    marginTop: 20,
-    marginBottom: 20,
-    marginLeft: 'auto',
-    marginRight: 'auto',
-  },
-  confirmBtnText: {
-    fontSize: 28,
-    alignSelf: 'center',
+  helpButton: {
+    position: 'absolute',
+    backgroundColor: '#007AFF',
+    borderRadius: 15,
+    width: 50,
+    height: 50,
+    textAlign: 'center',
+    textAlignVertical: 'center',
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 
   aiContainer: {
-    width: '100%',
+    width: '80%',
     flexDirection: 'row',
     alignItems: 'center',
     position: 'absolute',
@@ -234,15 +245,16 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 6,
     elevation: 2,
-    width: 250,
-    position: 'relative',
+    width: '80%',
     alignItems: 'center',
+    justifyContent: 'center',
+    position: 'relative',
   },
   aiText: {
     fontSize: 16,
     color: '#333',
     textAlign: 'center',
-    marginVertical: 10,
+    marginRight: 10,
   },
   controlButton: {
     backgroundColor: '#007AFF',
