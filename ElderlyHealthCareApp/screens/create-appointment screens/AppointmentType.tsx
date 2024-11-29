@@ -23,25 +23,6 @@ const LocationsScreen = ({ navigation, isAiEnabled, time, setType }: Props) => {
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [hasVisited, setHasVisited] = useState(false); // Track if the screen has been visited before
 
-  // Play AI voice on initial load if not previously visited
-  // useEffect(() => {
-  //   if (isAiEnabled && !hasVisited) {
-  //     playVoice();
-  //     setHasVisited(true); // Mark as visited after playing the first time
-  //   }
-  // }, [isAiEnabled, hasVisited]);
-
-  // useFocusEffect(
-  //   useCallback(() => {
-  //     // Play AI voice every time the screen regains focus (after initial load)
-  //     if (isAiEnabled && hasVisited) {
-  //       playVoice();
-  //     }
-  //     // Stop voice when navigating away
-  //     return () => stopVoice();
-  //   }, [isAiEnabled, hasVisited])
-  // );
-
   const playVoice = (text: string = 'Please select the type of appointment.') => {
     Speech.speak(text, {
       onStart: () => setIsSpeaking(true),

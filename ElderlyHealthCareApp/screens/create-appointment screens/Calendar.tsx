@@ -21,24 +21,6 @@ const CalendarScreen = ({ navigation, isAiEnabled, setDate, locationProp }: Prop
   const [showAi, setShowAi] = useState(!isAiEnabled);
   const [hasVisited, setHasVisited] = useState(false); // Track if the screen has been visited
 
-  // Play AI voice on initial load if not previously visited
-  // useEffect(() => {
-  //   if (isAiEnabled && !hasVisited) {
-  //     playVoice();
-  //     setHasVisited(true); // Mark as visited after first play
-  //   }
-  // }, [isAiEnabled, hasVisited]);
-
-  // // Handle screen focus and re-focus events
-  // useFocusEffect(
-  //   useCallback(() => {
-  //     if (isAiEnabled && hasVisited) {
-  //       playVoice();
-  //     }
-  //     return () => stopVoice(); // Stop voice when navigating away
-  //   }, [isAiEnabled, hasVisited])
-  // );
-
   const playVoice = (text: string = 'Please choose your preferred appointment date from the calendar.') => {
     Speech.speak(text, {
       onStart: () => setIsSpeaking(true),

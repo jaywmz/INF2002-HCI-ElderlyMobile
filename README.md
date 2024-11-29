@@ -1,5 +1,5 @@
 ## Elderly Healthcare App
-This mobile application is designed to support elderly users in managing their healthcare tasks, such as booking appointments, setting reminders, and using voice commands for easier navigation.
+This mobile application is designed to support elderly users in managing their healthcare tasks, such as booking appointments, setting reminders, and using voiceover commands for easier navigation.
 
 ## Features
 
@@ -30,22 +30,9 @@ Make sure you have the following installed:
       cd ElderlyHealthCareApp
       ```
 
-3. **Install dependencies**
+3. **Install dependencies and required libraries**
       ```bash
       npm install
-      ```
-
-4. **Install required libraries**
-      Use the commands below to install libraries for navigation, gesture handling, and voice functionality:
-      ```bash
-      npm install @react-navigation/native
-      expo install react-native-screens react-native-safe-area-context
-      npm install @react-navigation/stack
-      expo install react-native-gesture-handler
-      expo install expo-speech
-      npm install @react-native-voice/voice
-      npm install react-native-modal-dropdown
-
       ```
 
 ## Start the app
@@ -64,12 +51,7 @@ This will open Expo DevTools in your browser. Use the Expo Go app on your device
 
 - **App.tsx**: The main entry point for the app, initializing navigation and screen routing.
 - **assets/**: Contains static assets like images for service icons.
-- **screens/**: Holds all screen components, including:
-     - `auth/LoginScreen.tsx`, `auth/RegistrationScreen.tsx`: For user authentication.
-     - `mainscreens/HomeScreen.tsx`: Main landing page with navigation to services.
-     - `mainscreens/CreateApptScreen.tsx`, `mainscreens/ViewEditApptScreen.tsx`, `mainscreens/ReminderScreen.tsx`: Feature-specific screens for managing appointments and reminders.
-     - `create-appointment screens/Calendar.tsx`, `create-appointment screens/Locations.tsx`, `create-appointment screens/Timeslots.tsx`, `create-appointment screens/CreateApptConfirmation.tsx`: Screens for creating appointments.
-     - `SettingScreen.tsx`: Screen for app settings.
+- **screens/**: Holds all screen components.
 - **styles/Theme.ts**: Contains global styles to ensure a cohesive design across screens.
 - **types.ts**: Defines shared types for navigation and component props.
 
