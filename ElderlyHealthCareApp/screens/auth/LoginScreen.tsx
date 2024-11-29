@@ -6,7 +6,6 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList, RegisteredUser } from '../../types';
 import { useTimer } from '../../timer';
 
-
 type LoginScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Login'>;
 
 type Props = {
@@ -25,7 +24,7 @@ const LoginScreen = ({ navigation, registeredUser }: Props) => {
       alert('No registered user found. Please register first.');
       return;
     }
-  
+
     if (username === registeredUser.username && password === registeredUser.password) {
       startTimer();
       navigation.navigate('Main', { screen: 'Home' });
@@ -33,18 +32,26 @@ const LoginScreen = ({ navigation, registeredUser }: Props) => {
       alert('Incorrect username or password');
     }
   };
-  
+
+  const handleImageClick = () => {
+    navigation.navigate('Main', { screen: 'Home' });
+  };
 
   return (
     <View style={authPage.container}>
-      <Text style={{ fontSize: 35, fontWeight: 'bold', marginBottom: 35}}>ElderlyWell</Text>
-      <Text style={authPage.headerText}>Login with SingPass</Text>
-      <Image style={{width: 200, height: 200}} source={require('../../assets/singpass-qr.png')}/>
+      <Text style={{ fontSize: 32, fontWeight: 'bold', color: '#007AFF', marginBottom: 20,}}>Login/Register with SingPass</Text>
+      <TouchableOpacity onPress={handleImageClick}>
+        <Image 
+          key="singpass-qr"
+          style={{ width: 200, height: 200 }} 
+          source={require('../../assets/singpass-qr.png')} 
+        />
+      </TouchableOpacity>
       <View style={{ width: '100%', height: 1, backgroundColor: '#ccc', marginVertical: 20 }} />
       <Text style={authPage.headerText}>Login with Password</Text>
       <TextInput
         style={authPage.input}
-        placeholder="Enter Singpass ID"
+        placeholder="Enter Username"
         value={username}
         onChangeText={setUsername}
       />
@@ -59,7 +66,7 @@ const LoginScreen = ({ navigation, registeredUser }: Props) => {
         <Text style={authPage.buttonText}>Sign In</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate('Registration')} style={{ marginTop: 10 }}>
-        <Text style={{ color: '#007AFF', fontSize: 22.5, marginTop: 25}}>Register with Singpass</Text>
+        <Text style={{ color: '#007AFF', fontSize: 22.5, marginTop: 25 }}>Register An Account</Text>
       </TouchableOpacity>
     </View>
   );

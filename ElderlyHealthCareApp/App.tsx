@@ -28,6 +28,7 @@ import CreateApptSuccessScreen from './screens/create-appointment screens/Succes
 import CurrentReminderScreen from './screens/edit-reminder/CurrentReminder';
 import EditReminderScreen from './screens/edit-reminder/EditReminder';
 import EditSuccessScreen from './screens/edit-reminder/EditSuccess';
+import EditApptSucessScreen from './screens/edit-appt/EditApptSuccess'
 import { TimerProvider } from './timer';
 
 const Stack = createStackNavigator();
@@ -190,6 +191,10 @@ export default function App() {
 
           <Stack.Screen name="Reminder Calendar">
             {(props) => <ReminderCalendarScreen {...props} isAiEnabled={isAiEnabled} locationProp={location} setDate={setDate} />}
+          </Stack.Screen>
+
+          <Stack.Screen name="Edit Appointment Success">
+            {(props) => <EditApptSucessScreen {...props} isAiEnabled={isAiEnabled} locationProp={location} setDate={setDate} />}
           </Stack.Screen>
 
           <Stack.Screen name="ReminderTimeslots">

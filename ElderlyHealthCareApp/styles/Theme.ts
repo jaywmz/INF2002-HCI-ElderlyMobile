@@ -15,16 +15,18 @@ export const globalStyles = {
     alignItems: 'center',
   } as const,
   headerText: {
-    fontSize: 24,
+    fontSize: 48,
     fontWeight: 'bold',
     color: colors.primary,
     marginBottom: 20,
   } as const,
   button: {
     backgroundColor: colors.primary,
-    padding: 12,
+    padding: 15,
     borderRadius: 8,
     alignItems: 'center',
+    width: "80%",
+    marginTop: 15
   } as const,
   buttonText: {
     color: '#fff',
@@ -32,8 +34,8 @@ export const globalStyles = {
     fontWeight: '600',
   } as const,
   input: {
-    width: 200,
-    padding: 10,
+    width: "80%",
+    padding: 17.5,
     marginBottom: 10,
     borderWidth: 1,
     borderColor: '#ccc',

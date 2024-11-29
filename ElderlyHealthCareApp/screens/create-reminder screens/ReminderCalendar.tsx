@@ -61,6 +61,7 @@ const ReminderCalendarScreen = ({ navigation, isAiEnabled, setDate, locationProp
   return (
     <View style={styles.background}>
       <View>
+        
         {/* Header */}
         <Text style={styles.headerText}>Choose Timeslot</Text>
       </View>
@@ -82,6 +83,10 @@ const ReminderCalendarScreen = ({ navigation, isAiEnabled, setDate, locationProp
       )}
 
       {/* Calendar */}
+ 
+        <Text style={styles.headerText}>Choose Timeslot</Text>
+      </View>
+        
       <View style={styles.calendarContainer}>
         <Text style={styles.selectedDateText}>
           Selected Date: {selectedDate || 'None'}
@@ -96,12 +101,30 @@ const ReminderCalendarScreen = ({ navigation, isAiEnabled, setDate, locationProp
             arrowColor: 'blue',
           }}
         />
+        </View>
       </View>
 
       {/* Help Button */}
       <TouchableOpacity style={styles.helpButton} onPress={toggleAiAssistant}>
         <Text style={styles.helpButtonText}>Help</Text>
       </TouchableOpacity>
+    
+      {/* AI Assistance Section */}
+      {showAi && (
+        <View style={styles.aiContainer}>
+          <Image source={require('../../assets/AI_nurse.jpg')} style={styles.aiIcon} />
+          <View style={styles.aiTextContainer}>
+            <TouchableOpacity style={styles.closeButton} onPress={handleCloseAi}>
+              <Text style={styles.closeButtonText}>X</Text>
+            </TouchableOpacity>
+            <Text style={styles.aiText}>Please choose your medication date from the calendar above.</Text>
+            <TouchableOpacity style={styles.controlButton} onPress={handlePauseResume}>
+              <Text style={styles.controlButtonText}>{isSpeaking ? 'Pause' : 'Play'}</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      )}
+
     </View>
   );
 };
@@ -137,6 +160,19 @@ const styles = StyleSheet.create({
   aiContainer: {
     width: '90%',
     alignSelf: 'center',
+    width: '60%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    position: 'absolute',
+    bottom: 10,
+    left: 10,
+  },
+  aiIcon: {
+    width: 50,
+    height: 80,
+    marginRight: 10,
+  },
+  aiTextContainer: {
     backgroundColor: '#fff',
     padding: 15,
     borderRadius: 10,
@@ -206,5 +242,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 });
-
+        
 export default ReminderCalendarScreen;
+

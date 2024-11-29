@@ -44,8 +44,8 @@ const RegistrationScreen = ({ navigation, setRegisteredUser }: Props) => {
       <TouchableOpacity style={globalStyles.button} onPress={handleRegister}>
         <Text style={globalStyles.buttonText}>Register</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate(' ')} style={{ marginTop: 10 }}>
-        <Text style={{ color: '#007AFF', fontSize: 20, marginTop: 15 }}>Already have an account? Login</Text>
+      <TouchableOpacity onPress={() => navigation.navigate('Login')} style={{ marginTop: 10 }}>
+        <Text style={{ color: '#007AFF', fontSize: 25, marginTop: 15 }}>Already have an account? Login</Text>
       </TouchableOpacity>
     </View>
   );
